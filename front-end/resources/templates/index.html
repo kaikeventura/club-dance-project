@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+	<title>Página Inicial</title>
+	<meta charset="utf-8">
+	<link rel="icon" type="imagem/png" href="#" />
+
+	<!--Import Google Icon Font-->
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<!--Import materialize.css-->
+	<link type="text/css" rel="stylesheet" href="/resources/static/css/materialize.css" media="screen,projection" />
+	<!--style.css-->
+	<link type="text/css" rel="stylesheet" href="/resources/static/css/style.css" />
+	<!--Let browser know website is optimized for mobile-->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+</head>
+
+<body>
+
+	<!-- NAVBAR -->
+	<header>
+		<nav class="pink darken-1">
+			<div class="nav-wrapper">
+				<div class="row">
+					<div class="col s12">
+						<a href="#" data-target="sidenav-1" class="left sidenav-trigger hide-on-medium-and-up"><i
+								class="material-icons">menu</i></a>
+						<strong><a href="#" class="brand-logo white-text">Club Dance</a></strong>
+					</div>
+				</div>
+			</div>
+		</nav>
+	</header>
+
+	<!-- LEFT SIDEBAR-->
+	<ul id="sidenav-1" class="sidenav sidenav-fixed">
+		<li class="menu-lateral"><a href="#"><i class="material-icons">home</i>Home</a></li>
+		<li>
+			<div class="divider"></div>
+		</li>
+		<li><a><i class="material-icons">confirmation_number</i>Ingresso</a></li>
+		<li><a href="#"><i class="material-icons">chevron_right</i>Venda</a></li>
+		<li>
+			<div class="divider"></div>
+		</li>
+		<li><a><i class="material-icons">local_bar</i>Bar</a></li>
+		<li><a href="#"><i class="material-icons">chevron_right</i>Venda</a></li>
+		<li>
+			<div class="divider"></div>
+		</li>
+		<li><a><i class="material-icons">store</i>Estoque</a></li>
+		<li><a href="#"><i class="material-icons">chevron_right</i>Consulta</a></li>
+		<li>
+			<div class="divider"></div>
+		</li>
+		<li><a><i class="material-icons">people</i>Fornecedor</a></li>
+		<li><a href="#"><i class="material-icons">chevron_right</i>Consulta</a></li>
+		<li>
+			<div class="divider"></div>
+		</li>
+		<li><a><i class="material-icons">content_paste</i>Administração</a></li>
+		<li><a href="#"><i class="material-icons">chevron_right</i>Acessar</a></li>
+		<li>
+			<div class="divider"></div>
+		</li>
+	</ul>
+	<div>
+		<img id="logo" src="/resources/static/img/clublogo.png" alt="logo">
+	</div>
+
+	<!--JQuery-->
+	<script type="text/javascript" src="/resources/static/js/jquery-3.4.1.js"></script>
+	<!--JavaScript at end of body for optimized loading-->
+	<script type="text/javascript" src="/resources/static/js/materialize.js"></script>
+
+	<script>
+		$(document).ready(function () {
+			$('.sidenav').sidenav();
+			$('#sidenav-1').sidenav({ edge: 'left' });
+			$('#sidenav-2').sidenav({ edge: 'right' });
+		});
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,22 @@
+
+header, footer {
+	padding-left: 300px;
+}
+
+.text-menu-header{
+    font-size: 30pt;
+}
+
+.menu-lateral{
+    padding-top: 2.5%;    
+}
+
+#logo{
+    margin-top: 30px;
+    padding-left: 300px;
+    margin-left: 290px;
+}
+
+body{
+    background: black;
+}
