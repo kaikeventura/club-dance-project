@@ -1,0 +1,40 @@
+
+header, footer {
+	padding-left: 300px;
+}
+
+.text-menu-header{
+    font-size: 30pt;
+}
+
+.menu-lateral{
+    padding-top: 2.5%;    
+}
+
+#logo{
+    margin-top: 30px;
+    padding-left: 300px;
+    margin-left: 290px;
+}
+
+body{
+    background: black;
+}
+
+.body-principal{
+	padding-left: 10px;
+    margin-left: 290px;
+}
+
+
+
+/* Estilos dos botões */
+#btn-cad-evento{
+	margin-top: 2.3%;
+	margin-right: 1%;
+}
+
+#btn-svr-evento{
+	margin-top: 2.3%;
+	margin-right: 2.4%;
+}
