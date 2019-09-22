@@ -1,6 +1,6 @@
 package br.com.cng12.clubdance.entity;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,7 +30,7 @@ public class EventoEntity {
 
 	@Column(nullable = true)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private Date data;
+	private LocalDate data;
 
 	@Column(nullable = true)
 	private String horaInicio;
