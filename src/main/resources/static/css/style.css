@@ -26,7 +26,11 @@ body{
     margin-left: 290px;
 }
 
-
+/*  */
+.style-table{
+	border: 1px solid white;
+	box-shadow: 2px 2px 2px 0.5px white;
+}
 
 /* Estilos dos botões */
 #btn-cad-evento{

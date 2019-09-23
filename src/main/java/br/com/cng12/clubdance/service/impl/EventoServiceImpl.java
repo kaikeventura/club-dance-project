@@ -11,38 +11,40 @@ import br.com.cng12.clubdance.service.EventoService;
 
 @Service
 public class EventoServiceImpl implements EventoService {
-	
+
 	@Autowired
 	private EventoDAO dao;
 
 	@Override
 	public void salvar(EventoEntity eventoEntity) {
-		
+
 		dao.save(eventoEntity);
 	}
 
 	@Override
 	public List<EventoEntity> listar() {
-		
+
 		return dao.findAll();
 	}
 
 	@Override
 	public void editar(EventoEntity eventoEntity) {
-		// TODO Auto-generated method stub
+
+		dao.save(eventoEntity);
 
 	}
 
 	@Override
 	public void excluir(Long id) {
-		// TODO Auto-generated method stub
+
+		dao.deleteById(id);
 
 	}
 
 	@Override
 	public EventoEntity buscarPorId(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+
+		return dao.getOne(id);
 	}
 
 	@Override
