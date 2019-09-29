@@ -3,7 +3,7 @@
 	xmlns:th="http://www.thymeleaf.org">
 
 <head>
-<title>Cadastrar Evento</title>
+<title>Venda de ingressos</title>
 <meta charset="utf-8">
 <link rel="icon" type="imagem/png" th:href="@{/img/minilogo.png}" />
 
@@ -66,78 +66,56 @@
 			<div class="divider"></div>
 		</li>
 	</ul>
-	
+
 	<div class="body-principal">
-		<div class="row">
-			<div class="col s12 m12">
-				<div class="card">
-					<div class="card-action center black">
-						<strong><a class="white-text">Cadastrar Evento</a></strong>
-					</div>
-					<div class="divider"></div>
-
-					<!-- Formulário de cadastro -->
+		<div class="info-evento-venda">
+			<div class="row">
+				<form th:object="${eventoEntity}">
 					<div class="row">
-						<form class="col s12"
-							th:action="${eventoEntity.id == null} ? @{/evento/cadastrar-evento} : @{/evento/editar-evento}"
-							th:object="${eventoEntity}" method="POST">
-							<div class="row">
-								<div class="input-field col s11">
-									<i class="material-icons prefix">account_circle</i> <input
-										id="icon_prefix" type="text" class="validate"
-										th:field="*{nome}"> <label for="icon_prefix">Nome</label>
-								</div>
-							</div>
-							<div class="row">
-								<div class="input-field col s6">
-									<i class="material-icons prefix">gps_fixed</i> <input
-										id="icon_prefix" type="text" class="validate"
-										th:field="*{local}"> <label for="icon_prefix">Local</label>
-								</div>
-								<div class="input-field col s5">
-									<i class="material-icons prefix">date_range</i> <input
-										id="icon_prefix" type="date" class="validate"
-										th:field="*{data}"> <label for="icon_prefix">Data</label>
-								</div>
-							</div>
-							<div class="row">
-								<div class="input-field col s6">
-									<i class="material-icons prefix">access_time</i> <input
-										id="icon_prefix" type="time" class="validate"
-										th:field="*{horaInicio}"> <label for="icon_prefix">Hora
-										de Inicio</label>
-								</div>
-								<div class="input-field col s5">
-									<i class="material-icons prefix">access_time</i> <input
-										id="icon_prefix" type="time" class="validate"
-										th:field="*{horaTermino}"> <label for="icon_prefix">Hora
-										de Término</label>
-								</div>
-							</div>
-							<div class="row">
-								<div class="input-field col s6">
-									<i class="material-icons prefix">people</i> <input
-										id="icon_prefix" type="number" class="validate"
-										th:field="*{capacidade}"> <label for="icon_prefix">Capacidade
-										de Pessoas</label>
-								</div>
-								<div class="input-field col s5">
-									<div class="row right-align">
-										<input type="hidden" id="id" th:field="*{id}" />
-										<button id="btn-svr-evento" type="submit"
-											class="waves-effect waves-light btn pink darken-1">
-											<i class="material-icons right">border_color</i>Salvar
-										</button>
-									</div>
-								</div>
-							</div>
-						</form>
+						<div class="input-field col s6">
+							<input id="icon_prefix" type="text" class="validate"
+								th:field="*{nome}" disabled="disabled"> <label
+								for="icon_prefix">Nome</label>
+						</div>
+						<div class="input-field col s6">
+							<input id="icon_prefix" type="text" class="validate"
+								th:field="*{local}" disabled="disabled"> <label
+								for="icon_prefix">Local</label>
+						</div>
+						<div class="input-field col s3">
+							<input id="icon_prefix" type="text" class="validate"
+								th:field="*{data}" disabled="disabled"> <label
+								for="icon_prefix">Data</label>
+						</div>
+						<div class="input-field col s3">
+							<input id="icon_prefix" type="text" class="validate"
+								th:field="*{horaInicio}" disabled="disabled"> <label
+								for="icon_prefix">Inicio</label>
+						</div>
+						<div class="input-field col s3">
+							<input id="icon_prefix" type="text" class="validate"
+								th:field="*{horaTermino}" disabled="disabled"> <label
+								for="icon_prefix">Término</label>
+						</div>
+						<div class="input-field col s3">
+							<input id="icon_prefix" type="text" class="validate"
+								th:field="*{capacidade}" disabled="disabled"> <label
+								for="icon_prefix">Capacidade disp.</label>
+						</div>
 					</div>
-
-
-				</div>
+				</form>
 			</div>
 		</div>
+
+		<!-- Venda de ingresso -->
+		<div class="container formConvidado">
+		<form th:action="@{/evento/vender-ingresso-cliente}" th:object="${eventoEntity}" method="GET">
+			Nome: <input type="text" placeholder="Nome Completo" /> CPF: <input
+				type="text" name="rg" placeholder="000.000.000-00" />
+				<input type="hidden" id="id" th:field="*{id}" />
+			<button class="waves-effect waves-light btn" type="submit">Vender</button>
+		</form>
+	</div>
 
 	</div>
 
@@ -145,6 +123,9 @@
 	<script type="text/javascript" th:src="@{/js/jquery-3.4.1.js}"></script>
 	<!--JavaScript at end of body for optimized loading-->
 	<script type="text/javascript" th:src="@{/js/materialize.js}"></script>
+	<!--Moment JS-->
+	<script type="text/javascript" th:src="@{/js/moment.js}"></script>
+
 
 	<script>
 		$(document).ready(function() {

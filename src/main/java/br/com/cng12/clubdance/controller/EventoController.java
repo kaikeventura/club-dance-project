@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import br.com.cng12.clubdance.entity.ClienteEntity;
 import br.com.cng12.clubdance.entity.EventoEntity;
+import br.com.cng12.clubdance.service.impl.ClienteServiceImpl;
 import br.com.cng12.clubdance.service.impl.EventoServiceImpl;
 
 @Controller
@@ -18,7 +20,11 @@ public class EventoController {
 
 	// Injeção de dependência
 	@Autowired
-	private EventoServiceImpl service;
+	private EventoServiceImpl eventoService;
+
+	// Injeção de dependência
+	@Autowired
+	private ClienteServiceImpl clienteService;
 
 	// Chama a página para renderizar
 	@GetMapping("/evento/cadastrar-evento")
@@ -29,39 +35,53 @@ public class EventoController {
 	@PostMapping("/evento/cadastrar-evento")
 	public String salvarEvento(@Valid EventoEntity eventoEntity) {
 
-		service.salvar(eventoEntity);
-		
+		eventoService.salvar(eventoEntity);
+
 		return "redirect:/evento/cadastrar-evento";
 	}
 
 	@GetMapping("/evento/eventos")
 	public String listarEventos(ModelMap model) {
 
-		model.addAttribute("eventos", service.listar());
+		model.addAttribute("eventos", eventoService.listar());
 
 		return "evento/eventos";
 	}
-	
+
 	@GetMapping("/evento/editar-evento/{id}")
 	public String preEditarEvento(@PathVariable("id") Long id, ModelMap model) {
-		model.addAttribute("eventoEntity", service.buscarPorId(id));
+		model.addAttribute("eventoEntity", eventoService.buscarPorId(id));
 		return "evento/cadastrar-evento";
 	}
-	
+
 	@PostMapping("/evento/editar-evento")
 	public String editarEvento(@Valid EventoEntity eventoEntity, BindingResult bindingResult) {
 
-		service.editar(eventoEntity);
+		eventoService.editar(eventoEntity);
 
 		return "redirect:/evento/cadastrar-evento";
 	}
-	
+
 	@GetMapping("/evento/excluir-evento/{id}")
 	public String excluirEvento(@PathVariable("id") Long id) {
 
-		service.excluir(id);
+		eventoService.excluir(id);
 
 		return "redirect:/evento/eventos";
 	}
 
+	@GetMapping("/evento/vender-ingresso/{id}")
+	public String preVendaIngresso(@PathVariable("id") Long id, ModelMap model) {
+		model.addAttribute("eventoEntity", eventoService.buscarPorId(id));
+		return "evento/venda/venda-ingresso";
+	}
+
+	@GetMapping(value = "/evento/vender-ingresso-cliente/{id}")
+	public String venderIngressoCliente(@PathVariable("id") Long id, @Valid ClienteEntity clienteEntity) {
+
+		EventoEntity eventoEntity = eventoService.buscarPorId(id);
+		clienteEntity.setEventoEntity(eventoEntity);
+		clienteService.salvar(clienteEntity);
+		return "evento/venda/venda-ingresso";
+	}
 }

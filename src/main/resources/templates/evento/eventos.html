@@ -60,13 +60,8 @@
 		<li>
 			<div class="divider"></div>
 		</li>
-		<li><a><i class="material-icons">people</i>Fornecedor</a></li>
-		<li><a href="#"><i class="material-icons">chevron_right</i>Consulta</a></li>
-		<li>
-			<div class="divider"></div>
-		</li>
 		<li><a><i class="material-icons">content_paste</i>Administração</a></li>
-		<li><a href="#"><i class="material-icons">chevron_right</i>Acessar</a></li>
+		<li><a href="#"><i class="material-icons">chevron_right</i>Relatórios</a></li>
 		<li>
 			<div class="divider"></div>
 		</li>
@@ -100,8 +95,8 @@
 								<th>Nome</th>
 								<th>Local</th>
 								<th>Data</th>
-								<th>HR Inicio</th>
-								<th>HR Término</th>
+								<th>Inicio</th>
+								<th>Término</th>
 								<th>Capacidade</th>
 								<th>Vender</th>
 								<th>Editar</th>
@@ -113,11 +108,11 @@
 							<tr>
 								<td th:text="${e.nome}"></td>
 								<td th:text="${e.local}"></td>
-								<td th:text="${e.data}"></td>
+								<td th:text="${#temporals.format(e.data, 'dd/MM/yyyy')}"></td>
 								<td th:text="${e.horaInicio}"></td>
 								<td th:text="${e.horaTermino}"></td>
 								<td th:text="${e.capacidade}"></td>
-								<td><a href="#"
+								<td><a th:href="@{/evento/vender-ingresso/{id} (id=${e.id})}"
 									class="btn-floating btn-small waves-effect waves-light green pulse"><i
 										class="material-icons">loyalty</i></a></td>
 								<td><a th:href="@{/evento/editar-evento/{id} (id=${e.id})}"
