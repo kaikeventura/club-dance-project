@@ -22,12 +22,6 @@ public class ClienteServiceImpl implements ClienteService {
 	}
 
 	@Override
-	public List<ClienteEntity> listar() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public void editar(ClienteEntity clienteEntity) {
 		// TODO Auto-generated method stub
 		
@@ -49,6 +43,12 @@ public class ClienteServiceImpl implements ClienteService {
 	public List<ClienteEntity> buscarPorNome(String nome) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public List<ClienteEntity> listaClientesDoEvento(Long idEvento) {
+		// TODO Auto-generated method stub
+		return dao.listarClientesEvento(idEvento);
 	}
 
 }

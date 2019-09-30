@@ -1,44 +1,48 @@
-
+/* ----------------Tudo---------------- */
 header, footer {
 	padding-left: 300px;
 }
 
-.text-menu-header{
-    font-size: 30pt;
+.text-menu-header {
+	font-size: 30pt;
 }
 
-.menu-lateral{
-    padding-top: 2.5%;    
+.menu-lateral {
+	padding-top: 2.5%;
 }
 
-#logo{
-    margin-top: 30px;
-    padding-left: 300px;
-    margin-left: 290px;
-}
-
-body{
-    background: black;
-}
-
-.body-principal{
+.body-principal {
 	padding-left: 10px;
-    margin-left: 290px;
+	margin-left: 290px;
 }
 
-/*  */
-.style-table{
+.style-table {
 	border: 1px solid white;
 	box-shadow: 2px 2px 2px 0.5px white;
 }
+/* ------------------------------------ */
+
+
+/* ----------------Página inicial---------------- */
+#logo {
+	margin-top: 30px;
+	padding-left: 300px;
+	margin-left: 290px;
+}
+
+body {
+	background: black;
+}
+/* ---------------------------------------------- */
+
 
 /* ----------------Estilos dos botões---------------- */
-#btn-cad-evento{
+#btn-cad-evento {
 	margin-top: 2.3%;
 	margin-right: 1%;
 }
 
-#btn-svr-evento{
+#btn-svr-evento {
 	margin-top: 2.3%;
 	margin-right: 2.4%;
 }
@@ -46,11 +50,32 @@ body{
 
 
 /* ----------------Detalhes venda evento---------------- */
-.info-evento-venda{
+.info-evento-venda {
 	background: white;
-	width: 50%;
+	width: 49% !important;
 	margin-top: 1%;
 	margin-left: 1%;
+	margin-left: 1% !important;	
 }
 
+.form-evento-venda {
+	background: white;
+	width: 49%;
+	margin-top: 1%;
+	margin-left: 1%;
+	padding-left: 1%;
+}
+
+.lista-clientes {
+	background: white;
+	width: 48% !important;
+	margin-top: 1%;
+	margin-left: 1%;
+	margin-left: 1% !important;	
+}
+
+#btn-vender-ingresso {
+	float: right;
+	margin-bottom: 2%;
+}
 /* ----------------------------------------------------- */

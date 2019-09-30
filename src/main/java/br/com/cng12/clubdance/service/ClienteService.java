@@ -8,7 +8,7 @@ public interface ClienteService {
 
 	void salvar(ClienteEntity clienteEntity);
 
-	List<ClienteEntity> listar();
+	List<ClienteEntity> listaClientesDoEvento(Long idEvento);
 
 	void editar(ClienteEntity clienteEntity);
 

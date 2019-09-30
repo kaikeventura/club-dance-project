@@ -76,6 +76,7 @@ public class EventoController {
 	public String preVendaIngresso(@PathVariable("id") Long id, ModelMap model, ClienteEntity clienteEntity) {
 		this.idEvento = id;
 		model.addAttribute("eventoEntity", eventoService.buscarPorId(id));
+		model.addAttribute("clientes", clienteService.listaClientesDoEvento(this.idEvento));
 		return "evento/venda/venda-ingresso";
 	}
 
@@ -85,8 +86,7 @@ public class EventoController {
 		EventoEntity eventoEntity = eventoService.buscarPorId(idEvento);
 		clienteEntity.setEventoEntity(eventoEntity);
 		clienteService.salvar(clienteEntity);
-		return "redirect:/";
+		return "redirect:/evento/eventos";
 	}
-	
 	
 }

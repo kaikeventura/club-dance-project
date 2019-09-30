@@ -68,8 +68,8 @@
 	</ul>
 
 	<div class="body-principal">
-		<div class="info-evento-venda">
-			<div class="row">
+		<div class="row">
+			<div class="info-evento-venda col s6">
 				<form th:object="${eventoEntity}">
 					<div class="row">
 						<div class="input-field col s6">
@@ -105,51 +105,50 @@
 					</div>
 				</form>
 			</div>
+
+			<div class="lista-clientes col s6">
+				<div class="row">
+					<form class="col s12"
+						th:action="@{/evento/vender-ingresso-cliente}"
+						th:object="${clienteEntity}" method="POST">
+						<div class="row">
+							<div class="input-field col s6">
+								<input type="text" class="validate" th:field="*{nome}">
+								<label>Nome completo</label>
+							</div>
+							<div class="input-field col s6">
+								<input type="text" class="validate" th:field="*{cpf}"> <label>CPF</label>
+							</div>
+						</div>
+						<button id="btn-vender-ingresso" type="submit"
+							class="waves-effect waves-light btn pink darken-1">
+							<i class="material-icons right">border_color</i>Vender
+						</button>
+					</form>
+				</div>
+
+			</div>
 		</div>
 
 		<!-- Venda de ingresso -->
+		<div class="form-evento-venda">
+			<table class="highlight">
+				<thead>
+					<tr>
+						<th>Nome</th>
+						<th>CPF</th>
+						<th>Editar</th>
+					</tr>
+				</thead>
 
-		<div class="info-evento-venda">
-			<!-- <div class="row">
-				<form th:action="@{/evento/vender-ingresso-cliente}"
-					th:object="${clienteEntity}" method="POST">
-					<div class="input-field col s6">
-						<input id="icon_prefix" type="text" class="validate"
-							th:field="*{nome}"> <label
-							for="icon_prefix">Nome</label>
-					</div>
-					<div class="input-field col s6">
-						<input id="icon_prefix" type="text" class="validate"
-							th:field="*{cpf}"> <label
-							for="icon_prefix">CPF</label>
-					</div>
-					<button class="waves-effect waves-light btn" type="submit">Vender</button>
-				</form>
-			</div> -->
-
-
-			<div class="row">
-				<form class="col s12" th:action="@{/evento/vender-ingresso-cliente}"
-					th:object="${clienteEntity}" method="POST">
-					<div class="row">
-						<div class="input-field col s6">
-							<input type="text" class="validate"> <label
-								for="first_name" th:field="*{nome}">First Name</label>
-						</div>
-						<div class="input-field col s6">
-							<input id="last_name" type="text" class="validate"
-								th:field="*{cpf}"> <label for="last_name">Last
-								Name</label>
-						</div>
-
-					</div>
-					<button class="waves-effect waves-light btn" type="submit">Vender</button>
-				</form>
-			</div>
-
-
-
-
+				<tbody th:each="c : ${clientes}">
+					<tr>
+						<td th:text="${c.nome}"></td>
+						<td th:text="${c.cpf}"></td>
+						<td><button type="button">Excluir</button></td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
 	</div>
 
