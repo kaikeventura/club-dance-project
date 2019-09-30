@@ -86,7 +86,7 @@ public class EventoController {
 		EventoEntity eventoEntity = eventoService.buscarPorId(idEvento);
 		clienteEntity.setEventoEntity(eventoEntity);
 		clienteService.salvar(clienteEntity);
-		return "redirect:/evento/eventos";
+		return "redirect:/evento/vender-ingresso/"+idEvento;
 	}
 	
 }
