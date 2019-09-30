@@ -42,7 +42,16 @@ public class EventoEntity {
 	@Column(nullable = true)
 	private int capacidade;
 
+	@Column(nullable = false)
+	private Double precoIngressoNormal;
+	
+	@Column(nullable = false)
+	private Double precoIngressoVip;
+	
+	@Column(nullable = false)
+	private Double precoIngressoCamarote;
+	
 	@Column(nullable = true)
 	private boolean status;
-
+	
 }

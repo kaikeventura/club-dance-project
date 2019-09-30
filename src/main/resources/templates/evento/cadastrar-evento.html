@@ -66,7 +66,7 @@
 			<div class="divider"></div>
 		</li>
 	</ul>
-	
+
 	<div class="body-principal">
 		<div class="row">
 			<div class="col s12 m12">
@@ -101,25 +101,40 @@
 								</div>
 							</div>
 							<div class="row">
-								<div class="input-field col s6">
+								<div class="input-field col s4">
 									<i class="material-icons prefix">access_time</i> <input
 										id="icon_prefix" type="time" class="validate"
 										th:field="*{horaInicio}"> <label for="icon_prefix">Hora
 										de Inicio</label>
 								</div>
-								<div class="input-field col s5">
+								<div class="input-field col s4">
 									<i class="material-icons prefix">access_time</i> <input
 										id="icon_prefix" type="time" class="validate"
 										th:field="*{horaTermino}"> <label for="icon_prefix">Hora
 										de Término</label>
 								</div>
-							</div>
-							<div class="row">
-								<div class="input-field col s6">
+								<div class="input-field col s3">
 									<i class="material-icons prefix">people</i> <input
 										id="icon_prefix" type="number" class="validate"
 										th:field="*{capacidade}"> <label for="icon_prefix">Capacidade
 										de Pessoas</label>
+								</div>
+							</div>
+							<div class="row">
+								<div class="input-field col s2">
+									<i class="material-icons prefix">attach_money</i> <input
+										id="icon_prefix" type="number" class="validate"
+										th:field="*{precoIngressoNormal}"> <label for="icon_prefix">Normal</label>
+								</div>
+								<div class="input-field col s2">
+									<i class="material-icons prefix">attach_money</i> <input
+										id="icon_prefix" type="number" class="validate"
+										th:field="*{precoIngressoVip}"> <label for="icon_prefix">Vip</label>
+								</div>
+								<div class="input-field col s2">
+									<i class="material-icons prefix">attach_money</i> <input
+										id="icon_prefix" type="number" class="validate"
+										th:field="*{precoIngressoCamarote}"> <label for="icon_prefix">Camarote</label>
 								</div>
 								<div class="input-field col s5">
 									<div class="row right-align">

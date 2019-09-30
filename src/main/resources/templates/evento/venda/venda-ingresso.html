@@ -102,6 +102,21 @@
 								th:field="*{capacidade}" disabled="disabled"> <label
 								for="icon_prefix">Capacidade disp.</label>
 						</div>
+						<div class="input-field col s4">
+							<input id="icon_prefix" type="text" class="validate"
+								th:field="*{precoIngressoNormal}" disabled="disabled"> <label
+								for="icon_prefix">R$ Normal</label>
+						</div>
+						<div class="input-field col s4">
+							<input id="icon_prefix" type="text" class="validate"
+								th:field="*{precoIngressoVip}" disabled="disabled"> <label
+								for="icon_prefix">R$ Vip</label>
+						</div>
+						<div class="input-field col s4">
+							<input id="icon_prefix" type="text" class="validate"
+								th:field="*{precoIngressoCamarote}" disabled="disabled">
+							<label for="icon_prefix">R$ Camarote</label>
+						</div>
 					</div>
 				</form>
 			</div>
@@ -118,6 +133,14 @@
 							</div>
 							<div class="input-field col s6">
 								<input type="text" class="validate" th:field="*{cpf}"> <label>CPF</label>
+							</div>
+							<div class="input-field col s6 m6">
+								<select class="icons">
+									<option disabled selected>Selecionar ingresso</option>
+									<option th:data-icon="@{/img/normal.png}">Normal</option>
+									<option th:data-icon="@{/img/vip.jpg}">Vip</option>
+									<option th:data-icon="@{/img/camarote.jpg}">Camarote</option>
+								</select> <label>Ingresso</label>
 							</div>
 						</div>
 						<button id="btn-vender-ingresso" type="submit"
@@ -169,6 +192,9 @@
 			$('#sidenav-2').sidenav({
 				edge : 'right'
 			});
+		});
+		$(document).ready(function() {
+			$('select').formSelect();
 		});
 	</script>
 </body>
