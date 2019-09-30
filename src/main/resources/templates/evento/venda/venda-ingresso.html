@@ -108,15 +108,49 @@
 		</div>
 
 		<!-- Venda de ingresso -->
-		<div class="container formConvidado">
-		<form th:action="@{/evento/vender-ingresso-cliente}" th:object="${eventoEntity}" method="GET">
-			Nome: <input type="text" placeholder="Nome Completo" /> CPF: <input
-				type="text" name="rg" placeholder="000.000.000-00" />
-				<input type="hidden" id="id" th:field="*{id}" />
-			<button class="waves-effect waves-light btn" type="submit">Vender</button>
-		</form>
-	</div>
 
+		<div class="info-evento-venda">
+			<!-- <div class="row">
+				<form th:action="@{/evento/vender-ingresso-cliente}"
+					th:object="${clienteEntity}" method="POST">
+					<div class="input-field col s6">
+						<input id="icon_prefix" type="text" class="validate"
+							th:field="*{nome}"> <label
+							for="icon_prefix">Nome</label>
+					</div>
+					<div class="input-field col s6">
+						<input id="icon_prefix" type="text" class="validate"
+							th:field="*{cpf}"> <label
+							for="icon_prefix">CPF</label>
+					</div>
+					<button class="waves-effect waves-light btn" type="submit">Vender</button>
+				</form>
+			</div> -->
+
+
+			<div class="row">
+				<form class="col s12" th:action="@{/evento/vender-ingresso-cliente}"
+					th:object="${clienteEntity}" method="POST">
+					<div class="row">
+						<div class="input-field col s6">
+							<input type="text" class="validate"> <label
+								for="first_name" th:field="*{nome}">First Name</label>
+						</div>
+						<div class="input-field col s6">
+							<input id="last_name" type="text" class="validate"
+								th:field="*{cpf}"> <label for="last_name">Last
+								Name</label>
+						</div>
+
+					</div>
+					<button class="waves-effect waves-light btn" type="submit">Vender</button>
+				</form>
+			</div>
+
+
+
+
+		</div>
 	</div>
 
 	<!--JQuery-->

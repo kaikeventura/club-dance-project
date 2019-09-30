@@ -25,6 +25,8 @@ public class EventoController {
 	// Injeção de dependência
 	@Autowired
 	private ClienteServiceImpl clienteService;
+	
+	protected Long idEvento = 0L;
 
 	// Chama a página para renderizar
 	@GetMapping("/evento/cadastrar-evento")
@@ -71,17 +73,20 @@ public class EventoController {
 	}
 
 	@GetMapping("/evento/vender-ingresso/{id}")
-	public String preVendaIngresso(@PathVariable("id") Long id, ModelMap model) {
+	public String preVendaIngresso(@PathVariable("id") Long id, ModelMap model, ClienteEntity clienteEntity) {
+		this.idEvento = id;
 		model.addAttribute("eventoEntity", eventoService.buscarPorId(id));
 		return "evento/venda/venda-ingresso";
 	}
 
-	@GetMapping(value = "/evento/vender-ingresso-cliente/{id}")
-	public String venderIngressoCliente(@PathVariable("id") Long id, @Valid ClienteEntity clienteEntity) {
-
-		EventoEntity eventoEntity = eventoService.buscarPorId(id);
+	@PostMapping("/evento/vender-ingresso-cliente")
+	public String venderIngressoCliente(@Valid ClienteEntity clienteEntity) {
+		
+		EventoEntity eventoEntity = eventoService.buscarPorId(idEvento);
 		clienteEntity.setEventoEntity(eventoEntity);
 		clienteService.salvar(clienteEntity);
-		return "evento/venda/venda-ingresso";
+		return "redirect:/";
 	}
+	
+	
 }
