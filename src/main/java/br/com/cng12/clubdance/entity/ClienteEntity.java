@@ -27,4 +27,8 @@ public class ClienteEntity {
 	
 	@ManyToOne
 	private EventoEntity eventoEntity;
+	
+	@Column(nullable = true)
+	private String tipoIngresso; 
+	
 }

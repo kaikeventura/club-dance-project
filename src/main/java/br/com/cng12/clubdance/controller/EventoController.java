@@ -91,7 +91,20 @@ public class EventoController {
 		EventoEntity eventoEntity = eventoService.buscarPorId(idEvento);
 		clienteEntity.setEventoEntity(eventoEntity);
 		clienteService.salvar(clienteEntity);
-		clienteController.criarComanda(clienteEntity, eventoEntity, 0.0D);				
+		
+		Double valorIngresso = 0.0D;
+		
+		if(clienteEntity.getTipoIngresso().equals("NORMAL")) {
+			valorIngresso = eventoEntity.getPrecoIngressoNormal();
+		} 
+		else if(clienteEntity.getTipoIngresso().equals("VIP")) {
+			valorIngresso = eventoEntity.getPrecoIngressoVip();
+		}
+		else if(clienteEntity.getTipoIngresso().equals("CAMAROTE")) {
+			valorIngresso = eventoEntity.getPrecoIngressoCamarote();
+		}
+		
+		clienteController.criarComanda(clienteEntity, eventoEntity, valorIngresso);
 		
 		return "redirect:/evento/vender-ingresso/" + idEvento;
 	}

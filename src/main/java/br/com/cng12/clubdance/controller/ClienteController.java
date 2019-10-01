@@ -23,6 +23,7 @@ public class ClienteController {
 		ComandaEntity comandaEntity = new ComandaEntity();
 
 		comandaService.salvar(comandaEntity, clienteEntity, eventoEntity, precoIngresso);
+		
 	}
 
 }

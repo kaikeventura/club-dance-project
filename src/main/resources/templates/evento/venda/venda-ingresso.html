@@ -135,11 +135,14 @@
 								<input type="text" class="validate" th:field="*{cpf}"> <label>CPF</label>
 							</div>
 							<div class="input-field col s6 m6">
-								<select class="icons">
-									<option disabled selected>Selecionar ingresso</option>
-									<option th:data-icon="@{/img/normal.png}">Normal</option>
-									<option th:data-icon="@{/img/vip.jpg}">Vip</option>
-									<option th:data-icon="@{/img/camarote.jpg}">Camarote</option>
+								<select class="icons" th:field="*{tipoIngresso}">
+									<!-- <option disabled selected>Selecionar ingresso</option> -->
+									<option th:value="NORMAL" th:text="NORMAL"
+										th:data-icon="@{/img/normal.png}">Normal</option>
+									<option th:value="VIP" th:text="VIP"
+										th:data-icon="@{/img/vip.jpg}">Vip</option>
+									<option th:value="CAMAROTE" th:text="CAMAROTE"
+										th:data-icon="@{/img/camarote.jpg}">Camarote</option>
 								</select> <label>Ingresso</label>
 							</div>
 						</div>
@@ -160,6 +163,7 @@
 					<tr>
 						<th>Nome</th>
 						<th>CPF</th>
+						<th>Tipo de Ingresso</th>
 						<th>Editar</th>
 					</tr>
 				</thead>
@@ -168,7 +172,10 @@
 					<tr>
 						<td th:text="${c.nome}"></td>
 						<td th:text="${c.cpf}"></td>
-						<td><button type="button">Excluir</button></td>
+						<td th:text="${c.tipoIngresso}"></td>
+						<td><a
+							class="btn-floating btn-small waves-effect waves-light blue pulse"><i
+								class="material-icons">edit</i></a></td>
 					</tr>
 				</tbody>
 			</table>
