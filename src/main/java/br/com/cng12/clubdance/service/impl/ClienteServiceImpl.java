@@ -23,8 +23,8 @@ public class ClienteServiceImpl implements ClienteService {
 
 	@Override
 	public void editar(ClienteEntity clienteEntity) {
-		// TODO Auto-generated method stub
-		
+
+		dao.saveAndFlush(clienteEntity);
 	}
 
 	@Override
@@ -35,8 +35,8 @@ public class ClienteServiceImpl implements ClienteService {
 
 	@Override
 	public ClienteEntity buscarPorId(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return dao.getOne(id);
 	}
 
 	@Override

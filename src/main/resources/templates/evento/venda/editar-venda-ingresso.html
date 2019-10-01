@@ -3,7 +3,7 @@
 	xmlns:th="http://www.thymeleaf.org">
 
 <head>
-<title>Venda de ingressos</title>
+<title>Editar venda de ingressos</title>
 <meta charset="utf-8">
 <link rel="icon" type="imagem/png" th:href="@{/img/minilogo.png}" />
 
@@ -69,62 +69,9 @@
 
 	<div class="body-principal">
 		<div class="row">
-			<div class="info-evento-venda col s6">
-				<form th:object="${eventoEntity}">
-					<div class="row">
-						<div class="input-field col s6">
-							<input id="icon_prefix" type="text" class="validate"
-								th:field="*{nome}" disabled="disabled"> <label
-								for="icon_prefix">Nome</label>
-						</div>
-						<div class="input-field col s6">
-							<input id="icon_prefix" type="text" class="validate"
-								th:field="*{local}" disabled="disabled"> <label
-								for="icon_prefix">Local</label>
-						</div>
-						<div class="input-field col s3">
-							<input id="icon_prefix" type="text" class="validate"
-								th:field="*{data}" disabled="disabled"> <label
-								for="icon_prefix">Data</label>
-						</div>
-						<div class="input-field col s3">
-							<input id="icon_prefix" type="text" class="validate"
-								th:field="*{horaInicio}" disabled="disabled"> <label
-								for="icon_prefix">Inicio</label>
-						</div>
-						<div class="input-field col s3">
-							<input id="icon_prefix" type="text" class="validate"
-								th:field="*{horaTermino}" disabled="disabled"> <label
-								for="icon_prefix">Término</label>
-						</div>
-						<div class="input-field col s3">
-							<input id="icon_prefix" type="text" class="validate"
-								th:field="*{capacidade}" disabled="disabled"> <label
-								for="icon_prefix">Capacidade disp.</label>
-						</div>
-						<div class="input-field col s4">
-							<input id="icon_prefix" type="text" class="validate"
-								th:field="*{precoIngressoNormal}" disabled="disabled"> <label
-								for="icon_prefix">R$ Normal</label>
-						</div>
-						<div class="input-field col s4">
-							<input id="icon_prefix" type="text" class="validate"
-								th:field="*{precoIngressoVip}" disabled="disabled"> <label
-								for="icon_prefix">R$ Vip</label>
-						</div>
-						<div class="input-field col s4">
-							<input id="icon_prefix" type="text" class="validate"
-								th:field="*{precoIngressoCamarote}" disabled="disabled">
-							<label for="icon_prefix">R$ Camarote</label>
-						</div>
-					</div>
-				</form>
-			</div>
-
 			<div class="lista-clientes col s6">
 				<div class="row">
-					<form class="col s12"
-						th:action="@{/evento/vender-ingresso-cliente}"
+					<form class="col s12" th:action="@{/evento/venda/editar-venda}"
 						th:object="${clienteEntity}" method="POST">
 						<div class="row">
 							<div class="input-field col s6">
@@ -136,7 +83,6 @@
 							</div>
 							<div class="input-field col s6 m6">
 								<select class="icons" th:field="*{tipoIngresso}">
-									<!-- <option disabled selected>Selecionar ingresso</option> -->
 									<option th:value="NORMAL" th:text="NORMAL"
 										th:data-icon="@{/img/normal.png}">Normal</option>
 									<option th:value="VIP" th:text="VIP"
@@ -148,38 +94,12 @@
 						</div>
 						<button id="btn-vender-ingresso" type="submit"
 							class="waves-effect waves-light btn pink darken-1">
-							<i class="material-icons right">border_color</i>Vender
+							<i class="material-icons right">border_color</i>Salvar
 						</button>
 					</form>
 				</div>
 
 			</div>
-		</div>
-
-		<!-- Venda de ingresso -->
-		<div class="form-evento-venda">
-			<table class="highlight">
-				<thead>
-					<tr>
-						<th>Nome</th>
-						<th>CPF</th>
-						<th>Tipo de Ingresso</th>
-						<th>Editar</th>
-					</tr>
-				</thead>
-
-				<tbody th:each="c : ${clientes}">
-					<tr>
-						<td th:text="${c.nome}"></td>
-						<td th:text="${c.cpf}"></td>
-						<td th:text="${c.tipoIngresso}"></td>
-						<td><a
-							th:href="@{/evento/venda/editar-venda/{id} (id=${c.id})}"
-							class="btn-floating btn-small waves-effect waves-light blue pulse"><i
-								class="material-icons">edit</i></a></td>
-					</tr>
-				</tbody>
-			</table>
 		</div>
 	</div>
 
