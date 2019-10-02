@@ -17,5 +17,7 @@ public interface ClienteService {
 	ClienteEntity buscarPorId(Long id);
 
 	List<ClienteEntity> buscarPorNome(String nome);
+	
+	List<ClienteEntity> buscarPorCpf(String cpf, Long idEvento);
 
 }

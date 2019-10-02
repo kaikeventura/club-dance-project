@@ -49,8 +49,8 @@ public class EventoServiceImpl implements EventoService {
 
 	@Override
 	public List<EventoEntity> buscarPorNome(String nome) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return dao.buscarEventoPorNome(nome);
 	}
 
 }

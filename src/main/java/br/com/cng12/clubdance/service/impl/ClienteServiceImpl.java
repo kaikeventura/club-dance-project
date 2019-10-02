@@ -47,8 +47,14 @@ public class ClienteServiceImpl implements ClienteService {
 
 	@Override
 	public List<ClienteEntity> listaClientesDoEvento(Long idEvento) {
-		// TODO Auto-generated method stub
+
 		return dao.listarClientesEvento(idEvento);
+	}
+
+	@Override
+	public List<ClienteEntity> buscarPorCpf(String cpf, Long idEvento) {
+		
+		return dao.buscarPorCpf(cpf, idEvento);
 	}
 
 }

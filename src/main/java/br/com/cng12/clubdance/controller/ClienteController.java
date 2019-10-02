@@ -8,13 +8,13 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import br.com.cng12.clubdance.entity.ClienteEntity;
 import br.com.cng12.clubdance.entity.ComandaEntity;
 import br.com.cng12.clubdance.entity.EventoEntity;
 import br.com.cng12.clubdance.service.impl.ClienteServiceImpl;
 import br.com.cng12.clubdance.service.impl.ComandaServiceImpl;
-import br.com.cng12.clubdance.service.impl.EventoServiceImpl;
 
 @Controller
 public class ClienteController {
@@ -26,7 +26,7 @@ public class ClienteController {
 	private ClienteServiceImpl clienteService;
 
 	@Autowired
-	private EventoServiceImpl eventoService;
+	private EventoController eventoController;
 
 	protected Long idCliente;
 
@@ -44,18 +44,24 @@ public class ClienteController {
 	public String preEditarEvento(@PathVariable("id") Long id, ModelMap model) {
 		model.addAttribute("clienteEntity", clienteService.buscarPorId(id));
 		this.idCliente = id;
+
 		return "evento/venda/editar-venda-ingresso";
 	}
 
 	@PostMapping("/evento/venda/editar-venda")
 	public String editarEvento(@Valid ClienteEntity clienteEntity) {
-
-		// EventoEntity eventoEntity = eventoService.buscarPorId(clienteEntity.getId());
 		clienteService.editar(clienteEntity.getCpf(), clienteEntity.getNome(), clienteEntity.getTipoIngresso(),
 				clienteEntity.getId());
-		// return "redirect:/evento/vender-ingresso/" + eventoEntity.getId();
 
 		return "redirect:/evento/eventos";
+	}
+
+	// Erro ao chamar a página
+	@GetMapping("/evento/venda/buscar/cpf")
+	public String buscarClientePorCpf(@RequestParam("cpf") String cpf, ModelMap model) {
+		model.addAttribute("clientes", clienteService.buscarPorCpf(cpf, eventoController.getIdEvento()));
+
+		return "evento/venda/venda-ingresso";
 	}
 
 }

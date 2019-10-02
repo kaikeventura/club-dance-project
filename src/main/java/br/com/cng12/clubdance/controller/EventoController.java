@@ -8,11 +8,13 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import br.com.cng12.clubdance.entity.ClienteEntity;
 import br.com.cng12.clubdance.entity.EventoEntity;
 import br.com.cng12.clubdance.service.impl.ClienteServiceImpl;
 import br.com.cng12.clubdance.service.impl.EventoServiceImpl;
+import lombok.Getter;
 
 @Controller
 public class EventoController {
@@ -29,7 +31,8 @@ public class EventoController {
 	@Autowired
 	private	ClienteController clienteController;
 	
-	protected Long idEvento = 0L;
+	@Getter
+	private Long idEvento = 0L;
 
 	// Chama a página para renderizar
 	@GetMapping("/evento/cadastrar-evento")
@@ -106,6 +109,12 @@ public class EventoController {
 		clienteController.criarComanda(clienteEntity, eventoEntity, valorIngresso);
 		
 		return "redirect:/evento/vender-ingresso/" + idEvento;
+	}
+	
+	@GetMapping("/evento/buscar/nome")
+	public String buscarEventoPorNome(@RequestParam("nome") String nome, ModelMap model) {	
+		model.addAttribute("eventos", eventoService.buscarPorNome(nome));
+		return "evento/eventos";
 	}
 
 }

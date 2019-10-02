@@ -158,6 +158,16 @@
 
 		<!-- Venda de ingresso -->
 		<div class="form-evento-venda">
+			<!-- Buscar -->
+			<div class="row">
+				<form method="GET" th:action="@{/evento/venda/buscar/cpf}">
+					<div class="input-field col s6">
+						<i class="material-icons prefix">search</i> <input
+							placeholder="CPF" id="icon_prefix" type="text" class="validate" th:name="cpf">
+						<label for="icon_prefix">Buscar cliente</label>
+					</div>
+				</form>
+			</div>
 			<table class="highlight">
 				<thead>
 					<tr>

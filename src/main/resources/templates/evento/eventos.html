@@ -82,12 +82,15 @@
 					<div class="divider"></div>
 
 					<!-- Tabela -->
+					<!-- Buscar -->
 					<div class="row">
-						<div class="input-field col s3">
-							<i class="material-icons prefix">search</i> <input
-								id="icon_prefix" type="text" class="validate"> <label
-								for="icon_prefix">Buscar Evento</label>
-						</div>
+						<form method="GET" th:action="@{/evento/buscar/nome}">
+							<div class="input-field col s3">
+								<i class="material-icons prefix">search</i> <input
+									id="icon_prefix" type="text" class="validate" th:name="nome"> <label
+									for="icon_prefix">Buscar Evento</label>
+							</div>
+						</form>
 					</div>
 					<table class="highlight">
 						<thead>
@@ -112,7 +115,8 @@
 								<td th:text="${e.horaInicio}"></td>
 								<td th:text="${e.horaTermino}"></td>
 								<td th:text="${e.capacidade}"></td>
-								<td><a th:href="@{/evento/vender-ingresso/{id} (id=${e.id})}"
+								<td><a
+									th:href="@{/evento/vender-ingresso/{id} (id=${e.id})}"
 									class="btn-floating btn-small waves-effect waves-light green pulse"><i
 										class="material-icons">loyalty</i></a></td>
 								<td><a th:href="@{/evento/editar-evento/{id} (id=${e.id})}"
