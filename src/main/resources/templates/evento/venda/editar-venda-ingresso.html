@@ -71,7 +71,8 @@
 		<div class="row">
 			<div class="lista-clientes col s6">
 				<div class="row">
-					<form class="col s12" th:action="@{/evento/venda/editar-venda}"
+					<form class="col s12"
+						th:action="${clienteEntity.id == null} ? @{/} : @{/evento/venda/editar-venda}"
 						th:object="${clienteEntity}" method="POST">
 						<div class="row">
 							<div class="input-field col s6">
@@ -92,13 +93,15 @@
 								</select> <label>Ingresso</label>
 							</div>
 						</div>
-						<button id="btn-vender-ingresso" type="submit"
-							class="waves-effect waves-light btn pink darken-1">
-							<i class="material-icons right">border_color</i>Salvar
-						</button>
+						<div>
+							<input type="hidden" id="id" th:field="*{id}" />
+							<button id="btn-vender-ingresso" type="submit"
+								class="waves-effect waves-light btn pink darken-1">
+								<i class="material-icons right">border_color</i>Salvar
+							</button>
+						</div>
 					</form>
 				</div>
-
 			</div>
 		</div>
 	</div>

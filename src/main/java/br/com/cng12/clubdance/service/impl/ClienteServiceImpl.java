@@ -22,9 +22,9 @@ public class ClienteServiceImpl implements ClienteService {
 	}
 
 	@Override
-	public void editar(ClienteEntity clienteEntity) {
+	public void editar(String cpf, String nome, String tipoIngresso, Long id) {
 
-		dao.saveAndFlush(clienteEntity);
+		dao.editarCliente(cpf, nome, tipoIngresso, id);
 	}
 
 	@Override

@@ -21,13 +21,13 @@ public class ClienteController {
 
 	@Autowired
 	private ComandaServiceImpl comandaService;
-	
+
 	@Autowired
 	private ClienteServiceImpl clienteService;
-	
+
 	@Autowired
 	private EventoServiceImpl eventoService;
-	
+
 	protected Long idCliente;
 
 	/*
@@ -37,9 +37,9 @@ public class ClienteController {
 	public void criarComanda(ClienteEntity clienteEntity, EventoEntity eventoEntity, Double precoIngresso) {
 
 		ComandaEntity comandaEntity = new ComandaEntity();
-		comandaService.salvar(comandaEntity, clienteEntity, eventoEntity, precoIngresso);		
+		comandaService.salvar(comandaEntity, clienteEntity, eventoEntity, precoIngresso);
 	}
-	
+
 	@GetMapping("/evento/venda/editar-venda/{id}")
 	public String preEditarEvento(@PathVariable("id") Long id, ModelMap model) {
 		model.addAttribute("clienteEntity", clienteService.buscarPorId(id));
@@ -47,17 +47,15 @@ public class ClienteController {
 		return "evento/venda/editar-venda-ingresso";
 	}
 
-	// Erro aqui, esta tentando criar um novo objeto
 	@PostMapping("/evento/venda/editar-venda")
 	public String editarEvento(@Valid ClienteEntity clienteEntity) {
-		ClienteEntity auxCliente = clienteService.buscarPorId(idCliente);
-		EventoEntity auxEvento = eventoService.buscarPorId(auxCliente.getId());
-		
-		clienteEntity.setId(auxCliente.getId());
-		clienteEntity.setEventoEntity(auxEvento);
-		clienteService.editar(clienteEntity);
 
-		return "redirect:/evento/vender-ingresso/"+clienteEntity.getEventoEntity();
+		// EventoEntity eventoEntity = eventoService.buscarPorId(clienteEntity.getId());
+		clienteService.editar(clienteEntity.getCpf(), clienteEntity.getNome(), clienteEntity.getTipoIngresso(),
+				clienteEntity.getId());
+		// return "redirect:/evento/vender-ingresso/" + eventoEntity.getId();
+
+		return "redirect:/evento/eventos";
 	}
 
 }

@@ -10,7 +10,7 @@ public interface ClienteService {
 
 	List<ClienteEntity> listaClientesDoEvento(Long idEvento);
 
-	void editar(ClienteEntity clienteEntity);
+	void editar(String cpf, String nome, String tipoIngresso, Long id);
 
 	void excluir(Long id);
 
