@@ -53,4 +53,10 @@ public class EventoServiceImpl implements EventoService {
 		return dao.buscarEventoPorNome(nome);
 	}
 
+	@Override
+	public void editarCapacidadeDoEvento(int capacidade, Long id) {
+		
+		dao.editarCapacidade(capacidade, id);		
+	}
+
 }

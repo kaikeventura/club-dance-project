@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import br.com.cng12.clubdance.entity.ClienteEntity;
 import br.com.cng12.clubdance.entity.EventoEntity;
+import br.com.cng12.clubdance.exceptions.IngressoException;
 import br.com.cng12.clubdance.service.impl.ClienteServiceImpl;
 import br.com.cng12.clubdance.service.impl.EventoServiceImpl;
+import br.com.cng12.clubdance.utils.ControleDeCapacidadeEvento;
 import lombok.Getter;
 
 @Controller
@@ -29,8 +31,12 @@ public class EventoController {
 
 	// Injeção de dependência
 	@Autowired
-	private	ClienteController clienteController;
-	
+	private ClienteController clienteController;
+
+	// Injeção de dependência
+	@Autowired
+	private ControleDeCapacidadeEvento controleDeCapacidadeEvento;
+
 	@Getter
 	private Long idEvento = 0L;
 
@@ -88,31 +94,52 @@ public class EventoController {
 	}
 
 	@PostMapping("/evento/vender-ingresso-cliente")
-	public String venderIngressoCliente(@Valid ClienteEntity clienteEntity) {
+	public String venderIngressoCliente(@Valid ClienteEntity clienteEntity) throws IngressoException {
 
 		EventoEntity eventoEntity = eventoService.buscarPorId(idEvento);
 		clienteEntity.setEventoEntity(eventoEntity);
-		clienteService.salvar(clienteEntity);
-		
 		Double valorIngresso = 0.0D;
-		
-		if(clienteEntity.getTipoIngresso().equals("NORMAL")) {
-			valorIngresso = eventoEntity.getPrecoIngressoNormal();
+
+		if (controleDeCapacidadeEvento.verificaSeAQuantidadeDoEventoZerou(eventoEntity) == false) {
+
+			if (clienteEntity.getTipoIngresso().equals("NORMAL")) {
+				valorIngresso = eventoEntity.getPrecoIngressoNormal();
+				controleDeCapacidadeEvento.vendaIngressoNormalEVip(eventoEntity);
+				clienteService.salvar(clienteEntity);
+				clienteController.criarComanda(clienteEntity, eventoEntity, valorIngresso);
+			} 
+			else if (clienteEntity.getTipoIngresso().equals("VIP")) {
+				valorIngresso = eventoEntity.getPrecoIngressoVip();
+				controleDeCapacidadeEvento.vendaIngressoNormalEVip(eventoEntity);
+				clienteService.salvar(clienteEntity);
+				clienteController.criarComanda(clienteEntity, eventoEntity, valorIngresso);
+			}
+			else if (clienteEntity.getTipoIngresso().equals("CAMAROTE")) {
+				valorIngresso = eventoEntity.getPrecoIngressoCamarote();
+				controleDeCapacidadeEvento.vendaIngressoCamarote(eventoEntity);
+				clienteService.salvar(clienteEntity);
+				clienteController.criarComanda(clienteEntity, eventoEntity, valorIngresso);
+			}
 		} 
-		else if(clienteEntity.getTipoIngresso().equals("VIP")) {
-			valorIngresso = eventoEntity.getPrecoIngressoVip();
+//		else if (controleDeCapacidadeEvento.verificaSeAQuantidadeDoEventoZerou(eventoEntity) == true
+//				&& clienteEntity.getTipoIngresso().equals("CAMAROTE")) {
+//			if(controleDeCapacidadeEvento.verificaSeACapacidadeDoCamaroteExcedeu(eventoEntity) == false) {
+//				valorIngresso = eventoEntity.getPrecoIngressoCamarote();
+//				controleDeCapacidadeEvento.vendaIngressoCamarote(eventoEntity);
+//				clienteService.salvar(clienteEntity);
+//				clienteController.criarComanda(clienteEntity, eventoEntity, valorIngresso);
+//			} 
+//			
+//		}
+		else {
+			throw new IngressoException("O estoque de ingressos acabaram!");
 		}
-		else if(clienteEntity.getTipoIngresso().equals("CAMAROTE")) {
-			valorIngresso = eventoEntity.getPrecoIngressoCamarote();
-		}
-		
-		clienteController.criarComanda(clienteEntity, eventoEntity, valorIngresso);
-		
+
 		return "redirect:/evento/vender-ingresso/" + idEvento;
 	}
-	
+
 	@GetMapping("/evento/buscar/nome")
-	public String buscarEventoPorNome(@RequestParam("nome") String nome, ModelMap model) {	
+	public String buscarEventoPorNome(@RequestParam("nome") String nome, ModelMap model) {
 		model.addAttribute("eventos", eventoService.buscarPorNome(nome));
 		return "evento/eventos";
 	}

@@ -57,4 +57,10 @@ public class ClienteServiceImpl implements ClienteService {
 		return dao.buscarPorCpf(cpf, idEvento);
 	}
 
+	@Override
+	public List<ClienteEntity> buscarClientesEvento(Long idEvento, String tipoIngresso) {
+		
+		return dao.buscarClientesEvento(idEvento, tipoIngresso);
+	}
+
 }

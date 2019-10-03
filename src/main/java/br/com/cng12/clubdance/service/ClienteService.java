@@ -20,4 +20,5 @@ public interface ClienteService {
 	
 	List<ClienteEntity> buscarPorCpf(String cpf, Long idEvento);
 
+	List<ClienteEntity> buscarClientesEvento(Long idEvento, String tipoIngresso);
 }

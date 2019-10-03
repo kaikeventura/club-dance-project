@@ -17,5 +17,7 @@ public interface EventoService {
 	EventoEntity buscarPorId(Long id);
 
 	List<EventoEntity> buscarPorNome(String nome);
+	
+	void editarCapacidadeDoEvento(int capacidade, Long id);
 
 }
