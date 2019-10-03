@@ -1,0 +1,13 @@
+kaike916@gmail.com
+Jav@sopa
+app-casa-noturna-beta
+
+git init
+git add .
+git commit -am "Commit"
+heroku login
+heroku create app-casa-noturna-beta
+git push heroku master
+
+heroku logs --tail
+heroku open
