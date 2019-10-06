@@ -99,40 +99,24 @@ public class EventoController {
 		EventoEntity eventoEntity = eventoService.buscarPorId(idEvento);
 		clienteEntity.setEventoEntity(eventoEntity);
 		Double valorIngresso = 0.0D;
-
-		if (controleDeCapacidadeEvento.verificaSeAQuantidadeDoEventoZerou(eventoEntity) == false) {
-
-			if (clienteEntity.getTipoIngresso().equals("NORMAL")) {
-				valorIngresso = eventoEntity.getPrecoIngressoNormal();
-				controleDeCapacidadeEvento.vendaIngressoNormalEVip(eventoEntity);
-				clienteService.salvar(clienteEntity);
-				clienteController.criarComanda(clienteEntity, eventoEntity, valorIngresso);
-			} 
-			else if (clienteEntity.getTipoIngresso().equals("VIP")) {
-				valorIngresso = eventoEntity.getPrecoIngressoVip();
-				controleDeCapacidadeEvento.vendaIngressoNormalEVip(eventoEntity);
-				clienteService.salvar(clienteEntity);
-				clienteController.criarComanda(clienteEntity, eventoEntity, valorIngresso);
-			}
-			else if (clienteEntity.getTipoIngresso().equals("CAMAROTE")) {
-				valorIngresso = eventoEntity.getPrecoIngressoCamarote();
-				controleDeCapacidadeEvento.vendaIngressoCamarote(eventoEntity);
-				clienteService.salvar(clienteEntity);
-				clienteController.criarComanda(clienteEntity, eventoEntity, valorIngresso);
-			}
-		} 
-//		else if (controleDeCapacidadeEvento.verificaSeAQuantidadeDoEventoZerou(eventoEntity) == true
-//				&& clienteEntity.getTipoIngresso().equals("CAMAROTE")) {
-//			if(controleDeCapacidadeEvento.verificaSeACapacidadeDoCamaroteExcedeu(eventoEntity) == false) {
-//				valorIngresso = eventoEntity.getPrecoIngressoCamarote();
-//				controleDeCapacidadeEvento.vendaIngressoCamarote(eventoEntity);
-//				clienteService.salvar(clienteEntity);
-//				clienteController.criarComanda(clienteEntity, eventoEntity, valorIngresso);
-//			} 
-//			
-//		}
-		else {
-			throw new IngressoException("O estoque de ingressos acabaram!");
+		
+		if (clienteEntity.getTipoIngresso().equals("NORMAL")) {
+			valorIngresso = eventoEntity.getPrecoIngressoNormal();
+			controleDeCapacidadeEvento.vendaIngressoNormalEVip(eventoEntity);
+			clienteService.salvar(clienteEntity);
+			clienteController.criarComanda(clienteEntity, eventoEntity, valorIngresso);
+		}
+		if (clienteEntity.getTipoIngresso().equals("VIP")) {
+			valorIngresso = eventoEntity.getPrecoIngressoVip();
+			controleDeCapacidadeEvento.vendaIngressoNormalEVip(eventoEntity);
+			clienteService.salvar(clienteEntity);
+			clienteController.criarComanda(clienteEntity, eventoEntity, valorIngresso);
+		}
+		if (clienteEntity.getTipoIngresso().equals("CAMAROTE")) {
+			valorIngresso = eventoEntity.getPrecoIngressoCamarote();
+			controleDeCapacidadeEvento.vendaIngressoCamarote(eventoEntity);
+			clienteService.salvar(clienteEntity);
+			clienteController.criarComanda(clienteEntity, eventoEntity, valorIngresso);
 		}
 
 		return "redirect:/evento/vender-ingresso/" + idEvento;

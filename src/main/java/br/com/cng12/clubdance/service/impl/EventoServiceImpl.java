@@ -59,4 +59,10 @@ public class EventoServiceImpl implements EventoService {
 		dao.editarCapacidade(capacidade, id);		
 	}
 
+	@Override
+	public void editarCapacidadeDoEventoCamarote(int capacidadeCamarote, Long id) {
+		
+		dao.editarCapacidadeCamarote(capacidadeCamarote, id);
+	}
+
 }

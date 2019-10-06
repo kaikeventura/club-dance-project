@@ -100,7 +100,8 @@
 								<th>Data</th>
 								<th>Inicio</th>
 								<th>Término</th>
-								<th>Capacidade</th>
+								<th>Capacidade Normal/VIP</th>
+								<th>Capacidade Camarote</th>
 								<th>Vender</th>
 								<th>Editar</th>
 								<th>Excluir</th>
@@ -115,6 +116,7 @@
 								<td th:text="${e.horaInicio}"></td>
 								<td th:text="${e.horaTermino}"></td>
 								<td th:text="${e.capacidade}"></td>
+								<td th:text="${e.capacidadeCamarote}"></td>
 								<td><a
 									th:href="@{/evento/vender-ingresso/{id} (id=${e.id})}"
 									class="btn-floating btn-small waves-effect waves-light green pulse"><i

@@ -1,5 +1,7 @@
 package br.com.cng12.clubdance.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +26,12 @@ public class ComandaServiceImpl implements ComandaService {
 		comandaEntity.setPrecoIngresso(precoIngresso);		
 		
 		dao.save(comandaEntity);
+	}
+
+	@Override
+	public List<ComandaEntity> buscarComandaComCliente(Long idCliente) {
+		
+		return dao.buscarComandaComCliente(idCliente);
 	}
 
 }

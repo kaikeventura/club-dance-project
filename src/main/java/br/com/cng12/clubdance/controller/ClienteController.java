@@ -13,8 +13,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import br.com.cng12.clubdance.entity.ClienteEntity;
 import br.com.cng12.clubdance.entity.ComandaEntity;
 import br.com.cng12.clubdance.entity.EventoEntity;
+import br.com.cng12.clubdance.exceptions.IngressoException;
 import br.com.cng12.clubdance.service.impl.ClienteServiceImpl;
 import br.com.cng12.clubdance.service.impl.ComandaServiceImpl;
+import br.com.cng12.clubdance.service.impl.EventoServiceImpl;
+import br.com.cng12.clubdance.utils.ControleDeCapacidadeEvento;
 
 @Controller
 public class ClienteController {
@@ -27,6 +30,12 @@ public class ClienteController {
 
 	@Autowired
 	private EventoController eventoController;
+	
+	@Autowired
+	private ControleDeCapacidadeEvento controleDeCapacidadeEvento;
+	
+	@Autowired
+	private EventoServiceImpl eventoService;
 
 	protected Long idCliente;
 
@@ -49,9 +58,39 @@ public class ClienteController {
 	}
 
 	@PostMapping("/evento/venda/editar-venda")
-	public String editarEvento(@Valid ClienteEntity clienteEntity) {
-		clienteService.editar(clienteEntity.getCpf(), clienteEntity.getNome(), clienteEntity.getTipoIngresso(),
-				clienteEntity.getId());
+	public String editarEvento(@Valid ClienteEntity clienteEntity) throws IngressoException {
+		
+		ClienteEntity clienteEntityAtual = clienteService.buscarPorId(clienteEntity.getId());
+		EventoEntity eventoEntity = eventoService.buscarPorId(eventoController.getIdEvento());
+
+		if (clienteEntity.getTipoIngresso().equals("CAMAROTE")) {
+			if(controleDeCapacidadeEvento.vendaIngressoCamarote(eventoEntity) == true) {
+				clienteService.editar(clienteEntity.getCpf(), clienteEntity.getNome(), clienteEntity.getTipoIngresso(),
+						clienteEntity.getId());
+				controleDeCapacidadeEvento.retornaIngressoNormalVip(eventoEntity);
+			}
+			else{
+				throw new IngressoException("CAMAROTES ESGOTADOS");
+			}
+		}
+		else {
+			if(clienteEntityAtual.getTipoIngresso().equals("NORMAL") && clienteEntity.getTipoIngresso().equals("VIP")) {
+				clienteService.editar(clienteEntity.getCpf(), clienteEntity.getNome(), clienteEntity.getTipoIngresso(),
+						clienteEntity.getId());
+			}
+			else if(clienteEntityAtual.getTipoIngresso().equals("VIP") && clienteEntity.getTipoIngresso().equals("NORMAL")) {
+				clienteService.editar(clienteEntity.getCpf(), clienteEntity.getNome(), clienteEntity.getTipoIngresso(),
+						clienteEntity.getId());
+			}
+			else if(controleDeCapacidadeEvento.vendaIngressoNormalEVip(eventoEntity) == true) {
+				clienteService.editar(clienteEntity.getCpf(), clienteEntity.getNome(), clienteEntity.getTipoIngresso(),
+						clienteEntity.getId());
+				controleDeCapacidadeEvento.retornaIngressoCamarote(eventoEntity);
+			}
+			else{
+				throw new IngressoException("INGRESSOS ESGOTADOS");
+			}
+		}
 
 		return "redirect:/evento/eventos";
 	}

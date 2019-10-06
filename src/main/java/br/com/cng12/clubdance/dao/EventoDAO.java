@@ -22,4 +22,9 @@ public interface EventoDAO extends JpaRepository<EventoEntity, Long> {
 	@Query("UPDATE EventoEntity e SET e.capacidade =:capacidade WHERE e.id =:id")
 	void editarCapacidade(@Param("capacidade") int capacidade, @Param("id") Long id);
 	
+	@Transactional
+	@Modifying
+	@Query("UPDATE EventoEntity e SET e.capacidadeCamarote =:capacidadeCamarote WHERE e.id =:id")
+	void editarCapacidadeCamarote(@Param("capacidadeCamarote") int capacidade, @Param("id") Long id);
+	
 }

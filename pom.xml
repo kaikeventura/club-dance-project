@@ -8,9 +8,11 @@
 		<version>2.1.8.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
+	
 	<groupId>br.com.cng12.clubdance</groupId>
 	<artifactId>casa-noturna-club-dance</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
 	<name>casa-noturna-club-dance</name>
 	<description>Casa noturna Club Dance</description>
 
@@ -53,6 +55,11 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<!-- <dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
+		</dependency> -->
 	</dependencies>
 
 	<build>

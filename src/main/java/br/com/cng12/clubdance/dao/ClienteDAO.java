@@ -29,4 +29,5 @@ public interface ClienteDAO extends JpaRepository<ClienteEntity, Long> {
 	@Query("select c from ClienteEntity c WHERE c.eventoEntity =:idEvento and c.tipoIngresso =:tipoIngresso")
 	List<ClienteEntity> buscarClientesEvento(@Param("idEvento") Long idEvento,
 			@Param("tipoIngresso") String tipoIngresso);
+	
 }

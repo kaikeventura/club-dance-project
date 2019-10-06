@@ -1,13 +1,11 @@
 package br.com.cng12.clubdance.utils;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import br.com.cng12.clubdance.entity.ClienteEntity;
 import br.com.cng12.clubdance.entity.EventoEntity;
-import br.com.cng12.clubdance.service.impl.ClienteServiceImpl;
+import br.com.cng12.clubdance.exceptions.IngressoException;
+import br.com.cng12.clubdance.service.impl.ComandaServiceImpl;
 import br.com.cng12.clubdance.service.impl.EventoServiceImpl;
 
 @Component
@@ -17,68 +15,52 @@ public class ControleDeCapacidadeEvento {
 	private EventoServiceImpl eventoService;
 
 	@Autowired
-	private ClienteServiceImpl clienteService;
+	private ComandaServiceImpl comandaService;
 
-	public void vendaIngressoNormalEVip(EventoEntity eventoEntity) {
+	public boolean vendaIngressoNormalEVip(EventoEntity eventoEntity) throws IngressoException {
 
 		EventoEntity evento = eventoService.buscarPorId(eventoEntity.getId());
-
 		int capacidadeAntes = evento.getCapacidade();
-		int capacidadeDepois = capacidadeAntes - 1;
 
-		eventoService.editarCapacidadeDoEvento(capacidadeDepois, evento.getId());
-
-	}
-	
-	public void vendaIngressoCamarote(EventoEntity eventoEntity) {
-
-		EventoEntity evento = eventoService.buscarPorId(eventoEntity.getId());
-
-		int capacidadeAntes = evento.getCapacidade();
-		int capacidadeDepois = capacidadeAntes - 5;
-
-		eventoService.editarCapacidadeDoEvento(capacidadeDepois, evento.getId());
-
-	}
-
-	void vendaIngressoVip() {
-
-	}
-
-	void vendaIngressoCamarote() {
-
-	}
-
-	/*
-	 * O valor zerado significa que os 15 restantes são para os três camarotes que
-	 * possuem no local do evento
-	 */
-	public boolean verificaSeAQuantidadeDoEventoZerou(EventoEntity eventoEntity) {
-
-		EventoEntity evento = eventoService.buscarPorId(eventoEntity.getId());
-
-		if (evento.getCapacidade() == 15) {
+		if (!(capacidadeAntes == 0)) {
+			int capacidadeDepois = capacidadeAntes - 1;
+			eventoService.editarCapacidadeDoEvento(capacidadeDepois, evento.getId());
 			return true;
 		} else {
-			return false;
+			throw new IngressoException("INGRESSOS ESGOTADOS");
 		}
 
 	}
 
-	public boolean verificaSeACapacidadeDoCamaroteExcedeu(EventoEntity eventoEntity) {
-		List<ClienteEntity> clientes = clienteService.buscarClientesEvento(eventoEntity.getId(), "CAMAROTE");
+	public boolean vendaIngressoCamarote(EventoEntity eventoEntity) throws IngressoException {
 
-		System.out.println(clientes.size());
-		
-		if (clientes.size() == 2) {
-			
+		EventoEntity evento = eventoService.buscarPorId(eventoEntity.getId());
+		int capacidadeAntes = evento.getCapacidadeCamarote();
+
+		if (!(capacidadeAntes == 0)) {
+			int capacidadeDepois = capacidadeAntes - 1;
+			eventoService.editarCapacidadeDoEventoCamarote(capacidadeDepois, evento.getId());
 			return true;
+		} else {
+			throw new IngressoException("CAMAROTES ESGOTADOS");
 		}
-		return false;
+
 	}
 
-	void seTrocarTipoDeIngressoParaCamarote() {
+	public void retornaIngressoNormalVip(EventoEntity eventoEntity) {
 
+		EventoEntity evento = eventoService.buscarPorId(eventoEntity.getId());
+		int capacidadeAntes = evento.getCapacidade();
+		int capacidadeDepois = capacidadeAntes + 1;
+		eventoService.editarCapacidadeDoEvento(capacidadeDepois, evento.getId());
+	}
+	
+	public void retornaIngressoCamarote(EventoEntity eventoEntity) {
+
+		EventoEntity evento = eventoService.buscarPorId(eventoEntity.getId());
+		int capacidadeAntes = evento.getCapacidadeCamarote();
+		int capacidadeDepois = capacidadeAntes + 1;
+		eventoService.editarCapacidadeDoEventoCamarote(capacidadeDepois, evento.getId());
 	}
 
 }
