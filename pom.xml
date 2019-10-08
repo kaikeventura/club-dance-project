@@ -12,7 +12,7 @@
 	<groupId>br.com.cng12.clubdance</groupId>
 	<artifactId>casa-noturna-club-dance</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<!-- <packaging>war</packaging> -->
 	<name>casa-noturna-club-dance</name>
 	<description>Casa noturna Club Dance</description>
 
