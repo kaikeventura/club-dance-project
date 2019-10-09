@@ -3,6 +3,7 @@ package br.com.cng12.clubdance.utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import br.com.cng12.clubdance.entity.ClienteEntity;
 import br.com.cng12.clubdance.entity.EventoEntity;
 import br.com.cng12.clubdance.exceptions.IngressoException;
 import br.com.cng12.clubdance.service.impl.ComandaServiceImpl;
@@ -63,4 +64,9 @@ public class ControleDeCapacidadeEvento {
 		eventoService.editarCapacidadeDoEventoCamarote(capacidadeDepois, evento.getId());
 	}
 
+	public void editaOValorDoIngressoTrocado(Double precoIngresso, ClienteEntity clienteEntity,
+			EventoEntity eventoEntity) {
+		
+		comandaService.editarValorSeTrocarTipoDeIngresso(precoIngresso, clienteEntity, eventoEntity);
+	}
 }

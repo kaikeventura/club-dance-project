@@ -34,4 +34,12 @@ public class ComandaServiceImpl implements ComandaService {
 		return dao.buscarComandaComCliente(idCliente);
 	}
 
+	@Override
+	public void editarValorSeTrocarTipoDeIngresso(Double precoIngresso, ClienteEntity clienteEntity,
+			EventoEntity eventoEntity) {
+
+		dao.editarValorSeTrocarTipoDeIngresso(precoIngresso, clienteEntity, eventoEntity);
+	}
+
+	
 }

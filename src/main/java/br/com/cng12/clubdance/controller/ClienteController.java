@@ -30,19 +30,15 @@ public class ClienteController {
 
 	@Autowired
 	private EventoController eventoController;
-	
+
 	@Autowired
 	private ControleDeCapacidadeEvento controleDeCapacidadeEvento;
-	
+
 	@Autowired
 	private EventoServiceImpl eventoService;
 
 	protected Long idCliente;
 
-	/*
-	 * Quando o cliente realiza a compra do ingresso é criado um objeto do mesmo, e
-	 * respectivamente cria uma comanda, o metodo abaixo cria a comanda.
-	 */
 	public void criarComanda(ClienteEntity clienteEntity, EventoEntity eventoEntity, Double precoIngresso) {
 
 		ComandaEntity comandaEntity = new ComandaEntity();
@@ -59,35 +55,64 @@ public class ClienteController {
 
 	@PostMapping("/evento/venda/editar-venda")
 	public String editarEvento(@Valid ClienteEntity clienteEntity) throws IngressoException {
-		
+
 		ClienteEntity clienteEntityAtual = clienteService.buscarPorId(clienteEntity.getId());
 		EventoEntity eventoEntity = eventoService.buscarPorId(eventoController.getIdEvento());
 
+		if (clienteEntityAtual.getTipoIngresso().contentEquals(clienteEntity.getTipoIngresso())) {
+			clienteService.editar(clienteEntity.getCpf(), clienteEntity.getNome(), clienteEntity.getTipoIngresso(),
+					clienteEntity.getId());
+			return "redirect:/evento/eventos";
+		}
+
 		if (clienteEntity.getTipoIngresso().equals("CAMAROTE")) {
-			if(controleDeCapacidadeEvento.vendaIngressoCamarote(eventoEntity) == true) {
+			if (controleDeCapacidadeEvento.vendaIngressoCamarote(eventoEntity) == true) {
 				clienteService.editar(clienteEntity.getCpf(), clienteEntity.getNome(), clienteEntity.getTipoIngresso(),
 						clienteEntity.getId());
 				controleDeCapacidadeEvento.retornaIngressoNormalVip(eventoEntity);
-			}
-			else{
+
+				controleDeCapacidadeEvento.editaOValorDoIngressoTrocado(eventoEntity.getPrecoIngressoCamarote(),
+						clienteEntity, eventoEntity);
+			} 
+			else {
 				throw new IngressoException("CAMAROTES ESGOTADOS");
 			}
-		}
+		} 
 		else {
-			if(clienteEntityAtual.getTipoIngresso().equals("NORMAL") && clienteEntity.getTipoIngresso().equals("VIP")) {
+			if (clienteEntityAtual.getTipoIngresso().equals("NORMAL")
+					&& clienteEntity.getTipoIngresso().equals("VIP")) {
 				clienteService.editar(clienteEntity.getCpf(), clienteEntity.getNome(), clienteEntity.getTipoIngresso(),
 						clienteEntity.getId());
-			}
-			else if(clienteEntityAtual.getTipoIngresso().equals("VIP") && clienteEntity.getTipoIngresso().equals("NORMAL")) {
+				controleDeCapacidadeEvento.editaOValorDoIngressoTrocado(eventoEntity.getPrecoIngressoVip(),
+						clienteEntity, eventoEntity);
+			} 
+			else if (clienteEntityAtual.getTipoIngresso().equals("VIP")
+					&& clienteEntity.getTipoIngresso().equals("NORMAL")) {
 				clienteService.editar(clienteEntity.getCpf(), clienteEntity.getNome(), clienteEntity.getTipoIngresso(),
 						clienteEntity.getId());
-			}
-			else if(controleDeCapacidadeEvento.vendaIngressoNormalEVip(eventoEntity) == true) {
+				controleDeCapacidadeEvento.editaOValorDoIngressoTrocado(eventoEntity.getPrecoIngressoNormal(),
+						clienteEntity, eventoEntity);
+			} 
+			else if (clienteEntityAtual.getTipoIngresso().equals("CAMAROTE")
+					&& clienteEntity.getTipoIngresso().equals("NORMAL")) {
+				clienteService.editar(clienteEntity.getCpf(), clienteEntity.getNome(), clienteEntity.getTipoIngresso(),
+						clienteEntity.getId());
+				controleDeCapacidadeEvento.editaOValorDoIngressoTrocado(eventoEntity.getPrecoIngressoNormal(),
+						clienteEntity, eventoEntity);
+			} 
+			else if (clienteEntityAtual.getTipoIngresso().equals("CAMAROTE")
+					&& clienteEntity.getTipoIngresso().equals("VIP")) {
+				clienteService.editar(clienteEntity.getCpf(), clienteEntity.getNome(), clienteEntity.getTipoIngresso(),
+						clienteEntity.getId());
+				controleDeCapacidadeEvento.editaOValorDoIngressoTrocado(eventoEntity.getPrecoIngressoVip(),
+						clienteEntity, eventoEntity);
+			} 
+			else if (controleDeCapacidadeEvento.vendaIngressoNormalEVip(eventoEntity) == true) {
 				clienteService.editar(clienteEntity.getCpf(), clienteEntity.getNome(), clienteEntity.getTipoIngresso(),
 						clienteEntity.getId());
 				controleDeCapacidadeEvento.retornaIngressoCamarote(eventoEntity);
-			}
-			else{
+			} 
+			else {
 				throw new IngressoException("INGRESSOS ESGOTADOS");
 			}
 		}

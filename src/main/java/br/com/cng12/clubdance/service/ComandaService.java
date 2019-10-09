@@ -12,4 +12,7 @@ public interface ComandaService {
 			Double precoIngresso);
 
 	List<ComandaEntity> buscarComandaComCliente(Long idCliente);
+
+	void editarValorSeTrocarTipoDeIngresso(Double precoIngresso, ClienteEntity clienteEntity,
+			EventoEntity eventoEntity);
 }
