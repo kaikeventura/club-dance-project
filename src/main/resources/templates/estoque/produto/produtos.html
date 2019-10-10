@@ -69,7 +69,7 @@
 
 	<div class="body-principal">
 		<div class="row right-align">
-			<a href="" id="btn-cad-evento"
+			<a th:href="@{/estoque/produto/cadastrar-produto}" id="btn-cad-evento"
 				class="waves-effect waves-light btn pink darken-1"><i
 				class="material-icons right">border_color</i>Cadastrar Produto</a>
 		</div>
@@ -103,11 +103,11 @@
 							</tr>
 						</thead>
 
-						<tbody each="p : ${produtos}">
+						<tbody th:each="p : ${produtos}">
 							<tr>
-								<td text="${p.nome}"></td>
-								<td text="${p.marca}"></td>
-								<td text="${e.unidadeMedida}"></td>
+								<td th:text="${p.nome}"></td>
+								<td th:text="${p.marca}"></td>
+								<td th:text="${e.unidadeMedida}"></td>
 								<td><a href="@{/evento/editar-evento/{id} (id=${e.id})}"
 									class="btn-floating btn-small waves-effect waves-light blue pulse"><i
 										class="material-icons">edit</i></a></td>

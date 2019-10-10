@@ -42,7 +42,7 @@ public class EventoController {
 
 	// Chama a página para renderizar
 	@GetMapping("/evento/cadastrar-evento")
-	public String cadastrarEvento(EventoEntity eventoEntity) {
+	public String cadastroDeEvento(EventoEntity eventoEntity) {
 		return "evento/cadastrar-evento";
 	}
 
