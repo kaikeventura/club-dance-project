@@ -20,8 +20,11 @@ public class ProdutoEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(nullable = true)
+	@Column(nullable = true, unique = true)
 	private String nome;
+	
+	@Column(nullable = false)
+	private String marca;
 	
 	@Column(nullable = true)
 	private Double preco;

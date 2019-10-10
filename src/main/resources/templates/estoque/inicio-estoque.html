@@ -3,7 +3,7 @@
 	xmlns:th="http://www.thymeleaf.org">
 
 <head>
-<title>Página Inicial</title>
+<title>Estoque</title>
 <meta charset="utf-8">
 <link rel="icon" type="imagem/png" th:href="@{/img/minilogo.png}" />
 
@@ -11,11 +11,10 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
 	rel="stylesheet">
 <!--Import materialize.css-->
-<link type="text/css" rel="stylesheet"
-	th:href="@{/css/materialize.css}" media="screen,projection" />
+<link type="text/css" rel="stylesheet" th:href="@{/css/materialize.css}"
+	media="screen,projection" />
 <!--style.css-->
-<link type="text/css" rel="stylesheet"
-	th:href="@{/css/style.css}" />
+<link type="text/css" rel="stylesheet" th:href="@{/css/style.css}" />
 <!--Let browser know website is optimized for mobile-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
@@ -57,7 +56,8 @@
 			<div class="divider"></div>
 		</li>
 		<li><a><i class="material-icons">store</i>Estoque</a></li>
-		<li><a th:href="@{/estoque/inicio-estoque}"><i class="material-icons">chevron_right</i>Consulta</a></li>
+		<li><a th:href="@{/estoque/inicio-estoque}"><i
+				class="material-icons">chevron_right</i>Eventos</a></li>
 		<li>
 			<div class="divider"></div>
 		</li>
@@ -67,17 +67,30 @@
 			<div class="divider"></div>
 		</li>
 	</ul>
-	
-	<div>
-		<img id="logo" th:src="@{/img/clublogo.png}" alt="logo">
+
+	<div class="body-principal">
+		<div class="menu-ferramentas-estoque">
+			<div class="row">
+				<a th:href="@{/estoque/produto/produtos}" class="waves-effect waves-light btn-large pink darken-1"><i
+					class="material-icons right">format_align_justify</i>PRODUTO</a>
+			</div>
+			<div class="row">
+				<a class="waves-effect waves-light btn-large pink darken-1"><i
+					class="material-icons right">format_align_justify</i>ESTOQUE MINIMO</a>
+			</div>
+			<div class="row">
+				<a class="waves-effect waves-light btn-large pink darken-1"><i
+					class="material-icons right">format_align_justify</i>CONTROLE DE ESTOQUE</a>
+			</div>
+		</div>
 	</div>
 
 	<!--JQuery-->
-	<script type="text/javascript"
-		th:src="@{/js/jquery-3.4.1.js}"></script>
+	<script type="text/javascript" th:src="@{/js/jquery-3.4.1.js}"></script>
 	<!--JavaScript at end of body for optimized loading-->
-	<script type="text/javascript"
-		th:src="@{/js/materialize.js}"></script>
+	<script type="text/javascript" th:src="@{/js/materialize.js}"></script>
+	<!--Moment JS-->
+	<script type="text/javascript" th:src="@{/js/moment.js}"></script>
 
 	<script>
 		$(document).ready(function() {
@@ -88,6 +101,9 @@
 			$('#sidenav-2').sidenav({
 				edge : 'right'
 			});
+		});
+		$(document).ready(function() {
+			$('select').formSelect();
 		});
 	</script>
 </body>
