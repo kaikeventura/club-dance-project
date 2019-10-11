@@ -96,11 +96,9 @@
 							<div class="row">
 								<div class="input-field col s5">
 								<i class="material-icons prefix">account_circle</i>
-									<select>
-										<option value="" disabled selected>Choose your option</option>
-										<option value="1">Option 1</option>
-										<option value="2">Option 2</option>
-										<option value="3">Option 3</option>
+									<select th:field="*{unidadeMedida}">
+										<option value="">Selecione...</option>
+										<option th:each="um : ${unmd}" th:value="${um}" th:text="${um.unidade}"></option>
 									</select> <label>Unidade Medida</label>
 								</div>
 								<div class="input-field col s5">

@@ -11,7 +11,8 @@ public enum UnidadeMedida {
 	PEÇA("PC"),
 	METRO("MT"),
 	KILO("KG"),
-	LITRO("LT");
+	LITRO("LT"),
+	CAIXA("CX");
 	
 	private String unidade;	
 	
