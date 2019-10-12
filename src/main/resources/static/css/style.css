@@ -38,7 +38,8 @@ body {
 
 /* ----------------Estilos dos botões---------------- */
 #btn-cad-evento {
-	margin-top: 2.3%;
+	margin-top: 1%;
+	margin-bottom: -1%;
 	margin-right: 1%;
 }
 

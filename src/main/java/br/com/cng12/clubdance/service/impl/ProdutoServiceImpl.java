@@ -26,5 +26,31 @@ public class ProdutoServiceImpl implements ProdutoService {
 		
 		return dao.findAll();
 	}
+	
+	@Override
+	public void editar(String nome, String marca, String unidadeMedida, Long id) {
+
+		dao.editarProduto(nome, marca, unidadeMedida, id);
+	}
+
+	@Override
+	public void excluir(Long id) {
+		
+		dao.deleteById(id);		
+	}
+
+	@Override
+	public ProdutoEntity buscarPorId(Long id) {
+
+		return dao.getOne(id);
+	}
+
+	@Override
+	public List<ProdutoEntity> buscarPorNome(String nome) {
+		
+		return dao.buscarProdutoPorNome(nome);
+	}
+
+	
 
 }
