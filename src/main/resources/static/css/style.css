@@ -83,7 +83,7 @@ body {
 /* ----------------------------------------------------- */
 
 
-
+/* ----------------Estoque---------------- */
 .menu-ferramentas-estoque {
 	background: white;
 	width: 30%;
@@ -92,3 +92,25 @@ body {
 	padding-left: 1%;
 	padding: 0.8%;
 }
+/* ---------------------------------------- */
+
+/* ----------------Detalhes fornecedor---------------- */
+.detalhes-fornecedor {
+	background: white;
+	width: 98% !important;
+	margin-left: 1%;
+	margin-left: 1% !important;	
+}
+
+#btn-editar {
+	margin-top: 2.3%;
+	margin-right: 2.4%;
+	float: right;
+}
+
+#btn-excluir {
+	margin-top: 2.3%;
+	margin-right: 2.4%;
+	float: left;
+}
+/* ---------------------------------------------------- */

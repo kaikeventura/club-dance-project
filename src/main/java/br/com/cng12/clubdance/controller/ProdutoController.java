@@ -35,8 +35,6 @@ public class ProdutoController {
 
 		produtoService.salvar(produtoEntity);
 
-		System.out.println(produtoEntity.toString());
-
 		return "redirect:/estoque/produto/cadastrar-produto";
 	}
 

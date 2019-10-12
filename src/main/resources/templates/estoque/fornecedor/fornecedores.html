@@ -3,7 +3,7 @@
 	xmlns:th="http://www.thymeleaf.org">
 
 <head>
-<title>Estoque</title>
+<title>Fornecedores</title>
 <meta charset="utf-8">
 <link rel="icon" type="imagem/png" th:href="@{/img/minilogo.png}" />
 
@@ -56,8 +56,7 @@
 			<div class="divider"></div>
 		</li>
 		<li><a><i class="material-icons">store</i>Estoque</a></li>
-		<li><a th:href="@{/estoque/inicio-estoque}"><i
-				class="material-icons">chevron_right</i>Consultar</a></li>
+		<li><a href="#"><i class="material-icons">chevron_right</i>Consulta</a></li>
 		<li>
 			<div class="divider"></div>
 		</li>
@@ -69,28 +68,67 @@
 	</ul>
 
 	<div class="body-principal">
-		<div class="menu-ferramentas-estoque">
-			<div class="row">
-				<a th:href="@{/estoque/produto/produtos}" class="waves-effect waves-light btn-large pink darken-1"><i
-					class="material-icons right">format_align_justify</i>PRODUTO</a>
-			</div>
-			<div class="row">
-				<a th:href="@{/estoque/fornecedor/fornecedores}" class="waves-effect waves-light btn-large pink darken-1"><i
-					class="material-icons right">format_align_justify</i>FORNECEDOR</a>
-			</div>
-			<div class="row">
-				<a class="waves-effect waves-light btn-large pink darken-1"><i
-					class="material-icons right">format_align_justify</i>CONTROLE DE ESTOQUE</a>
+		<div class="row right-align">
+			<a th:href="@{/estoque/fornecedor/cadastrar-fornecedor}" id="btn-cad-evento"
+				class="waves-effect waves-light btn pink darken-1"><i
+				class="material-icons right">border_color</i>Cadastrar Fornecedor</a>
+		</div>
+		<div class="row">
+			<div class="col s12 m12">
+				<div class="card style-table">
+					<div class="card-action center black">
+						<strong><a class="white-text">Lista de Fornecedores</a></strong>
+					</div>
+					<div class="divider"></div>
+
+					<!-- Tabela -->
+					<!-- Buscar -->
+					<div class="row">
+						<form method="GET" action="@{/estoque/produto/buscar/nome}">
+							<div class="input-field col s3">
+								<i class="material-icons prefix">search</i> <input
+									id="icon_prefix" type="text" class="validate" th:name="nome">
+								<label for="icon_prefix">Buscar Produto</label>
+							</div>
+						</form>
+					</div>
+					<table class="highlight">
+						<thead>
+							<tr>
+								<th>Nome Fantasia</th>
+								<th>Razão Social</th>
+								<th>CNPJ</th>
+								<th>Telefone</th>
+								<th>Contato</th>
+								<th>Status</th>
+								<th>Detalhes</th>
+							</tr>
+						</thead>
+
+						<tbody th:each="f : ${fornecedores}">
+							<tr>
+								<td th:text="${f.nomeFantasia}"></td>
+								<td th:text="${f.razaoSocial}"></td>
+								<td th:text="${f.cnpj}"></td>
+								<td th:text="${f.telefone}"></td>	
+								<td th:text="${f.nomeContato}"></td>	
+								<td th:text="${f.status}"></td>						
+								<td><a th:href="@{/estoque/fornecedor/detalhes/fornecedor-detalhes/{id} (id=${f.id})}"
+									class="btn-floating btn-small waves-effect waves-light blue pulse"><i
+										class="material-icons">info_outline</i></a></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 			</div>
 		</div>
+
 	</div>
 
 	<!--JQuery-->
 	<script type="text/javascript" th:src="@{/js/jquery-3.4.1.js}"></script>
 	<!--JavaScript at end of body for optimized loading-->
 	<script type="text/javascript" th:src="@{/js/materialize.js}"></script>
-	<!--Moment JS-->
-	<script type="text/javascript" th:src="@{/js/moment.js}"></script>
 
 	<script>
 		$(document).ready(function() {
@@ -101,9 +139,6 @@
 			$('#sidenav-2').sidenav({
 				edge : 'right'
 			});
-		});
-		$(document).ready(function() {
-			$('select').formSelect();
 		});
 	</script>
 </body>

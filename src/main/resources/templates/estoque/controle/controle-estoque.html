@@ -3,7 +3,7 @@
 	xmlns:th="http://www.thymeleaf.org">
 
 <head>
-<title>Estoque</title>
+<title>Controle de estoque</title>
 <meta charset="utf-8">
 <link rel="icon" type="imagem/png" th:href="@{/img/minilogo.png}" />
 
@@ -57,7 +57,7 @@
 		</li>
 		<li><a><i class="material-icons">store</i>Estoque</a></li>
 		<li><a th:href="@{/estoque/inicio-estoque}"><i
-				class="material-icons">chevron_right</i>Consultar</a></li>
+				class="material-icons">chevron_right</i>Eventos</a></li>
 		<li>
 			<div class="divider"></div>
 		</li>
@@ -72,15 +72,15 @@
 		<div class="menu-ferramentas-estoque">
 			<div class="row">
 				<a th:href="@{/estoque/produto/produtos}" class="waves-effect waves-light btn-large pink darken-1"><i
-					class="material-icons right">format_align_justify</i>PRODUTO</a>
-			</div>
-			<div class="row">
-				<a th:href="@{/estoque/fornecedor/fornecedores}" class="waves-effect waves-light btn-large pink darken-1"><i
-					class="material-icons right">format_align_justify</i>FORNECEDOR</a>
+					class="material-icons right">format_align_justify</i>Lançar nota fiscal</a>
 			</div>
 			<div class="row">
 				<a class="waves-effect waves-light btn-large pink darken-1"><i
-					class="material-icons right">format_align_justify</i>CONTROLE DE ESTOQUE</a>
+					class="material-icons right">format_align_justify</i>Visualizar estoque</a>
+			</div>
+			<div class="row">
+				<a class="waves-effect waves-light btn-large pink darken-1"><i
+					class="material-icons right">format_align_justify</i>Estoque minimo</a>
 			</div>
 		</div>
 	</div>

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>Cadastrar Fornecedor</title>
+<meta charset="utf-8">
+<link rel="icon" type="imagem/png" th:href="@{/img/minilogo.png}" />
+
+<!--Import Google Icon Font-->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
+<!--Import materialize.css-->
+<link type="text/css" rel="stylesheet" th:href="@{/css/materialize.css}"
+	media="screen,projection" />
+<!--style.css-->
+<link type="text/css" rel="stylesheet" th:href="@{/css/style.css}" />
+<!--Let browser know website is optimized for mobile-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+</head>
+
+<body>
+
+	<!-- NAVBAR -->
+	<header>
+		<nav class="pink darken-1">
+			<div class="nav-wrapper">
+				<div class="row">
+					<div class="col s12">
+						<!-- <a href="#" data-target="sidenav-1"
+							class="left sidenav-trigger hide-on-medium-and-up"><i
+							class="material-icons">menu</i></a> <strong><a href="#"
+							class="brand-logo white-text">Club Dance</a></strong> -->
+					</div>
+				</div>
+			</div>
+		</nav>
+	</header>
+
+	<!-- LEFT SIDEBAR-->
+	<ul id="sidenav-1" class="sidenav sidenav-fixed">
+		<li class="menu-lateral"><a th:href="@{/}"><i
+				class="material-icons">home</i>Home</a></li>
+		<li>
+			<div class="divider"></div>
+		</li>
+		<li><a><i class="material-icons">confirmation_number</i>Ingresso</a></li>
+		<li><a th:href="@{/evento/eventos}"><i class="material-icons">chevron_right</i>Eventos</a></li>
+		<li>
+			<div class="divider"></div>
+		</li>
+		<li><a><i class="material-icons">local_bar</i>Bar</a></li>
+		<li><a href="#"><i class="material-icons">chevron_right</i>Venda</a></li>
+		<li>
+			<div class="divider"></div>
+		</li>
+		<li><a><i class="material-icons">store</i>Estoque</a></li>
+		<li><a href="#"><i class="material-icons">chevron_right</i>Consulta</a></li>
+		<li>
+			<div class="divider"></div>
+		</li>
+		<li><a><i class="material-icons">content_paste</i>Administração</a></li>
+		<li><a href="#"><i class="material-icons">chevron_right</i>Relatórios</a></li>
+		<li>
+			<div class="divider"></div>
+		</li>
+	</ul>
+
+	<div class="body-principal">
+		<div class="row right-align">
+			<a th:href="@{/estoque/fornecedor/fornecedores}" id="btn-cad-evento"
+				class="waves-effect waves-light btn pink darken-1"><i
+				class="material-icons right">border_color</i>Lista de fornecedores</a>
+		</div>
+		<div class="row">
+			<div class="col s12 m12">
+				<div class="card">
+					<div class="card-action center black">
+						<strong><a class="white-text">Cadastrar Fornecedor</a></strong>
+					</div>
+					<div class="divider"></div>
+
+					<!-- Formulário de cadastro -->
+					<div class="row">
+						<form class="col s12"
+							th:action="${fornecedorEntity.id == null} ? @{/estoque/fornecedor/cadastrar-fornecedor} : @{/estoque/fornecedor/detalhes/fornecedor-detalhes/editar-fornecedor}"
+							th:object="${fornecedorEntity}" method="POST">
+							<div class="row">
+								<div class="input-field col s5">
+									<i class="material-icons prefix">account_circle</i> <input
+										id="icon_prefix" type="text" class="validate"
+										th:field="*{nomeFantasia}"> <label for="icon_prefix">Nome
+										Fantasia</label>
+								</div>
+								<div class="input-field col s6">
+									<i class="material-icons prefix">gps_fixed</i> <input
+										id="icon_prefix" type="text" class="validate"
+										th:field="*{razaoSocial}"> <label for="icon_prefix">Razão
+										Social</label>
+								</div>
+							</div>
+							<div class="row">
+								<div class="input-field col s3">
+									<i class="material-icons prefix">account_circle</i> <select
+										th:field="*{atividadePrincipal}">
+										<option value="">Selecione...</option>
+										<option th:each="a : ${atividade}" th:value="${a}"
+											th:text="${a.atividade}"></option>
+									</select> <label>Atividade principal</label>
+								</div>
+								<div class="input-field col s4">
+									<i class="material-icons prefix">account_circle</i> <input
+										id="icon_prefix" type="text" class="validate"
+										th:field="*{cnpj}"> <label for="icon_prefix">CNPJ</label>
+								</div>
+								<div class="input-field col s4">
+									<i class="material-icons prefix">account_circle</i> <input
+										id="icon_prefix" type="text" class="validate"
+										th:field="*{inscricaoEstadual}"> <label
+										for="icon_prefix">Inscricao Estadual</label>
+								</div>
+							</div>
+							<div class="row">
+								<div class="input-field col s6">
+									<i class="material-icons prefix">account_circle</i> <input
+										id="icon_prefix" type="text" class="validate"
+										th:field="*{endereco}"> <label for="icon_prefix">Endereço</label>
+								</div>
+								<div class="input-field col s5">
+									<i class="material-icons prefix">account_circle</i> <input
+										id="icon_prefix" type="text" class="validate"
+										th:field="*{bairro}"> <label for="icon_prefix">Bairro</label>
+								</div>
+							</div>
+							<div class="row">
+								<div class="input-field col s4">
+									<i class="material-icons prefix">account_circle</i> <input
+										id="icon_prefix" type="text" class="validate"
+										th:field="*{cidade}"> <label for="icon_prefix">Cidade</label>
+								</div>
+								<div class="input-field col s3">
+									<i class="material-icons prefix">account_circle</i> <select
+										th:field="*{uf}">
+										<option value="">Selecione...</option>
+										<option th:each="uf : ${uf}" th:value="${uf}"
+											th:text="${uf.sigla}"></option>
+									</select> <label>UF</label>
+								</div>
+								<div class="input-field col s4">
+									<i class="material-icons prefix">account_circle</i> <input
+										id="icon_prefix" type="text" class="validate"
+										th:field="*{cep}"> <label for="icon_prefix">CEP</label>
+								</div>
+							</div>
+							<div class="row">
+								<div class="input-field col s3">
+									<i class="material-icons prefix">account_circle</i> <input
+										id="icon_prefix" type="text" class="validate"
+										th:field="*{telefone}"> <label for="icon_prefix">Telefone</label>
+								</div>
+								<div class="input-field col s3">
+									<i class="material-icons prefix">account_circle</i> <input
+										id="icon_prefix" type="text" class="validate"
+										th:field="*{celular}"> <label for="icon_prefix">Celular</label>
+								</div>
+								<div class="input-field col s5">
+									<i class="material-icons prefix">account_circle</i> <input
+										id="icon_prefix" type="text" class="validate"
+										th:field="*{email}"> <label for="icon_prefix">Email</label>
+								</div>
+							</div>
+							<div class="row">
+								<div class="input-field col s3">
+									<i class="material-icons prefix">account_circle</i> <input
+										id="icon_prefix" type="text" class="validate"
+										th:field="*{nomeContato}"> <label for="icon_prefix">Contato</label>
+								</div>
+								<div class="input-field col s3">
+									<i class="material-icons prefix">account_circle</i> <select
+										th:field="*{status}">
+										<option value="">Selecione...</option>
+										<option th:each="s : ${status}" th:value="${s}"
+											th:text="${s.status}"></option>
+									</select> <label>Status</label>
+								</div>
+								<div class="input-field col s5">
+									<div class="row right-align">
+										<input type="hidden" id="id" th:field="*{id}" />
+										<button id="btn-svr-evento" type="submit"
+											class="waves-effect waves-light btn pink darken-1">
+											<i class="material-icons right">border_color</i>Salvar
+										</button>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+
+
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<!--JQuery-->
+	<script type="text/javascript" th:src="@{/js/jquery-3.4.1.js}"></script>
+	<!--JavaScript at end of body for optimized loading-->
+	<script type="text/javascript" th:src="@{/js/materialize.js}"></script>
+
+	<script>
+		$(document).ready(function() {
+			$('.sidenav').sidenav();
+			$('#sidenav-1').sidenav({
+				edge : 'left'
+			});
+			$('#sidenav-2').sidenav({
+				edge : 'right'
+			});
+		});
+		$(document).ready(function() {
+			$('select').formSelect();
+		});
+	</script>
+</body>
+
+</html>
