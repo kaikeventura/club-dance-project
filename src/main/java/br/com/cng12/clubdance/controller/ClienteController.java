@@ -66,6 +66,7 @@ public class ClienteController {
 		}
 
 		if (clienteEntity.getTipoIngresso().equals("CAMAROTE")) {
+			// Verifica se ainda possui ingressos disponiveis do tipo camarote
 			if (controleDeCapacidadeEvento.vendaIngressoCamarote(eventoEntity) == true) {
 				clienteService.editar(clienteEntity.getCpf(), clienteEntity.getNome(), clienteEntity.getTipoIngresso(),
 						clienteEntity.getId());
@@ -97,6 +98,8 @@ public class ClienteController {
 					&& clienteEntity.getTipoIngresso().equals("NORMAL")) {
 				clienteService.editar(clienteEntity.getCpf(), clienteEntity.getNome(), clienteEntity.getTipoIngresso(),
 						clienteEntity.getId());
+				controleDeCapacidadeEvento.vendaIngressoNormalEVip(eventoEntity);
+				controleDeCapacidadeEvento.retornaIngressoCamarote(eventoEntity);
 				controleDeCapacidadeEvento.editaOValorDoIngressoTrocado(eventoEntity.getPrecoIngressoNormal(),
 						clienteEntity, eventoEntity);
 			} 
@@ -104,6 +107,8 @@ public class ClienteController {
 					&& clienteEntity.getTipoIngresso().equals("VIP")) {
 				clienteService.editar(clienteEntity.getCpf(), clienteEntity.getNome(), clienteEntity.getTipoIngresso(),
 						clienteEntity.getId());
+				controleDeCapacidadeEvento.vendaIngressoNormalEVip(eventoEntity);
+				controleDeCapacidadeEvento.retornaIngressoCamarote(eventoEntity);
 				controleDeCapacidadeEvento.editaOValorDoIngressoTrocado(eventoEntity.getPrecoIngressoVip(),
 						clienteEntity, eventoEntity);
 			} 
