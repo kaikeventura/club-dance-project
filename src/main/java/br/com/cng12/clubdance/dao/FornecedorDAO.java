@@ -30,5 +30,8 @@ public interface FornecedorDAO extends JpaRepository<FornecedorEntity, Long> {
 	
 	@Query("select f from FornecedorEntity f where f.nomeFantasia like concat('%',?1,'%')")
 	List<FornecedorEntity> buscarFornecedorPorNome(String nome);
+	
+	@Query("select f from FornecedorEntity f where f.status = 'ATIVO'")
+	List<FornecedorEntity> listarFornecedoresAtivos();
 
 }

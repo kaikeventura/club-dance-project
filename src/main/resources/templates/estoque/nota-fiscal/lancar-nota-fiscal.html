@@ -28,7 +28,8 @@
 			<div class="nav-wrapper">
 				<div class="row">
 					<div class="col s12">
-						<form method="GET" th:action="@{/estoque/nota-fiscal/buscar-fornecedor/nome}">
+						<form method="GET"
+							th:action="@{/estoque/nota-fiscal/buscar-fornecedor/nome}">
 							<div class="input-field col s9">
 								<i class="material-icons prefix">search</i> <input
 									id="icon_prefix" type="text" class="validate" th:name="nome">
@@ -97,7 +98,7 @@
 								<td th:text="${f.razaoSocial}"></td>
 								<td th:text="${f.cnpj}"></td>
 								<td><a
-									href="@{/estoque/fornecedor/detalhes/fornecedor-detalhes/{id} (id=${f.id})}"
+									th:href="@{/estoque/nota-fiscal/lancar/lancar-nota-fiscal-fornecedor/{id} (id=${f.id})}"
 									class="btn-floating btn-small waves-effect waves-light green pulse"><i
 										class="material-icons">playlist_add_check</i></a></td>
 							</tr>

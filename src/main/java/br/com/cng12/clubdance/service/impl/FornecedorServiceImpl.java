@@ -26,6 +26,12 @@ public class FornecedorServiceImpl implements FornecedorService {
 
 		return dao.findAll();
 	}
+	
+	@Override
+	public List<FornecedorEntity> listarFornecedoresAtivos() {
+		// TODO Auto-generated method stub
+		return dao.listarFornecedoresAtivos();
+	}
 
 	@Override
 	public void editar(String nomeFantasia, String razaoSocial, String atividadePrincipal, String cnpj,

@@ -9,6 +9,8 @@ public interface FornecedorService {
 	void salvar(FornecedorEntity fornecedorEntity);
 
 	List<FornecedorEntity> listar();
+	
+	List<FornecedorEntity> listarFornecedoresAtivos();
 
 	void editar(String nomeFantasia, String razaoSocial, String atividadePrincipal, String cnpj,
 			String inscricaoEstadual, String endereco, String bairro, String cidade, String uf, String cep,
