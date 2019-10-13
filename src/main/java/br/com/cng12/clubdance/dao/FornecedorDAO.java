@@ -1,5 +1,7 @@
 package br.com.cng12.clubdance.dao;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -25,5 +27,8 @@ public interface FornecedorDAO extends JpaRepository<FornecedorEntity, Long> {
 			@Param("cep") String cep, @Param("telefone") String telefone, @Param("celular") String celular,
 			@Param("email") String email, @Param("nomeContato") String nomeContato, @Param("status") String status,
 			@Param("id") Long id);
+	
+	@Query("select f from FornecedorEntity f where f.nomeFantasia like concat('%',?1,'%')")
+	List<FornecedorEntity> buscarFornecedorPorNome(String nome);
 
 }

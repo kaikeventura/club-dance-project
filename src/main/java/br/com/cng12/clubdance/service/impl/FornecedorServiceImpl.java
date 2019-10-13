@@ -50,8 +50,8 @@ public class FornecedorServiceImpl implements FornecedorService {
 
 	@Override
 	public List<FornecedorEntity> buscarPorNome(String nome) {
-		// TODO Auto-generated method stub
-		return null;
+
+		return dao.buscarFornecedorPorNome(nome);
 	}
 
 }

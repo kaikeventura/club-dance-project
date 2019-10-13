@@ -3,7 +3,7 @@
 	xmlns:th="http://www.thymeleaf.org">
 
 <head>
-<title>Estoque</title>
+<title>Lançar Nota Fiscal</title>
 <meta charset="utf-8">
 <link rel="icon" type="imagem/png" th:href="@{/img/minilogo.png}" />
 
@@ -28,10 +28,13 @@
 			<div class="nav-wrapper">
 				<div class="row">
 					<div class="col s12">
-						<!-- <a href="#" data-target="sidenav-1"
-							class="left sidenav-trigger hide-on-medium-and-up"><i
-							class="material-icons">menu</i></a> <strong><a href="#"
-							class="brand-logo white-text">Club Dance</a></strong> -->
+						<form method="GET" th:action="@{/estoque/nota-fiscal/buscar-fornecedor/nome}">
+							<div class="input-field col s9">
+								<i class="material-icons prefix">search</i> <input
+									id="icon_prefix" type="text" class="validate" th:name="nome">
+								<label for="icon_prefix">Buscar Fornecedor</label>
+							</div>
+						</form>
 					</div>
 				</div>
 			</div>
@@ -69,22 +72,38 @@
 	</ul>
 
 	<div class="body-principal">
-		<div class="menu-ferramentas-estoque">
-			<div class="row">
-				<a th:href="@{/estoque/produto/produtos}" class="waves-effect waves-light btn-large pink darken-1"><i
-					class="material-icons right">format_align_justify</i>PRODUTO</a>
-			</div>
-			<div class="row">
-				<a th:href="@{/estoque/fornecedor/fornecedores}" class="waves-effect waves-light btn-large pink darken-1"><i
-					class="material-icons right">format_align_justify</i>FORNECEDOR</a>
-			</div>
-			<div class="row">
-				<a th:href="@{/estoque/nota-fiscal/lancar-nota-fiscal}" class="waves-effect waves-light btn-large pink darken-1"><i
-					class="material-icons right">format_align_justify</i>LANÇAR NOTA FISCAL</a>
-			</div>
-			<div class="row">
-				<a class="waves-effect waves-light btn-large pink darken-1"><i
-					class="material-icons right">format_align_justify</i>CONTROLE DE ESTOQUE MINIMO</a>
+		<div class="row">
+			<div class="col s12 m12">
+				<div class="card style-table">
+					<div class="card-action center black">
+						<strong><a class="white-text">Selecionar Fornecedor</a></strong>
+					</div>
+					<div class="divider"></div>
+
+					<!-- Tabela -->
+					<table class="highlight">
+						<thead>
+							<tr>
+								<th>Nome Fantasia</th>
+								<th>Razão Social</th>
+								<th>CNPJ</th>
+								<th>Selecionar</th>
+							</tr>
+						</thead>
+
+						<tbody th:each="f : ${fornecedores}">
+							<tr>
+								<td th:text="${f.nomeFantasia}"></td>
+								<td th:text="${f.razaoSocial}"></td>
+								<td th:text="${f.cnpj}"></td>
+								<td><a
+									href="@{/estoque/fornecedor/detalhes/fornecedor-detalhes/{id} (id=${f.id})}"
+									class="btn-floating btn-small waves-effect waves-light green pulse"><i
+										class="material-icons">playlist_add_check</i></a></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 			</div>
 		</div>
 	</div>

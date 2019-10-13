@@ -19,5 +19,4 @@ public interface FornecedorService {
 	FornecedorEntity buscarPorId(Long id);
 
 	List<FornecedorEntity> buscarPorNome(String nome);
-
 }

@@ -8,7 +8,7 @@ public class EstoqueController {
 
 	@GetMapping("/estoque/inicio-estoque")
 	public String inicioEstoque() {
+		
 		return "estoque/inicio-estoque";
-	}
-	
+	}	
 }

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import br.com.cng12.clubdance.entity.FornecedorEntity;
 import br.com.cng12.clubdance.service.impl.FornecedorServiceImpl;
@@ -94,9 +95,10 @@ public class FornecedorController {
 		return Status.values();
 	}
 
-//	@GetMapping("/estoque/produto/buscar/nome")
-//	public String buscarProdutoPorNome(@RequestParam("nome") String nome, ModelMap model) {
-//		model.addAttribute("produtos", produtoService.buscarPorNome(nome));
-//		return "estoque/produto/produtos";
-//	}
+	@GetMapping("/estoque/fornecedor/buscar/nome")
+	public String buscarFornecedorPorNome(@RequestParam("nome") String nome, ModelMap model) {
+		model.addAttribute("fornecedores", fornecedorService.buscarPorNome(nome));
+		
+		return "estoque/fornecedor/fornecedores";
+	}
 }
