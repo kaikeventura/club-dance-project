@@ -10,7 +10,7 @@ import br.com.cng12.clubdance.service.impl.ComandaServiceImpl;
 import br.com.cng12.clubdance.service.impl.EventoServiceImpl;
 
 @Component
-public class ControleDeCapacidadeEvento {
+public class ControleDeCapacidadeEventoComponent {
 
 	@Autowired
 	private EventoServiceImpl eventoService;

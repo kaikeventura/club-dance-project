@@ -15,7 +15,7 @@ import br.com.cng12.clubdance.entity.EventoEntity;
 import br.com.cng12.clubdance.exceptions.IngressoException;
 import br.com.cng12.clubdance.service.impl.ClienteServiceImpl;
 import br.com.cng12.clubdance.service.impl.EventoServiceImpl;
-import br.com.cng12.clubdance.utils.ControleDeCapacidadeEvento;
+import br.com.cng12.clubdance.utils.ControleDeCapacidadeEventoComponent;
 import lombok.Getter;
 
 @Controller
@@ -31,7 +31,7 @@ public class EventoController {
 	private ClienteController clienteController;
 
 	@Autowired
-	private ControleDeCapacidadeEvento controleDeCapacidadeEvento;
+	private ControleDeCapacidadeEventoComponent controleDeCapacidadeEvento;
 
 	@Getter
 	private Long idEvento = 0L;

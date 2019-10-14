@@ -32,7 +32,7 @@ public class ProdutoEntity {
 	private Double preco;
 	
 	@Column(nullable = false)
-	private Double qtdeEstoque;
+	private int qtdeEstoque;
 	
 	@Column(nullable = true)
 	private String unidadeMedida;

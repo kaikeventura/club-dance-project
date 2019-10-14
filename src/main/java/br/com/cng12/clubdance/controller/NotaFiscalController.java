@@ -12,12 +12,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import br.com.cng12.clubdance.entity.FornecedorEntity;
 import br.com.cng12.clubdance.entity.NotaFiscalEntity;
-import br.com.cng12.clubdance.entity.NotaFiscalFornecedorProdutoEntity;
 import br.com.cng12.clubdance.entity.ProdutoEntity;
 import br.com.cng12.clubdance.service.impl.FornecedorServiceImpl;
 import br.com.cng12.clubdance.service.impl.NotaFiscalServiceImpl;
 import br.com.cng12.clubdance.service.impl.ProdutoServiceImpl;
-import br.com.cng12.clubdance.utils.Temporario;
+import br.com.cng12.clubdance.utils.EntradaDeProdutoComponent;
+import br.com.cng12.clubdance.utils.NotaFiscalAux;
+import br.com.cng12.clubdance.utils.TemporarioComponent;
 
 @Controller
 public class NotaFiscalController {
@@ -26,13 +27,16 @@ public class NotaFiscalController {
 	private FornecedorServiceImpl fornecedorService;
 
 	@Autowired
-	private Temporario temp;
+	private TemporarioComponent temp;
 
 	@Autowired
 	private NotaFiscalServiceImpl notaFiscalService;
 
 	@Autowired
 	private ProdutoServiceImpl produtoService;
+
+	@Autowired
+	private EntradaDeProdutoComponent entradaDeProdutoComponent;
 
 	@GetMapping("/estoque/nota-fiscal/selecionar-fornecedor")
 	public String selecionarFornecedor(FornecedorEntity fornecedorEntity, ModelMap modelMap) {
@@ -74,7 +78,7 @@ public class NotaFiscalController {
 
 	@GetMapping("/estoque/nota-fiscal/lancar/lancar-produto")
 	public String preLancarProduto(FornecedorEntity fornecedorEntity, NotaFiscalEntity notaFiscalEntity,
-			ProdutoEntity produtoEntity, ModelMap modelMap) {
+			ProdutoEntity produtoEntity, NotaFiscalAux notaFiscalAux, ModelMap modelMap) {
 
 		modelMap.addAttribute("fornecedorEntity", fornecedorService.buscarPorId(temp.getIdFornecedorTemp()));
 		modelMap.addAttribute("notaFiscalEntity", notaFiscalService.buscarPorId(temp.getIdNotaFiscalTemp()));
@@ -84,22 +88,14 @@ public class NotaFiscalController {
 	}
 
 	@PostMapping("/estoque/nota-fiscal/lancar/lancar-produto")
-	public String lancarProduto(@Valid ProdutoEntity produtoEntity,
-			@Valid NotaFiscalFornecedorProdutoEntity notaFiscalFornecedorProdutoEntity) {
+	public String lancarProduto(@Valid NotaFiscalAux notaFiscalAux) {
 
-		return "/estoque/nota-fiscal/lancar/lancar-produto";
+		Long idProduto = Long.parseLong(notaFiscalAux.getNomeProduto());
+
+		entradaDeProdutoComponent.lancamentoDeEntradaDeProduto(notaFiscalAux.getValorUnitario(),
+				notaFiscalAux.getQtde(), idProduto);
+
+		return "redirect:/estoque/nota-fiscal/lancar/lancar-produto";
 	}
-
-//	@PostMapping("/teste")
-//	public String test(@Valid NotaFiscalEntity notaFiscalEntity) {
-//		
-//		notaFiscalService.salvar(notaFiscalEntity);
-//		
-//		temp.setIdNotaFiscalTemp(notaFiscalEntity.getId());
-//		System.out.println("preNotaFiscal: " + temp.getIdFornecedorTemp());
-//		System.out.println("novaNotaFiscal: " + temp.getIdNotaFiscalTemp());
-//		
-//		return "estoque/nota-fiscal/lancar/lancar-produto";
-//	}
 
 }

@@ -57,4 +57,10 @@ public class ProdutoServiceImpl implements ProdutoService {
 		return dao.buscarProdutoPorNome(nome);
 	}
 
+	@Override
+	public void lancarEntradaDeProduto(Double preco, int qtdeEstoque, Long id) {
+		
+		dao.LancarEntradaDeProduto(preco, qtdeEstoque, id);
+	}
+
 }

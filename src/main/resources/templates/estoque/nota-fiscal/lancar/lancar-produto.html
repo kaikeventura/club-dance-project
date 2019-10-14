@@ -101,25 +101,37 @@
 			</div>
 		</div>
 		<div class="dados-fornecedor">
-			<form th:action="@{/estoque/nota-fiscal/lancar/lancar-produto}" method="post">
+			<form class="col s12"
+				th:action="@{/estoque/nota-fiscal/lancar/lancar-produto}"
+				th:object="${notaFiscalAux}" method="POST">
 				<div class="row">
-					<div class="input-field col s3" th:object="${produtoEntity}">
+					<div class="input-field col s3">
 						<i class="material-icons prefix">account_circle</i> <select
-							th:field="*{nome}">
+							th:field="*{nomeProduto}">
 							<option value="">Selecione...</option>
-							<option th:each="p : ${produtos}" th:value="${p}"
+							<option th:each="p : ${produtos}" th:value="${p.id}"
 								th:text="${p.nome}"></option>
-						</select> <label>Unidade Medida</label>
+						</select> <label>Produto</label>
 					</div>
-					<div th:object="${notaFiscalFornecedorProdutoEntity}">
-						<div class="input-field col s3">
-							<input id="icon_prefix" type="text" class="validate"
-								th:field="*{valorUnitario}"> <label for="icon_prefix">Valor
-								Unitário</label>
-						</div>
-						<div class="input-field col s3">
-							<input id="icon_prefix" type="text" class="validate"
-								th:field="*{qtde}"> <label for="icon_prefix">Quantidade</label>
+					<div class="input-field col s4">
+						<i class="material-icons prefix">gps_fixed</i> <input
+							id="icon_prefix" type="text" class="validate"
+							th:field="*{valorUnitario}"> <label for="icon_prefix">Valor
+							Unitário</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="input-field col s4">
+						<i class="material-icons prefix">gps_fixed</i> <input
+							id="icon_prefix" type="number" class="validate"
+							th:field="*{qtde}"> <label for="icon_prefix">Quantidade</label>
+					</div>
+					<div class="input-field col s3">
+						<div class="row right-align">
+							<button id="btn-svr-evento" type="submit"
+								class="waves-effect waves-light btn pink darken-1">
+								<i class="material-icons right">border_color</i>Salvar
+							</button>
 						</div>
 					</div>
 				</div>

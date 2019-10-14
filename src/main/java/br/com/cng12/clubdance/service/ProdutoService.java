@@ -19,4 +19,6 @@ public interface ProdutoService {
 	ProdutoEntity buscarPorId(Long id);
 
 	List<ProdutoEntity> buscarPorNome(String nome);
+	
+	void lancarEntradaDeProduto(Double preco, int qtdeEstoque, Long id);
 }

@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Component
 @Data
-public class Temporario {
+public class TemporarioComponent {
 	
 	private Long idFornecedorTemp;
 	private Long idNotaFiscalTemp;

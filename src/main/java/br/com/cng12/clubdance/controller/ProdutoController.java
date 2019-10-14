@@ -31,7 +31,7 @@ public class ProdutoController {
 	@PostMapping("/estoque/produto/cadastrar-produto")
 	public String salvarProduto(@Valid ProdutoEntity produtoEntity) {
 
-		produtoEntity.setQtdeEstoque(0D);
+		produtoEntity.setQtdeEstoque(0);
 		produtoEntity.setPreco(0.0D);
 		produtoService.salvar(produtoEntity);
 

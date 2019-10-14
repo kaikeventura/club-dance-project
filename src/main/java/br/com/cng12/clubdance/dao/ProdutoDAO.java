@@ -28,4 +28,10 @@ public interface ProdutoDAO extends JpaRepository<ProdutoEntity, Long> {
 	@Query("select p from ProdutoEntity p where p.status = 'ATIVO'")
 	List<ProdutoEntity> listarProdutosAtivos();
 
+	@Transactional
+	@Modifying
+	@Query("UPDATE ProdutoEntity p SET p.preco =:preco, p.qtdeEstoque =:qtdeEstoque WHERE p.id =:id")
+	void LancarEntradaDeProduto(@Param("preco") Double preco, @Param("qtdeEstoque") int qtdeEstoque,
+			@Param("id") Long id);
+
 }
