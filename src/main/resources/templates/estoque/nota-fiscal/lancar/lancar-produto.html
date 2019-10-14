@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org">
-
 <head>
 <title>Lançar Produto</title>
 <meta charset="utf-8">
@@ -105,7 +104,7 @@
 				th:action="@{/estoque/nota-fiscal/lancar/lancar-produto}"
 				th:object="${notaFiscalAux}" method="POST">
 				<div class="row">
-					<div class="input-field col s3">
+					<div class="input-field col s5">
 						<i class="material-icons prefix">account_circle</i> <select
 							th:field="*{nomeProduto}">
 							<option value="">Selecione...</option>
@@ -113,20 +112,20 @@
 								th:text="${p.nome}"></option>
 						</select> <label>Produto</label>
 					</div>
-					<div class="input-field col s4">
+					<div class="input-field col s3">
 						<i class="material-icons prefix">gps_fixed</i> <input
 							id="icon_prefix" type="text" class="validate"
 							th:field="*{valorUnitario}"> <label for="icon_prefix">Valor
 							Unitário</label>
 					</div>
-				</div>
-				<div class="row">
-					<div class="input-field col s4">
+					<div class="input-field col s3">
 						<i class="material-icons prefix">gps_fixed</i> <input
 							id="icon_prefix" type="number" class="validate"
 							th:field="*{qtde}"> <label for="icon_prefix">Quantidade</label>
 					</div>
-					<div class="input-field col s3">
+				</div>
+				<div class="row">
+					<div class="input-field col s12">
 						<div class="row right-align">
 							<button id="btn-svr-evento" type="submit"
 								class="waves-effect waves-light btn pink darken-1">

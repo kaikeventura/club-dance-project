@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import br.com.cng12.clubdance.entity.FornecedorEntity;
 import br.com.cng12.clubdance.entity.NotaFiscalEntity;
+import br.com.cng12.clubdance.entity.NotaFiscalFornecedorProdutoEntity;
 import br.com.cng12.clubdance.entity.ProdutoEntity;
 import br.com.cng12.clubdance.service.impl.FornecedorServiceImpl;
+import br.com.cng12.clubdance.service.impl.NotaFiscalFornecedorProdutoEntityServiceImpl;
 import br.com.cng12.clubdance.service.impl.NotaFiscalServiceImpl;
 import br.com.cng12.clubdance.service.impl.ProdutoServiceImpl;
 import br.com.cng12.clubdance.utils.EntradaDeProdutoComponent;
@@ -38,6 +40,9 @@ public class NotaFiscalController {
 	@Autowired
 	private EntradaDeProdutoComponent entradaDeProdutoComponent;
 
+	@Autowired
+	private NotaFiscalFornecedorProdutoEntityServiceImpl NFPService;
+
 	@GetMapping("/estoque/nota-fiscal/selecionar-fornecedor")
 	public String selecionarFornecedor(FornecedorEntity fornecedorEntity, ModelMap modelMap) {
 
@@ -58,8 +63,6 @@ public class NotaFiscalController {
 
 		model.addAttribute("fornecedorEntity", fornecedorService.buscarPorId(id));
 		temp.setIdFornecedorTemp(id);
-		System.out.println("Fornecedor: " + temp.getIdFornecedorTemp());
-		System.out.println("NotaFiscal: " + temp.getIdNotaFiscalTemp());
 
 		return "estoque/nota-fiscal/lancar/nota-fiscal";
 	}
@@ -68,10 +71,7 @@ public class NotaFiscalController {
 	public String novaNotaFiscal(@Valid NotaFiscalEntity notaFiscalEntity) {
 
 		notaFiscalService.salvar(notaFiscalEntity);
-
 		temp.setIdNotaFiscalTemp(notaFiscalEntity.getId());
-		System.out.println("Fornecedor: " + temp.getIdFornecedorTemp());
-		System.out.println("NotaFiscal: " + temp.getIdNotaFiscalTemp());
 
 		return "redirect:/estoque/nota-fiscal/lancar/lancar-produto";
 	}
@@ -91,9 +91,15 @@ public class NotaFiscalController {
 	public String lancarProduto(@Valid NotaFiscalAux notaFiscalAux) {
 
 		Long idProduto = Long.parseLong(notaFiscalAux.getNomeProduto());
+		NotaFiscalEntity notaFiscal = notaFiscalService.buscarPorId(temp.getIdNotaFiscalTemp());
+		FornecedorEntity fornecedor = fornecedorService.buscarPorId(temp.getIdFornecedorTemp());
+		ProdutoEntity produto = produtoService.buscarPorId(idProduto);
+		NotaFiscalFornecedorProdutoEntity NFPEntity = new NotaFiscalFornecedorProdutoEntity(notaFiscal, fornecedor,
+				produto, notaFiscalAux.getValorUnitario(), notaFiscalAux.getQtde());
 
 		entradaDeProdutoComponent.lancamentoDeEntradaDeProduto(notaFiscalAux.getValorUnitario(),
 				notaFiscalAux.getQtde(), idProduto);
+		NFPService.salvar(NFPEntity);
 
 		return "redirect:/estoque/nota-fiscal/lancar/lancar-produto";
 	}

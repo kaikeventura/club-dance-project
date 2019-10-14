@@ -23,14 +23,4 @@ public class EntradaDeProdutoComponent {
 
 	}
 
-	public static void main(String[] args) {
-
-		Double valor = 12032.78D;
-		Double MLucro = 3.98D;
-
-		Double result = (valor * MLucro) / 100;
-
-		System.out.println(result + valor);
-	}
-
 }

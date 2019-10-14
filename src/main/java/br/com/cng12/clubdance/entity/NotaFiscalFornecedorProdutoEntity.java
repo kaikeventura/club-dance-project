@@ -21,18 +21,28 @@ public class NotaFiscalFornecedorProdutoEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@ManyToOne
 	private NotaFiscalEntity notaFiscalEntity;
-	
+
 	@ManyToOne
 	private FornecedorEntity fornecedorEntity;
-	
+
 	@ManyToOne
 	private ProdutoEntity produtoEntity;
-	
+
 	private Double valorUnitario;
-	
-	private Double qtde;
-	
+
+	private int qtde;
+
+	public NotaFiscalFornecedorProdutoEntity(NotaFiscalEntity notaFiscalEntity, FornecedorEntity fornecedorEntity,
+			ProdutoEntity produtoEntity, Double valorUnitario, int qtde) {
+		super();
+		this.notaFiscalEntity = notaFiscalEntity;
+		this.fornecedorEntity = fornecedorEntity;
+		this.produtoEntity = produtoEntity;
+		this.valorUnitario = valorUnitario;
+		this.qtde = qtde;
+	}
+
 }
