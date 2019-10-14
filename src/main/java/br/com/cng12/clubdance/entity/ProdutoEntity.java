@@ -37,6 +37,9 @@ public class ProdutoEntity {
 	@Column(nullable = true)
 	private String unidadeMedida;
 	
+	@Column(nullable = false)
+	private Double margemLucro;
+	
 	@Column(nullable = true)
 	private String status;
 	

@@ -10,11 +10,13 @@ public interface ProdutoService {
 
 	List<ProdutoEntity> listar();
 	
-	void editar(String nome, String marca, String unidadeMedida, String status, Long id);
+	List<ProdutoEntity> listarProdutosAtivos();
+
+	void editar(String nome, String marca, String unidadeMedida, Double margemLucro, String status, Long id);
 
 	void excluir(Long id);
 
 	ProdutoEntity buscarPorId(Long id);
-	
+
 	List<ProdutoEntity> buscarPorNome(String nome);
 }

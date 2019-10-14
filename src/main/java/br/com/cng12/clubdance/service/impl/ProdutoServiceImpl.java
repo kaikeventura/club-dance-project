@@ -28,9 +28,15 @@ public class ProdutoServiceImpl implements ProdutoService {
 	}
 	
 	@Override
-	public void editar(String nome, String marca, String unidadeMedida, String status, Long id) {
+	public List<ProdutoEntity> listarProdutosAtivos() {
 
-		dao.editarProduto(nome, marca, unidadeMedida, status, id);
+		return dao.listarProdutosAtivos();
+	}
+	
+	@Override
+	public void editar(String nome, String marca, String unidadeMedida, Double margemLucro, String status, Long id) {
+		
+		dao.editarProduto(nome, marca, unidadeMedida, margemLucro, status, id);		
 	}
 
 	@Override

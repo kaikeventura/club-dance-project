@@ -17,14 +17,15 @@ public interface ProdutoDAO extends JpaRepository<ProdutoEntity, Long> {
 	@Transactional
 	@Modifying
 	@Query("UPDATE ProdutoEntity p SET p.nome =:nome, p.marca =:marca, p.unidadeMedida =:unidadeMedida, "
-			+ "p.status =:status WHERE p.id =:id")
+			+ "p.margemLucro =:margemLucro, p.status =:status WHERE p.id =:id")
 	void editarProduto(@Param("nome") String nome, @Param("marca") String marca,
-			@Param("unidadeMedida") String unidadeMedida, @Param("status") String status, @Param("id") Long id);
+			@Param("unidadeMedida") String unidadeMedida, @Param("margemLucro") Double margemLucro,
+			@Param("status") String status, @Param("id") Long id);
 
 	@Query("select p from ProdutoEntity p where p.nome like concat('%',?1,'%')")
 	List<ProdutoEntity> buscarProdutoPorNome(String nome);
 
 	@Query("select p from ProdutoEntity p where p.status = 'ATIVO'")
-	List<ProdutoEntity> listarFornecedoresAtivos();
+	List<ProdutoEntity> listarProdutosAtivos();
 
 }

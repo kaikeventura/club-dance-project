@@ -1,6 +1,5 @@
 package br.com.cng12.clubdance.entity;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,7 +20,6 @@ public class NotaFiscalFornecedorProdutoEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="id_nota_fiscal")
 	private Long id;
 	
 	@ManyToOne

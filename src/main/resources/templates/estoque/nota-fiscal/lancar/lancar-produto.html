@@ -100,6 +100,31 @@
 				</div>
 			</div>
 		</div>
+		<div class="dados-fornecedor">
+			<form th:action="@{/estoque/nota-fiscal/lancar/lancar-produto}" method="post">
+				<div class="row">
+					<div class="input-field col s3" th:object="${produtoEntity}">
+						<i class="material-icons prefix">account_circle</i> <select
+							th:field="*{nome}">
+							<option value="">Selecione...</option>
+							<option th:each="p : ${produtos}" th:value="${p}"
+								th:text="${p.nome}"></option>
+						</select> <label>Unidade Medida</label>
+					</div>
+					<div th:object="${notaFiscalFornecedorProdutoEntity}">
+						<div class="input-field col s3">
+							<input id="icon_prefix" type="text" class="validate"
+								th:field="*{valorUnitario}"> <label for="icon_prefix">Valor
+								Unitário</label>
+						</div>
+						<div class="input-field col s3">
+							<input id="icon_prefix" type="text" class="validate"
+								th:field="*{qtde}"> <label for="icon_prefix">Quantidade</label>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
 	</div>
 
 	<!--JQuery-->

@@ -27,8 +27,7 @@
 		<nav class="pink darken-1">
 			<div class="nav-wrapper">
 				<div class="row">
-					<div class="col s12">
-					</div>
+					<div class="col s12"></div>
 				</div>
 			</div>
 		</nav>
@@ -65,8 +64,7 @@
 
 	<div class="body-principal">
 		<div class="row right-align">
-			<a th:href="@{/estoque/produto/produtos}"
-				id="btn-cad-evento"
+			<a th:href="@{/estoque/produto/produtos}" id="btn-cad-evento"
 				class="waves-effect waves-light btn pink darken-1"><i
 				class="material-icons right">border_color</i>Lista de produtos</a>
 		</div>
@@ -84,25 +82,30 @@
 							th:action="${produtoEntity.id == null} ? @{/estoque/produto/cadastrar-produto} : @{/estoque/produto/editar-produto}"
 							th:object="${produtoEntity}" method="POST">
 							<div class="row">
-								<div class="input-field col s6">
+								<div class="input-field col s4">
 									<i class="material-icons prefix">account_circle</i> <input
 										id="icon_prefix" type="text" class="validate"
 										th:field="*{nome}"> <label for="icon_prefix">Nome</label>
 								</div>
-								<div class="input-field col s5">
+								<div class="input-field col s4">
 									<i class="material-icons prefix">gps_fixed</i> <input
 										id="icon_prefix" type="text" class="validate"
 										th:field="*{marca}"> <label for="icon_prefix">Marca</label>
 								</div>
-							</div>
-							<div class="row">
-								<div class="input-field col s4">
+								<div class="input-field col s3">
 									<i class="material-icons prefix">account_circle</i> <select
 										th:field="*{unidadeMedida}">
 										<option value="">Selecione...</option>
 										<option th:each="um : ${unmd}" th:value="${um}"
 											th:text="${um.unidade}"></option>
 									</select> <label>Unidade Medida</label>
+								</div>
+							</div>
+							<div class="row">
+								<div class="input-field col s4">
+									<i class="material-icons prefix">gps_fixed</i> <input
+										id="icon_prefix" type="number" class="validate"
+										th:field="*{margemLucro}"> <label for="icon_prefix">Margem de Lucro %</label>
 								</div>
 								<div class="input-field col s4">
 									<i class="material-icons prefix">account_circle</i> <select

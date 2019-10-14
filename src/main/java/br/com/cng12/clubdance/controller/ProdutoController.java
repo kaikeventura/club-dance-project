@@ -54,9 +54,9 @@ public class ProdutoController {
 
 	@PostMapping("/estoque/produto/editar-produto")
 	public String editarProduto(@Valid ProdutoEntity produtoEntity) {
-
+		
 		produtoService.editar(produtoEntity.getNome(), produtoEntity.getMarca(), produtoEntity.getUnidadeMedida(),
-				produtoEntity.getStatus(), produtoEntity.getId());
+				produtoEntity.getMargemLucro(), produtoEntity.getStatus(), produtoEntity.getId());
 
 		return "redirect:/estoque/produto/cadastrar-produto";
 	}
