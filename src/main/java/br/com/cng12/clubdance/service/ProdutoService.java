@@ -10,7 +10,7 @@ public interface ProdutoService {
 
 	List<ProdutoEntity> listar();
 	
-	void editar(String nome, String marca, String unidadeMedida, Long id);
+	void editar(String nome, String marca, String unidadeMedida, String status, Long id);
 
 	void excluir(Long id);
 

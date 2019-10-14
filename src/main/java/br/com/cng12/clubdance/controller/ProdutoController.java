@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import br.com.cng12.clubdance.entity.ProdutoEntity;
 import br.com.cng12.clubdance.service.impl.ProdutoServiceImpl;
+import br.com.cng12.clubdance.utils.Status;
 import br.com.cng12.clubdance.utils.UnidadeMedida;
 
 @Controller
@@ -32,7 +33,6 @@ public class ProdutoController {
 
 		produtoEntity.setQtdeEstoque(0D);
 		produtoEntity.setPreco(0.0D);
-
 		produtoService.salvar(produtoEntity);
 
 		return "redirect:/estoque/produto/cadastrar-produto";
@@ -56,11 +56,11 @@ public class ProdutoController {
 	public String editarProduto(@Valid ProdutoEntity produtoEntity) {
 
 		produtoService.editar(produtoEntity.getNome(), produtoEntity.getMarca(), produtoEntity.getUnidadeMedida(),
-				produtoEntity.getId());
+				produtoEntity.getStatus(), produtoEntity.getId());
 
 		return "redirect:/estoque/produto/cadastrar-produto";
 	}
-	
+
 	@GetMapping("/estoque/produto/excluir-produto/{id}")
 	public String excluirProduto(@PathVariable("id") Long id) {
 
@@ -73,7 +73,12 @@ public class ProdutoController {
 	public UnidadeMedida[] getUNMDs() {
 		return UnidadeMedida.values();
 	}
-	
+
+	@ModelAttribute("status")
+	public Status[] getStatus() {
+		return Status.values();
+	}
+
 	@GetMapping("/estoque/produto/buscar/nome")
 	public String buscarProdutoPorNome(@RequestParam("nome") String nome, ModelMap model) {
 		model.addAttribute("produtos", produtoService.buscarPorNome(nome));

@@ -125,5 +125,12 @@ body {
 	padding: -4%;
 }
 
-
 /* --------------------------------------------------- */
+
+/* ----------------Lançar Produto Nota Fiscal---------------- */
+.dados-fornecedor {
+	background: white;
+	width: 98% !important;
+	margin-left: 1% !important;
+	margin-top: 0.3% !important;
+}

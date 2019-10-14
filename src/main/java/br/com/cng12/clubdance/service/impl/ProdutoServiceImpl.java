@@ -28,9 +28,9 @@ public class ProdutoServiceImpl implements ProdutoService {
 	}
 	
 	@Override
-	public void editar(String nome, String marca, String unidadeMedida, Long id) {
+	public void editar(String nome, String marca, String unidadeMedida, String status, Long id) {
 
-		dao.editarProduto(nome, marca, unidadeMedida, id);
+		dao.editarProduto(nome, marca, unidadeMedida, status, id);
 	}
 
 	@Override
@@ -50,7 +50,5 @@ public class ProdutoServiceImpl implements ProdutoService {
 		
 		return dao.buscarProdutoPorNome(nome);
 	}
-
-	
 
 }

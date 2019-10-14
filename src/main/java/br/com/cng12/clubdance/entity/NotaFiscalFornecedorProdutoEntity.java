@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -12,32 +13,28 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Table(name = "produto")
+@Table(name = "nota_fiscal_fornecedor_produto")
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProdutoEntity {
+public class NotaFiscalFornecedorProdutoEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="id_nota_fiscal")
 	private Long id;
-
-	@Column(nullable = true, unique = true)
-	private String nome;
 	
-	@Column(nullable = false)
-	private String marca;
+	@ManyToOne
+	private NotaFiscalEntity notaFiscalEntity;
 	
-	@Column(nullable = true)
-	private Double preco;
+	@ManyToOne
+	private FornecedorEntity fornecedorEntity;
 	
-	@Column(nullable = false)
-	private Double qtdeEstoque;
+	@ManyToOne
+	private ProdutoEntity produtoEntity;
 	
-	@Column(nullable = true)
-	private String unidadeMedida;
+	private Double valorUnitario;
 	
-	@Column(nullable = true)
-	private String status;
+	private Double qtde;
 	
 }

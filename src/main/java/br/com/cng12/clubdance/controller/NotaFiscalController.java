@@ -1,46 +1,91 @@
 package br.com.cng12.clubdance.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import br.com.cng12.clubdance.entity.FornecedorEntity;
+import br.com.cng12.clubdance.entity.NotaFiscalEntity;
 import br.com.cng12.clubdance.service.impl.FornecedorServiceImpl;
+import br.com.cng12.clubdance.service.impl.NotaFiscalServiceImpl;
+import br.com.cng12.clubdance.utils.Temporario;
 
 @Controller
 public class NotaFiscalController {
 
 	@Autowired
 	private FornecedorServiceImpl fornecedorService;
-	
-	@GetMapping("/estoque/nota-fiscal/lancar-nota-fiscal")
-	public String lancarNotaFiscal(FornecedorEntity fornecedorEntity, ModelMap modelMap) {
-		
+
+	@Autowired
+	private Temporario temp;
+
+	@Autowired
+	private NotaFiscalServiceImpl notaFiscalService;
+
+	@GetMapping("/estoque/nota-fiscal/selecionar-fornecedor")
+	public String selecionarFornecedor(FornecedorEntity fornecedorEntity, ModelMap modelMap) {
+
 		modelMap.addAttribute("fornecedores", fornecedorService.listarFornecedoresAtivos());
-		
-		return "estoque/nota-fiscal/lancar-nota-fiscal";
+
+		return "estoque/nota-fiscal/selecionar-fornecedor";
 	}
-	
+
 	@GetMapping("/estoque/nota-fiscal/buscar-fornecedor/nome")
 	public String buscarFornecedorPorNome(@RequestParam("nome") String nome, ModelMap model) {
 		model.addAttribute("fornecedores", fornecedorService.buscarPorNome(nome));
-		
-		return "estoque/nota-fiscal/lancar-nota-fiscal";
+
+		return "estoque/nota-fiscal/selecionar-fornecedor";
 	}
-	
-	@GetMapping("/estoque/nota-fiscal/lancar/lancar-nota-fiscal-fornecedor/{id}")
-	public String preLancarNotaFiscalFornecedor(@PathVariable("id") Long id, ModelMap model) {
+
+	@GetMapping("/estoque/nota-fiscal/lancar/nota-fiscal/{id}")
+	public String preNotaFiscal(@PathVariable("id") Long id, ModelMap model, NotaFiscalEntity notaFiscalEntity) {
+
 		model.addAttribute("fornecedorEntity", fornecedorService.buscarPorId(id));
-		
-		return "estoque/nota-fiscal/lancar/lancar-nota-fiscal-fornecedor";
+		temp.setIdFornecedorTemp(id);
+		System.out.println("Fornecedor: " + temp.getIdFornecedorTemp());
+		System.out.println("NotaFiscal: " + temp.getIdNotaFiscalTemp());
+
+		return "estoque/nota-fiscal/lancar/nota-fiscal";
 	}
-	
-//	@GetMapping("/estoque/nota-fiscal/lancar/lancar-nota-fiscal-fornecedor")
-//	public String lancarNotaFiscalFornecedor(FornecedorEntity fornecedorEntity) {
+
+	@PostMapping("/estoque/nota-fiscal/lancar/nota-fiscal")
+	public String novaNotaFiscal(@Valid NotaFiscalEntity notaFiscalEntity) {
+
+		notaFiscalService.salvar(notaFiscalEntity);
+
+		temp.setIdNotaFiscalTemp(notaFiscalEntity.getId());
+		System.out.println("Fornecedor: " + temp.getIdFornecedorTemp());
+		System.out.println("NotaFiscal: " + temp.getIdNotaFiscalTemp());
+
+		return "redirect:/estoque/nota-fiscal/lancar/lancar-produto";
+	}
+
+	@GetMapping("/estoque/nota-fiscal/lancar/lancar-produto")
+	public String preLancarProduto(FornecedorEntity fornecedorEntity, NotaFiscalEntity notaFiscalEntity,
+			ModelMap modelMap) {
+
+		modelMap.addAttribute("fornecedorEntity", fornecedorService.buscarPorId(temp.getIdFornecedorTemp()));
+		modelMap.addAttribute("notaFiscalEntity", notaFiscalService.buscarPorId(temp.getIdNotaFiscalTemp()));
+
+		return "/estoque/nota-fiscal/lancar/lancar-produto";
+	}
+
+//	@PostMapping("/teste")
+//	public String test(@Valid NotaFiscalEntity notaFiscalEntity) {
 //		
-//		return "estoque/nota-fiscal/lancar/lancar-nota-fiscal-fornecedor";
+//		notaFiscalService.salvar(notaFiscalEntity);
+//		
+//		temp.setIdNotaFiscalTemp(notaFiscalEntity.getId());
+//		System.out.println("preNotaFiscal: " + temp.getIdFornecedorTemp());
+//		System.out.println("novaNotaFiscal: " + temp.getIdNotaFiscalTemp());
+//		
+//		return "estoque/nota-fiscal/lancar/lancar-produto";
 //	}
+
 }

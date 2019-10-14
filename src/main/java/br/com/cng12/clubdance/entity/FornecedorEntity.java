@@ -64,6 +64,6 @@ public class FornecedorEntity {
 	@Column(nullable = false)
 	private String nomeContato;
 	
-	@Column(nullable = true, unique = true)
+	@Column(nullable = true)
 	private String status;
 }

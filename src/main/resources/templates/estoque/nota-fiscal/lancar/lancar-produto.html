@@ -3,7 +3,7 @@
 	xmlns:th="http://www.thymeleaf.org">
 
 <head>
-<title>Lançar Nota Fiscal</title>
+<title>Lançar Produto</title>
 <meta charset="utf-8">
 <link rel="icon" type="imagem/png" th:href="@{/img/minilogo.png}" />
 
@@ -27,16 +27,7 @@
 		<nav class="pink darken-1">
 			<div class="nav-wrapper">
 				<div class="row">
-					<div class="col s12">
-						<form method="GET"
-							th:action="@{/estoque/nota-fiscal/buscar-fornecedor/nome}">
-							<div class="input-field col s9">
-								<i class="material-icons prefix">search</i> <input
-									id="icon_prefix" type="text" class="validate" th:name="nome">
-								<label for="icon_prefix">Buscar Fornecedor</label>
-							</div>
-						</form>
-					</div>
+					<div class="col s12"></div>
 				</div>
 			</div>
 		</nav>
@@ -73,37 +64,39 @@
 	</ul>
 
 	<div class="body-principal">
-		<div class="row">
-			<div class="col s12 m12">
-				<div class="card style-table">
-					<div class="card-action center black">
-						<strong><a class="white-text">Selecionar Fornecedor</a></strong>
-					</div>
-					<div class="divider"></div>
-
-					<!-- Tabela -->
-					<table class="highlight">
-						<thead>
-							<tr>
-								<th>Nome Fantasia</th>
-								<th>Razão Social</th>
-								<th>CNPJ</th>
-								<th>Selecionar</th>
-							</tr>
-						</thead>
-
-						<tbody th:each="f : ${fornecedores}">
-							<tr>
-								<td th:text="${f.nomeFantasia}"></td>
-								<td th:text="${f.razaoSocial}"></td>
-								<td th:text="${f.cnpj}"></td>
-								<td><a
-									th:href="@{/estoque/nota-fiscal/lancar/lancar-nota-fiscal-fornecedor/{id} (id=${f.id})}"
-									class="btn-floating btn-small waves-effect waves-light green pulse"><i
-										class="material-icons">playlist_add_check</i></a></td>
-							</tr>
-						</tbody>
-					</table>
+		<div class="dados-fornecedor">
+			<div class="row" th:object="${fornecedorEntity}">
+				<div class="input-field col s3">
+					<input id="icon_prefix" type="text" class="validate"
+						th:field="*{nomeFantasia}" disabled="disabled"> <label
+						for="icon_prefix">Nome Fantasia</label>
+				</div>
+				<div class="input-field col s3">
+					<input id="icon_prefix" type="text" class="validate"
+						th:field="*{razaoSocial}" disabled="disabled"> <label
+						for="icon_prefix">Razão Social</label>
+				</div>
+				<div class="input-field col s3">
+					<input id="icon_prefix" type="text" class="validate"
+						th:field="*{cnpj}" disabled="disabled"> <label
+						for="icon_prefix">CNPJ</label>
+				</div>
+				<div class="input-field col s3">
+					<input id="icon_prefix" type="text" class="validate"
+						th:field="*{inscricaoEstadual}" disabled="disabled"> <label
+						for="icon_prefix">Nome Fantasia</label>
+				</div>
+			</div>
+			<div class="row" th:object="${notaFiscalEntity}">
+				<div class="input-field col s6">
+					<input id="icon_prefix" type="text" class="validate"
+						th:field="*{numero}" disabled="disabled"> <label
+						for="icon_prefix">Número Nota Fiscal</label>
+				</div>
+				<div class="input-field col s6">
+					<input id="icon_prefix" type="text" class="validate"
+						th:field="*{dataEmissao}" disabled="disabled"> <label
+						for="icon_prefix">Data de Emissão</label>
 				</div>
 			</div>
 		</div>

@@ -28,10 +28,6 @@
 			<div class="nav-wrapper">
 				<div class="row">
 					<div class="col s12">
-						<!-- <a href="#" data-target="sidenav-1"
-							class="left sidenav-trigger hide-on-medium-and-up"><i
-							class="material-icons">menu</i></a> <strong><a href="#"
-							class="brand-logo white-text">Club Dance</a></strong> -->
 					</div>
 				</div>
 			</div>
@@ -100,7 +96,7 @@
 								</div>
 							</div>
 							<div class="row">
-								<div class="input-field col s6">
+								<div class="input-field col s4">
 									<i class="material-icons prefix">account_circle</i> <select
 										th:field="*{unidadeMedida}">
 										<option value="">Selecione...</option>
@@ -108,7 +104,15 @@
 											th:text="${um.unidade}"></option>
 									</select> <label>Unidade Medida</label>
 								</div>
-								<div class="input-field col s5">
+								<div class="input-field col s4">
+									<i class="material-icons prefix">account_circle</i> <select
+										th:field="*{status}">
+										<option value="">Selecione...</option>
+										<option th:each="s : ${status}" th:value="${s}"
+											th:text="${s.status}"></option>
+									</select> <label>Status</label>
+								</div>
+								<div class="input-field col s3">
 									<div class="row right-align">
 										<input type="hidden" id="id" th:field="*{id}" />
 										<button id="btn-svr-evento" type="submit"

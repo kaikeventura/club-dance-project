@@ -21,26 +21,21 @@ import lombok.Getter;
 @Controller
 public class EventoController {
 
-	// Injeção de dependência
 	@Autowired
 	private EventoServiceImpl eventoService;
 
-	// Injeção de dependência
 	@Autowired
 	private ClienteServiceImpl clienteService;
 
-	// Injeção de dependência
 	@Autowired
 	private ClienteController clienteController;
 
-	// Injeção de dependência
 	@Autowired
 	private ControleDeCapacidadeEvento controleDeCapacidadeEvento;
 
 	@Getter
 	private Long idEvento = 0L;
 
-	// Chama a página para renderizar
 	@GetMapping("/evento/cadastrar-evento")
 	public String cadastroDeEvento(EventoEntity eventoEntity) {
 		return "evento/cadastrar-evento";
