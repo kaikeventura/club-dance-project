@@ -93,7 +93,7 @@
 						for="icon_prefix">Número Nota Fiscal</label>
 				</div>
 				<div class="input-field col s6">
-					<input id="icon_prefix" type="text" class="validate"
+					<input id="dataEvento" type="text" class="validate"
 						th:field="*{dataEmissao}" disabled="disabled"> <label
 						for="icon_prefix">Data de Emissão</label>
 				</div>
@@ -158,6 +158,14 @@
 		$(document).ready(function() {
 			$('select').formSelect();
 		});
+	</script>
+	<script>
+		let dateVariavel = document.getElementById('dataEvento');
+		var data = new Date(dateVariavel.value);
+		var result = data.toISOString().substr(0, 10).split('-').reverse()
+				.join('/');
+		console.log(result);
+		dateVariavel.value = result;
 	</script>
 </body>
 
