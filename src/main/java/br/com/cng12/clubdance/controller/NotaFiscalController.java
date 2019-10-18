@@ -1,5 +1,7 @@
 package br.com.cng12.clubdance.controller;
 
+import java.time.LocalDate;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +43,7 @@ public class NotaFiscalController {
 	private EntradaDeProdutoComponent entradaDeProdutoComponent;
 
 	@Autowired
-	private NotaFiscalFornecedorProdutoEntityServiceImpl NFPService;
+	private static NotaFiscalFornecedorProdutoEntityServiceImpl NFPService;
 
 	@GetMapping("/estoque/nota-fiscal/selecionar-fornecedor")
 	public String selecionarFornecedor(FornecedorEntity fornecedorEntity, ModelMap modelMap) {
@@ -70,6 +72,7 @@ public class NotaFiscalController {
 	@PostMapping("/estoque/nota-fiscal/lancar/nota-fiscal")
 	public String novaNotaFiscal(@Valid NotaFiscalEntity notaFiscalEntity) {
 
+		notaFiscalEntity.setDataLancamento(LocalDate.now());
 		notaFiscalService.salvar(notaFiscalEntity);
 		temp.setIdNotaFiscalTemp(notaFiscalEntity.getId());
 
@@ -84,7 +87,7 @@ public class NotaFiscalController {
 		modelMap.addAttribute("notaFiscalEntity", notaFiscalService.buscarPorId(temp.getIdNotaFiscalTemp()));
 		modelMap.addAttribute("produtos", produtoService.listarProdutosAtivos());
 
-		return "/estoque/nota-fiscal/lancar/lancar-produto";
+		return "estoque/nota-fiscal/lancar/lancar-produto";
 	}
 
 	@PostMapping("/estoque/nota-fiscal/lancar/lancar-produto")
@@ -104,4 +107,42 @@ public class NotaFiscalController {
 		return "redirect:/estoque/nota-fiscal/lancar/lancar-produto";
 	}
 
+	// Acesso admin
+	@GetMapping("/estoque/nota-fiscal/lista/notas-fiscais")
+	public String notasFiscaisLancadas(NotaFiscalFornecedorProdutoEntity NFPEntity, ModelMap modelMap) {
+
+		modelMap.addAttribute("notasFiscais", notaFiscalService.listar());
+
+		return "estoque/nota-fiscal/lista/notas-fiscais";
+	}
+
+//	@GetMapping("/estoque/nota-fiscal/lista/editar/selecionar-produto/{id}")
+//	public String preEditarNotaFiscalSelecionarProduto(@PathVariable("id") Long id, NotaFiscalEntity notaFiscalEntity,
+//			NotaFiscalFornecedorProdutoEntity NFPEntity, FornecedorEntity fornecedorEntity,
+//			ProdutoEntity produtoEntity, ModelMap modelMap) {
+//		
+//		NotaFiscalEntity notaFiscal = notaFiscalService.buscarPorId(id);
+//		NotaFiscalFornecedorProdutoEntity NFP = NFPService.buscarPorId(id);
+//		
+//		modelMap.addAttribute("notaFiscal", notaFiscalService.buscarPorId(id));
+//		modelMap.addAttribute("NFPEntity", NFPService.buscarNFPComIdNotaFiscal(notaFiscal));
+//		modelMap.addAttribute("fornecedor", fornecedorService.buscarPorId(NFP.getNotaFiscalEntity().getId()));
+//		modelMap.addAttribute("produto", produtoService.buscarPorId(NFP.getProdutoEntity().getId()));
+//		
+//		return "estoque/nota-fiscal/lista/editar/selecionar-produto";
+//	}
+	
+	@GetMapping("/estoque/nota-fiscal/lista/editar/selecionar-produto/{id}")
+	public String preEditarNotaFiscalSelecionarProduto(@PathVariable("id") Long id, ModelMap modelMap) {
+		
+		NotaFiscalEntity notaFiscal = notaFiscalService.buscarPorId(id);
+		NotaFiscalFornecedorProdutoEntity NFP = NFPService.buscarPorId(id);
+		
+		modelMap.addAttribute("notaFiscal", notaFiscalService.buscarPorId(id));
+//		modelMap.addAttribute("NFPEntity", NFPService.buscarNFPComIdNotaFiscal(notaFiscal));
+//		modelMap.addAttribute("fornecedor", fornecedorService.buscarPorId(NFP.getNotaFiscalEntity().getId()));
+//		modelMap.addAttribute("produto", produtoService.buscarPorId(NFP.getProdutoEntity().getId()));
+		
+		return "estoque/nota-fiscal/lista/editar/selecionar-produto";
+	}
 }

@@ -33,4 +33,10 @@ public class NotaFiscalServiceImpl implements NotaFiscalService {
 		return dao.buscarPorNumero(numero);
 	}
 
+	@Override
+	public List<NotaFiscalEntity> listar() {
+		
+		return dao.findAll();
+	}
+
 }

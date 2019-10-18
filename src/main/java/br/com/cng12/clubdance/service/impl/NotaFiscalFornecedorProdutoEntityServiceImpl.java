@@ -1,9 +1,12 @@
 package br.com.cng12.clubdance.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.cng12.clubdance.dao.NotaFiscalFornecedorProdutoEntityDAO;
+import br.com.cng12.clubdance.entity.NotaFiscalEntity;
 import br.com.cng12.clubdance.entity.NotaFiscalFornecedorProdutoEntity;
 import br.com.cng12.clubdance.service.NotaFiscalFornecedorProdutoEntityService;
 
@@ -17,6 +20,18 @@ public class NotaFiscalFornecedorProdutoEntityServiceImpl implements NotaFiscalF
 	public void salvar(NotaFiscalFornecedorProdutoEntity notaFiscalFornecedorProdutoEntity) {
 		
 		dao.save(notaFiscalFornecedorProdutoEntity);
+	}
+
+	@Override
+	public List<NotaFiscalFornecedorProdutoEntity> buscarNFPComIdNotaFiscal(NotaFiscalEntity notaFiscalEntity) {
+		
+		return dao.buscarNFPComIdNotaFiscal(notaFiscalEntity);
+	}
+
+	@Override
+	public NotaFiscalFornecedorProdutoEntity buscarPorId(Long id) {
+
+		return dao.getOne(id);
 	}
 	
 	

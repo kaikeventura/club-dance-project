@@ -32,4 +32,8 @@ public class NotaFiscalEntity {
 	@DateTimeFormat(iso = ISO.DATE)
 	private LocalDate dataEmissao;
 	
+	@Column(nullable = false)
+	@DateTimeFormat(iso = ISO.DATE)
+	private LocalDate dataLancamento;
+	
 }

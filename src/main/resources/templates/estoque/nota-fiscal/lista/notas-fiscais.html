@@ -3,7 +3,7 @@
 	xmlns:th="http://www.thymeleaf.org">
 
 <head>
-<title>Selecionar Fornecedor</title>
+<title>Notas Fiscais - Lançadas</title>
 <meta charset="utf-8">
 <link rel="icon" type="imagem/png" th:href="@{/img/minilogo.png}" />
 
@@ -28,18 +28,16 @@
 			<div class="nav-wrapper">
 				<div class="row">
 					<div class="col s12">
-						<form method="GET"
-							th:action="@{/estoque/nota-fiscal/buscar-fornecedor/nome}">
-							<div class="input-field col s8">
+						<form method="GET" action="@{}">
+							<div class="input-field col s10">
 								<i class="material-icons prefix">search</i> <input
 									id="icon_prefix" type="text" class="validate" th:name="nome">
-								<label for="icon_prefix">Buscar Fornecedor</label>
+								<label for="icon_prefix">Buscar Nota Fiscal</label>
 							</div>
 						</form>
-						<div class="input-field col s4 right-align">
-							<a th:href="@{/estoque/nota-fiscal/lista/notas-fiscais}"
-								class="waves-effect waves-light btn pink darken-1">Notas
-								Fiscais Lançadas</a>
+						<div class="input-field col s2 right-align">
+							<a th:href="@{/estoque/nota-fiscal/selecionar-fornecedor}"
+								class="waves-effect waves-light btn pink darken-1">Voltar</a>
 						</div>
 					</div>
 				</div>
@@ -82,7 +80,7 @@
 			<div class="col s12 m12">
 				<div class="card style-table">
 					<div class="card-action center black">
-						<strong><a class="white-text">Selecionar Fornecedor</a></strong>
+						<strong><a class="white-text">Selecionar Nota Fiscal</a></strong>
 					</div>
 					<div class="divider"></div>
 
@@ -90,20 +88,20 @@
 					<table class="highlight">
 						<thead>
 							<tr>
-								<th>Nome Fantasia</th>
-								<th>Razão Social</th>
-								<th>CNPJ</th>
+								<th>Número nota fiscal</th>
+								<th>Data de emissão</th>
+								<th>Data de lançamento</th>
 								<th>Selecionar</th>
 							</tr>
 						</thead>
 
-						<tbody th:each="f : ${fornecedores}">
+						<tbody th:each="nf : ${notasFiscais}">
 							<tr>
-								<td th:text="${f.nomeFantasia}"></td>
-								<td th:text="${f.razaoSocial}"></td>
-								<td th:text="${f.cnpj}"></td>
+								<td th:text="${nf.numero}"></td>
+								<td th:text="${#temporals.format(nf.dataEmissao, 'dd/MM/yyyy')}"></td>
+								<td th:text="${#temporals.format(nf.dataLancamento, 'dd/MM/yyyy')}"></td>
 								<td><a
-									th:href="@{/estoque/nota-fiscal/lancar/nota-fiscal/{id} (id=${f.id})}"
+									th:href="@{/estoque/nota-fiscal/lista/editar/selecionar-produto/{id} (id=${nf.id})}"
 									class="btn-floating btn-small waves-effect waves-light green pulse"><i
 										class="material-icons">playlist_add_check</i></a></td>
 							</tr>
