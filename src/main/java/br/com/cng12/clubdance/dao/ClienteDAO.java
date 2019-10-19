@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.cng12.clubdance.entity.ClienteEntity;
+import br.com.cng12.clubdance.entity.EventoEntity;
 
 @Repository
 public interface ClienteDAO extends JpaRepository<ClienteEntity, Long> {
@@ -29,5 +30,8 @@ public interface ClienteDAO extends JpaRepository<ClienteEntity, Long> {
 	@Query("select c from ClienteEntity c WHERE c.eventoEntity =:idEvento and c.tipoIngresso =:tipoIngresso")
 	List<ClienteEntity> buscarClientesEvento(@Param("idEvento") Long idEvento,
 			@Param("tipoIngresso") String tipoIngresso);
+	
+	@Query("select c from ClienteEntity c WHERE c.eventoEntity =:eventoEntity")
+	List<ClienteEntity> buscarClientesDoEvento(@Param("eventoEntity") EventoEntity eventoEntity);
 	
 }

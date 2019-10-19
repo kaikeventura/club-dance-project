@@ -23,14 +23,14 @@ public class ComandaServiceImpl implements ComandaService {
 
 		comandaEntity.setClienteEntity(clienteEntity);
 		comandaEntity.setEventoEntity(eventoEntity);
-		comandaEntity.setPrecoIngresso(precoIngresso);		
-		
+		comandaEntity.setPrecoIngresso(precoIngresso);
+
 		dao.save(comandaEntity);
 	}
 
 	@Override
 	public List<ComandaEntity> buscarComandaComCliente(Long idCliente) {
-		
+
 		return dao.buscarComandaComCliente(idCliente);
 	}
 
@@ -41,5 +41,10 @@ public class ComandaServiceImpl implements ComandaService {
 		dao.editarValorSeTrocarTipoDeIngresso(precoIngresso, clienteEntity, eventoEntity);
 	}
 
-	
+	@Override
+	public ComandaEntity buscarPorIdClienteIdEvento(ClienteEntity clienteEntity, EventoEntity eventoEntity) {
+		
+		return dao.buscarPorIdClienteIdEvento(clienteEntity, eventoEntity);
+	}
+
 }

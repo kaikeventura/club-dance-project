@@ -3,6 +3,7 @@ package br.com.cng12.clubdance.service;
 import java.util.List;
 
 import br.com.cng12.clubdance.entity.ClienteEntity;
+import br.com.cng12.clubdance.entity.EventoEntity;
 
 public interface ClienteService {
 
@@ -21,4 +22,6 @@ public interface ClienteService {
 	List<ClienteEntity> buscarPorCpf(String cpf, Long idEvento);
 
 	List<ClienteEntity> buscarClientesEvento(Long idEvento, String tipoIngresso);
+	
+	List<ClienteEntity> buscarClientesDoEvento(EventoEntity eventoEntity);
 }

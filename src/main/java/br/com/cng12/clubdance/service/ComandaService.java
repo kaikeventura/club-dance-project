@@ -15,4 +15,6 @@ public interface ComandaService {
 
 	void editarValorSeTrocarTipoDeIngresso(Double precoIngresso, ClienteEntity clienteEntity,
 			EventoEntity eventoEntity);
+	
+	ComandaEntity buscarPorIdClienteIdEvento(ClienteEntity clienteEntity, EventoEntity eventoEntity);
 }

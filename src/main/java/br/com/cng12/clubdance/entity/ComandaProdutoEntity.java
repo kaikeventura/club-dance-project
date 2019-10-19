@@ -26,5 +26,12 @@ public class ComandaProdutoEntity {
 	private ProdutoEntity produtoEntity;
 	
 	@Column(nullable = true)
-	private Double preco;
+	private Double valorUnitario;
+	
+	@Column(nullable = true)
+	private int qtde;
+	
+	@Column(nullable = true)
+	private Double valorTotal;
+	
 }

@@ -17,7 +17,7 @@ import br.com.cng12.clubdance.exceptions.IngressoException;
 import br.com.cng12.clubdance.service.impl.ClienteServiceImpl;
 import br.com.cng12.clubdance.service.impl.ComandaServiceImpl;
 import br.com.cng12.clubdance.service.impl.EventoServiceImpl;
-import br.com.cng12.clubdance.utils.ControleDeCapacidadeEventoComponent;
+import br.com.cng12.clubdance.utils.components.ControleDeCapacidadeEventoComponent;
 
 @Controller
 public class ClienteController {

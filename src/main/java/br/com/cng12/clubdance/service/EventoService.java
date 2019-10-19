@@ -21,5 +21,9 @@ public interface EventoService {
 	void editarCapacidadeDoEvento(int capacidade, Long id);
 	
 	void editarCapacidadeDoEventoCamarote(int capacidadeCamarote, Long id);
+	
+	List<EventoEntity> listarEventosAtivos();
+	
+	List<EventoEntity> listarEventosInativos();
 
 }

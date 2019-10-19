@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.cng12.clubdance.dao.ClienteDAO;
 import br.com.cng12.clubdance.entity.ClienteEntity;
+import br.com.cng12.clubdance.entity.EventoEntity;
 import br.com.cng12.clubdance.service.ClienteService;
 
 @Service
@@ -61,6 +62,12 @@ public class ClienteServiceImpl implements ClienteService {
 	public List<ClienteEntity> buscarClientesEvento(Long idEvento, String tipoIngresso) {
 		
 		return dao.buscarClientesEvento(idEvento, tipoIngresso);
+	}
+
+	@Override
+	public List<ClienteEntity> buscarClientesDoEvento(EventoEntity eventoEntity) {
+		
+		return dao.buscarClientesDoEvento(eventoEntity);
 	}
 
 }

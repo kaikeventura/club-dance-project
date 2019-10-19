@@ -1,4 +1,4 @@
-package br.com.cng12.clubdance.utils;
+package br.com.cng12.clubdance.utils.auxiliares;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

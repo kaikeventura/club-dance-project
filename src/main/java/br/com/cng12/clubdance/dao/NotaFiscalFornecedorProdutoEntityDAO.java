@@ -1,7 +1,5 @@
 package br.com.cng12.clubdance.dao;
 
-import java.util.List;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -14,7 +12,7 @@ import br.com.cng12.clubdance.entity.NotaFiscalFornecedorProdutoEntity;
 public interface NotaFiscalFornecedorProdutoEntityDAO extends JpaRepository<NotaFiscalFornecedorProdutoEntity, Long> {
 
 	@Query("select nfp from NotaFiscalFornecedorProdutoEntity nfp where nfp.notaFiscalEntity =:notaFiscalEntity")
-	List<NotaFiscalFornecedorProdutoEntity> buscarNFPComIdNotaFiscal(
+	NotaFiscalFornecedorProdutoEntity buscarNFPComIdNotaFiscal(
 			@Param("notaFiscalEntity") NotaFiscalEntity notaFiscalEntity);
 
 }

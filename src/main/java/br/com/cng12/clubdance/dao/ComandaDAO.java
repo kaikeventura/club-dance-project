@@ -24,4 +24,9 @@ public interface ComandaDAO extends JpaRepository<ComandaEntity, Long> {
 	@Query("UPDATE ComandaEntity c SET c.precoIngresso =:precoIngresso WHERE c.clienteEntity =:clienteEntity and c.eventoEntity =:eventoEntity")
 	void editarValorSeTrocarTipoDeIngresso(@Param("precoIngresso") Double precoIngresso,
 			@Param("clienteEntity") ClienteEntity clienteEntity, @Param("eventoEntity") EventoEntity eventoEntity);
+
+	@Query("select c from ComandaEntity c WHERE c.clienteEntity =:clienteEntity and c.eventoEntity =:eventoEntity")
+	ComandaEntity buscarPorIdClienteIdEvento(@Param("clienteEntity") ClienteEntity clienteEntity,
+			@Param("eventoEntity") EventoEntity eventoEntity);
+
 }

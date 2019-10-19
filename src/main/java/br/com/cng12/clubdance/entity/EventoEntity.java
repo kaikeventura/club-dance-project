@@ -55,6 +55,6 @@ public class EventoEntity {
 	private Double precoIngressoCamarote;
 	
 	@Column(nullable = true)
-	private boolean status;
+	private String status;
 	
 }

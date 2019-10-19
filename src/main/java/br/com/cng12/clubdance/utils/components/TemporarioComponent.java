@@ -1,4 +1,4 @@
-package br.com.cng12.clubdance.utils;
+package br.com.cng12.clubdance.utils.components;
 
 import org.springframework.stereotype.Component;
 
@@ -10,5 +10,8 @@ public class TemporarioComponent {
 	
 	private Long idFornecedorTemp;
 	private Long idNotaFiscalTemp;
+	private Long idEventoTemp;
+	private Long idClienteTemp;
+	private Long idComandaProdutoEntityTemp;
 	
 }

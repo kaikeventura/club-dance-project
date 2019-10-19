@@ -65,4 +65,16 @@ public class EventoServiceImpl implements EventoService {
 		dao.editarCapacidadeCamarote(capacidadeCamarote, id);
 	}
 
+	@Override
+	public List<EventoEntity> listarEventosAtivos() {
+	
+		return dao.listarEventosAtivos();
+	}
+
+	@Override
+	public List<EventoEntity> listarEventosInativos() {
+	
+		return dao.listarEventosInativos();
+	}
+
 }

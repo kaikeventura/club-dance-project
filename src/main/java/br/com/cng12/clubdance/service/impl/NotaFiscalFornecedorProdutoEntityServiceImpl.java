@@ -1,7 +1,5 @@
 package br.com.cng12.clubdance.service.impl;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +21,7 @@ public class NotaFiscalFornecedorProdutoEntityServiceImpl implements NotaFiscalF
 	}
 
 	@Override
-	public List<NotaFiscalFornecedorProdutoEntity> buscarNFPComIdNotaFiscal(NotaFiscalEntity notaFiscalEntity) {
+	public NotaFiscalFornecedorProdutoEntity buscarNFPComIdNotaFiscal(NotaFiscalEntity notaFiscalEntity) {
 		
 		return dao.buscarNFPComIdNotaFiscal(notaFiscalEntity);
 	}

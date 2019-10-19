@@ -1,4 +1,4 @@
-package br.com.cng12.clubdance.utils;
+package br.com.cng12.clubdance.utils.components;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
