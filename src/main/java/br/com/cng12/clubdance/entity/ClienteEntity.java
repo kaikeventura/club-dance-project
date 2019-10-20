@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
 import lombok.Data;
 
@@ -20,9 +21,11 @@ public class ClienteEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@Size(min = 1, max = 40, message = "Entre 1 e 40 caracteres.")
 	@Column(nullable = true)
 	private String nome;
 
+	@Size(min = 1, max = 15, message = "Entre 1 e 20 caracteres.")
 	@Column(nullable = true)
 	private String cpf;
 	

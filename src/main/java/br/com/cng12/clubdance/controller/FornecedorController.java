@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.cng12.clubdance.entity.FornecedorEntity;
 import br.com.cng12.clubdance.service.impl.FornecedorServiceImpl;
@@ -30,10 +31,11 @@ public class FornecedorController {
 	}
 
 	@PostMapping("/estoque/fornecedor/cadastrar-fornecedor")
-	public String salvarFornecedor(@Valid FornecedorEntity fornecedorEntity) {
+	public String salvarFornecedor(@Valid FornecedorEntity fornecedorEntity, RedirectAttributes attr) {
 
 		fornecedorService.salvar(fornecedorEntity);
-
+		attr.addFlashAttribute("success", "Salvo com sucesso.");
+		
 		return "redirect:/estoque/fornecedor/cadastrar-fornecedor";
 	}
 
@@ -60,7 +62,7 @@ public class FornecedorController {
 	}
 
 	@PostMapping("/estoque/fornecedor/detalhes/fornecedor-detalhes/editar-fornecedor")
-	public String editarProduto(@Valid FornecedorEntity fornecedorEntity) {
+	public String editarProduto(@Valid FornecedorEntity fornecedorEntity, RedirectAttributes attr) {
 
 		fornecedorService.editar(fornecedorEntity.getNomeFantasia(), fornecedorEntity.getRazaoSocial(),
 				fornecedorEntity.getAtividadePrincipal(), fornecedorEntity.getCnpj(),
@@ -68,6 +70,7 @@ public class FornecedorController {
 				fornecedorEntity.getCidade(), fornecedorEntity.getUf(), fornecedorEntity.getCep(),
 				fornecedorEntity.getTelefone(), fornecedorEntity.getCelular(), fornecedorEntity.getEmail(),
 				fornecedorEntity.getNomeContato(), fornecedorEntity.getStatus(), fornecedorEntity.getId());
+		attr.addFlashAttribute("success", "Salvo com sucesso.");
 
 		return "redirect:/estoque/fornecedor/cadastrar-fornecedor";
 	}

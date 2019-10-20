@@ -25,16 +25,7 @@
 	<!-- NAVBAR -->
 	<header>
 		<nav class="pink darken-1">
-			<div class="nav-wrapper">
-				<div class="row">
-					<div class="col s12">
-						<!-- <a href="#" data-target="sidenav-1"
-							class="left sidenav-trigger hide-on-medium-and-up"><i
-							class="material-icons">menu</i></a> <strong><a href="#"
-							class="brand-logo white-text">Club Dance</a></strong> -->
-					</div>
-				</div>
-			</div>
+			<div class="nav-wrapper"></div>
 		</nav>
 	</header>
 
@@ -80,7 +71,9 @@
 						<strong><a class="white-text">Cadastrar Fornecedor</a></strong>
 					</div>
 					<div class="divider"></div>
-
+					<div th:if="${success} != null">
+						<span class="success-span z-depth-1 col s12" th:text="${success}"></span>
+					</div>
 					<!-- Formulário de cadastro -->
 					<div class="row">
 						<form class="col s12"
@@ -90,20 +83,22 @@
 								<div class="input-field col s5">
 									<i class="material-icons prefix">account_circle</i> <input
 										id="icon_prefix" type="text" class="validate"
-										th:field="*{nomeFantasia}"> <label for="icon_prefix">Nome
+										th:field="*{nomeFantasia}" required="required" size="100"
+										maxlength="100"> <label for="icon_prefix">Nome
 										Fantasia</label>
 								</div>
 								<div class="input-field col s6">
 									<i class="material-icons prefix">gps_fixed</i> <input
 										id="icon_prefix" type="text" class="validate"
-										th:field="*{razaoSocial}"> <label for="icon_prefix">Razão
+										th:field="*{razaoSocial}" required="required" size="100"
+										maxlength="100"> <label for="icon_prefix">Razão
 										Social</label>
 								</div>
 							</div>
 							<div class="row">
 								<div class="input-field col s3">
 									<i class="material-icons prefix">account_circle</i> <select
-										th:field="*{atividadePrincipal}">
+										th:field="*{atividadePrincipal}" required="required">
 										<option value="">Selecione...</option>
 										<option th:each="a : ${atividade}" th:value="${a}"
 											th:text="${a.atividade}"></option>
@@ -112,12 +107,15 @@
 								<div class="input-field col s4">
 									<i class="material-icons prefix">account_circle</i> <input
 										id="icon_prefix" type="text" class="validate"
-										th:field="*{cnpj}"> <label for="icon_prefix">CNPJ</label>
+										th:field="*{cnpj}" required="required"
+										onkeypress="$(this).mask('00.000.000/0000-00')"> <label
+										for="icon_prefix">CNPJ</label>
 								</div>
 								<div class="input-field col s4">
 									<i class="material-icons prefix">account_circle</i> <input
 										id="icon_prefix" type="text" class="validate"
-										th:field="*{inscricaoEstadual}"> <label
+										th:field="*{inscricaoEstadual}" required="required"
+										onkeypress="$(this).mask('000.000.000.000')"> <label
 										for="icon_prefix">Inscricao Estadual</label>
 								</div>
 							</div>
@@ -125,23 +123,26 @@
 								<div class="input-field col s6">
 									<i class="material-icons prefix">account_circle</i> <input
 										id="icon_prefix" type="text" class="validate"
-										th:field="*{endereco}"> <label for="icon_prefix">Endereço</label>
+										th:field="*{endereco}" required="required" size="100"
+										maxlength="100"> <label for="icon_prefix">Endereço</label>
 								</div>
 								<div class="input-field col s5">
 									<i class="material-icons prefix">account_circle</i> <input
 										id="icon_prefix" type="text" class="validate"
-										th:field="*{bairro}"> <label for="icon_prefix">Bairro</label>
+										th:field="*{bairro}" required="required" size="30"
+										maxlength="30"> <label for="icon_prefix">Bairro</label>
 								</div>
 							</div>
 							<div class="row">
 								<div class="input-field col s4">
 									<i class="material-icons prefix">account_circle</i> <input
 										id="icon_prefix" type="text" class="validate"
-										th:field="*{cidade}"> <label for="icon_prefix">Cidade</label>
+										th:field="*{cidade}" required="required" size="30"
+										maxlength="30"> <label for="icon_prefix">Cidade</label>
 								</div>
 								<div class="input-field col s3">
 									<i class="material-icons prefix">account_circle</i> <select
-										th:field="*{uf}">
+										th:field="*{uf}" required="required">
 										<option value="">Selecione...</option>
 										<option th:each="uf : ${uf}" th:value="${uf}"
 											th:text="${uf.sigla}"></option>
@@ -150,35 +151,43 @@
 								<div class="input-field col s4">
 									<i class="material-icons prefix">account_circle</i> <input
 										id="icon_prefix" type="text" class="validate"
-										th:field="*{cep}"> <label for="icon_prefix">CEP</label>
+										th:field="*{cep}" required="required"
+										onkeypress="$(this).mask('00.000-000')"> <label
+										for="icon_prefix">CEP</label>
 								</div>
 							</div>
 							<div class="row">
 								<div class="input-field col s3">
 									<i class="material-icons prefix">account_circle</i> <input
 										id="icon_prefix" type="text" class="validate"
-										th:field="*{telefone}"> <label for="icon_prefix">Telefone</label>
+										th:field="*{telefone}" required="required"
+										onkeypress="$(this).mask('(00) 0000-0000')"> <label
+										for="icon_prefix">Telefone</label>
 								</div>
 								<div class="input-field col s3">
 									<i class="material-icons prefix">account_circle</i> <input
 										id="icon_prefix" type="text" class="validate"
-										th:field="*{celular}"> <label for="icon_prefix">Celular</label>
+										th:field="*{celular}" required="required"
+										onkeypress="$(this).mask('(00) 0-0000-0000')"> <label
+										for="icon_prefix">Celular</label>
 								</div>
 								<div class="input-field col s5">
 									<i class="material-icons prefix">account_circle</i> <input
-										id="icon_prefix" type="text" class="validate"
-										th:field="*{email}"> <label for="icon_prefix">Email</label>
+										id="icon_prefix" type="email" class="validate"
+										th:field="*{email}" required="required"> <label
+										for="icon_prefix">Email</label>
 								</div>
 							</div>
 							<div class="row">
 								<div class="input-field col s3">
 									<i class="material-icons prefix">account_circle</i> <input
 										id="icon_prefix" type="text" class="validate"
-										th:field="*{nomeContato}"> <label for="icon_prefix">Contato</label>
+										th:field="*{nomeContato}" required="required" size="20"
+										maxlength="20"> <label for="icon_prefix">Contato</label>
 								</div>
 								<div class="input-field col s3">
 									<i class="material-icons prefix">account_circle</i> <select
-										th:field="*{status}">
+										th:field="*{status}" required="required">
 										<option value="">Selecione...</option>
 										<option th:each="s : ${status}" th:value="${s}"
 											th:text="${s.status}"></option>
@@ -208,6 +217,8 @@
 	<script type="text/javascript" th:src="@{/js/jquery-3.4.1.js}"></script>
 	<!--JavaScript at end of body for optimized loading-->
 	<script type="text/javascript" th:src="@{/js/materialize.js}"></script>
+	<!--JQuery Maskedinput-->
+	<script type="text/javascript" th:src="@{/js/jquery.mask.js}"></script>
 
 	<script>
 		$(document).ready(function() {

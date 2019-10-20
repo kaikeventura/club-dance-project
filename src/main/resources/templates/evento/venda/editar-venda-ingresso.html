@@ -76,11 +76,14 @@
 						th:object="${clienteEntity}" method="POST">
 						<div class="row">
 							<div class="input-field col s6">
-								<input type="text" class="validate" th:field="*{nome}">
-								<label>Nome completo</label>
+								<input type="text" class="validate" th:field="*{nome}"
+									required="required" size="40" maxlength="40"> <label>Nome
+									completo</label>
 							</div>
 							<div class="input-field col s6">
-								<input type="text" class="validate" th:field="*{cpf}"> <label>CPF</label>
+								<input type="text" class="validate" th:field="*{cpf}"
+									required="required"
+									onkeypress="$(this).mask('000.000.000-00');"> <label>CPF</label>
 							</div>
 							<div class="input-field col s6 m6">
 								<select class="icons" th:field="*{tipoIngresso}">
@@ -112,6 +115,9 @@
 	<script type="text/javascript" th:src="@{/js/materialize.js}"></script>
 	<!--Moment JS-->
 	<script type="text/javascript" th:src="@{/js/moment.js}"></script>
+	<!--JQuery Maskedinput-->
+	<script type="text/javascript" th:src="@{/js/jquery.mask.js}"></script>
+	
 
 
 	<script>

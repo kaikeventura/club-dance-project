@@ -51,7 +51,7 @@ public class EventoController {
 		}
 		
 		eventoService.salvar(eventoEntity);
-		attr.addFlashAttribute("success", "Evento salvo com sucesso.");
+		attr.addFlashAttribute("success", "Salvo com sucesso.");
 		
 		return "redirect:/evento/cadastrar-evento";
 	}
@@ -73,9 +73,10 @@ public class EventoController {
 	}
 
 	@PostMapping("/evento/editar-evento")
-	public String editarEvento(@Valid EventoEntity eventoEntity) {
+	public String editarEvento(@Valid EventoEntity eventoEntity, RedirectAttributes attr) {
 
 		eventoService.editar(eventoEntity);
+		attr.addFlashAttribute("success", "Salvo com sucesso.");
 
 		return "redirect:/evento/cadastrar-evento";
 	}

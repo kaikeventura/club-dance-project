@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.cng12.clubdance.entity.ProdutoEntity;
 import br.com.cng12.clubdance.service.impl.ProdutoServiceImpl;
@@ -29,11 +30,12 @@ public class ProdutoController {
 	}
 
 	@PostMapping("/estoque/produto/cadastrar-produto")
-	public String salvarProduto(@Valid ProdutoEntity produtoEntity) {
+	public String salvarProduto(@Valid ProdutoEntity produtoEntity, RedirectAttributes attr) {
 
 		produtoEntity.setQtdeEstoque(0);
 		produtoEntity.setPreco(0.0D);
 		produtoService.salvar(produtoEntity);
+		attr.addFlashAttribute("success", "Salvo com sucesso.");
 
 		return "redirect:/estoque/produto/cadastrar-produto";
 	}
@@ -53,11 +55,11 @@ public class ProdutoController {
 	}
 
 	@PostMapping("/estoque/produto/editar-produto")
-	public String editarProduto(@Valid ProdutoEntity produtoEntity) {
+	public String editarProduto(@Valid ProdutoEntity produtoEntity, RedirectAttributes attr) {
 		
 		produtoService.editar(produtoEntity.getNome(), produtoEntity.getMarca(), produtoEntity.getUnidadeMedida(),
 				produtoEntity.getMargemLucro(), produtoEntity.getStatus(), produtoEntity.getId());
-
+		attr.addFlashAttribute("success", "Salvo com sucesso.");
 		return "redirect:/estoque/produto/cadastrar-produto";
 	}
 
