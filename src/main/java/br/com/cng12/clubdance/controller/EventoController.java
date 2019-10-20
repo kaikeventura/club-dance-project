@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.cng12.clubdance.entity.ClienteEntity;
 import br.com.cng12.clubdance.entity.EventoEntity;
@@ -43,14 +44,15 @@ public class EventoController {
 	}
 
 	@PostMapping("/evento/cadastrar-evento")
-	public String salvarEvento(@Valid EventoEntity eventoEntity, BindingResult bindingResult) {
+	public String salvarEvento(@Valid EventoEntity eventoEntity, BindingResult bindingResult, RedirectAttributes attr) {
 
 		if (bindingResult.hasErrors()) {
 			return "evento/cadastrar-evento";
 		}
 		
 		eventoService.salvar(eventoEntity);
-
+		attr.addFlashAttribute("success", "Evento salvo com sucesso.");
+		
 		return "redirect:/evento/cadastrar-evento";
 	}
 
@@ -64,7 +66,9 @@ public class EventoController {
 
 	@GetMapping("/evento/editar-evento/{id}")
 	public String preEditarEvento(@PathVariable("id") Long id, ModelMap model) {
+
 		model.addAttribute("eventoEntity", eventoService.buscarPorId(id));
+		
 		return "evento/cadastrar-evento";
 	}
 

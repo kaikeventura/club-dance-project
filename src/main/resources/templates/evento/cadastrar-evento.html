@@ -75,7 +75,9 @@
 						<strong><a class="white-text">Cadastrar Evento</a></strong>
 					</div>
 					<div class="divider"></div>
-
+					<div th:if="${success} != null">
+						<span class="success-span z-depth-1 col s12" th:text="${success}"></span>
+					</div>
 					<!-- Formulário de cadastro -->
 					<div class="row">
 						<form class="col s12"
@@ -128,16 +130,17 @@
 								</div>
 								<div class="input-field col s3">
 									<i class="material-icons prefix">people</i> <input min="1"
-										max="5" id="icon_prefix" type="number" class="validate"
-										th:field="*{capacidade}"> <label for="icon_prefix">Capacidade
-										Normal/VIP</label> <span class="error-span z-depth-1 col s12"
+										max="5" id="icon_prefix" required="required" type="number"
+										class="validate" th:field="*{capacidade}"> <label
+										for="icon_prefix">Capacidade Normal/VIP</label> <span
+										class="error-span z-depth-1 col s12"
 										th:if="${#fields.hasErrors('capacidade')}"
 										th:errors="*{capacidade}">Name error</span>
 								</div>
 								<div class="input-field col s3">
 									<i class="material-icons prefix">people</i> <input min="1"
-										max="5" required="required" id="icon_prefix" type="number" class="validate"
-										th:field="*{capacidadeCamarote}"> <label
+										max="5" required="required" id="icon_prefix" type="number"
+										class="validate" th:field="*{capacidadeCamarote}"> <label
 										for="icon_prefix">Capacidade Camarote</label> <span
 										class="error-span z-depth-1 col s12"
 										th:if="${#fields.hasErrors('capacidadeCamarote')}"
