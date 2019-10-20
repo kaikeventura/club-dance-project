@@ -3,15 +3,19 @@ package br.com.cng12.clubdance.controller;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import br.com.cng12.clubdance.entity.ClienteEntity;
 import br.com.cng12.clubdance.entity.EventoEntity;
 import br.com.cng12.clubdance.entity.ProdutoEntity;
+import br.com.cng12.clubdance.exceptions.EstoqueException;
 import br.com.cng12.clubdance.service.impl.ClienteServiceImpl;
 import br.com.cng12.clubdance.service.impl.ComandaProdutoServiceImpl;
 import br.com.cng12.clubdance.service.impl.EventoServiceImpl;
@@ -84,14 +88,34 @@ public class BarController {
 	}
 
 	@PostMapping("/bar/vender/selecionar-produto")
-	public String selecionarProduto(@Valid ComandaAux comandaAux) {
+	public String selecionarProduto(@Valid ComandaAux comandaAux) throws EstoqueException {
 
 		Long idProduto = Long.parseLong(comandaAux.getNomeProduto());
 		ProdutoEntity produtoEntity = produtoService.buscarPorId(idProduto);
 
-		comandaProdutoService.salvar(comandaProdutoComponent.novaComandaProdutoEntity(temp.getIdClienteTemp(),
-				temp.getIdEventoTemp(), produtoEntity, comandaAux.getQtde()));
+		if (produtoEntity.getQtdeEstoque() > 0) {
+			if(comandaAux.getQtde() <= produtoEntity.getQtdeEstoque()) {
+				comandaProdutoService.salvar(comandaProdutoComponent.novaComandaProdutoEntity(temp.getIdClienteTemp(),
+						temp.getIdEventoTemp(), produtoEntity, comandaAux.getQtde()));
+				int qtdeEstoque = produtoEntity.getQtdeEstoque() - comandaAux.getQtde();
+				produtoService.retirarQtdeEstoque(qtdeEstoque, produtoEntity.getId());	
+			}
+			else {
+				throw new EstoqueException("QUANTIDADE SOLICITADA É MAIOR QUE A QUANTIDADE DISPONÍVEL");
+			}
+		}
+		else {
+			throw new EstoqueException("ESTOQUE ZERADO");
+		}
 
 		return "redirect:/bar/vender/selecionar-cliente/" + temp.getIdClienteTemp();
+	}
+
+	@GetMapping("/bar/vender/quantidade-produto")
+	public @ResponseBody int quantidadeAtualProduto(@RequestParam Long id) {
+
+		ProdutoEntity produtoEntity = produtoService.buscarPorId(id);
+		
+		return produtoEntity.getQtdeEstoque();
 	}
 }

@@ -31,7 +31,13 @@ public interface ProdutoDAO extends JpaRepository<ProdutoEntity, Long> {
 	@Transactional
 	@Modifying
 	@Query("UPDATE ProdutoEntity p SET p.preco =:preco, p.qtdeEstoque =:qtdeEstoque WHERE p.id =:id")
-	void LancarEntradaDeProduto(@Param("preco") Double preco, @Param("qtdeEstoque") int qtdeEstoque,
+	void lancarEntradaDeProduto(@Param("preco") Double preco, @Param("qtdeEstoque") int qtdeEstoque,
+			@Param("id") Long id);
+	
+	@Transactional
+	@Modifying
+	@Query("UPDATE ProdutoEntity p SET p.qtdeEstoque =:qtdeEstoque WHERE p.id =:id")
+	void retirarQtdeEstoque(@Param("qtdeEstoque") int qtdeEstoque,
 			@Param("id") Long id);
 
 }

@@ -21,4 +21,6 @@ public interface ProdutoService {
 	List<ProdutoEntity> buscarPorNome(String nome);
 	
 	void lancarEntradaDeProduto(Double preco, int qtdeEstoque, Long id);
+	
+	void retirarQtdeEstoque(int qtdeEstoque, Long id);
 }

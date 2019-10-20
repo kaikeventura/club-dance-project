@@ -106,13 +106,18 @@
 					<form th:action="@{/bar/vender/selecionar-produto}"
 						th:object="${comandaAux}" method="POST">
 						<div class="row">
-							<div class="input-field col s8">
+							<div class="input-field col s5">
 								<i class="material-icons prefix">account_circle</i> <select
-									th:field="*{nomeProduto}">
+									th:field="*{nomeProduto}" id="idProduto" onchange="up()">
 									<option value="">Selecione...</option>
 									<option th:each="p : ${produtos}" th:value="${p.id}"
 										th:text="${p.nome}"></option>
 								</select> <label>Produto</label>
+							</div>
+							<div class="input-field col s3">
+								<i class="material-icons prefix">gps_fixed</i> <input
+									id="quantidadeAtual" type="number" class="validate"
+									disabled="disabled" placeholder="0"> <label for="icon_prefix">Quantidade Atual</label>
 							</div>
 							<div class="input-field col s3">
 								<i class="material-icons prefix">gps_fixed</i> <input
@@ -164,6 +169,18 @@
 				.join('/');
 		console.log(result);
 		dateVariavel.value = result;
+	</script>
+	<script>
+		function up() {
+			var id = document.getElementById("idProduto").value;
+			$.ajax({
+			  url: "/bar/vender/quantidade-produto?id="+id,
+			  success: function(data){
+			    $("#quantidadeAtual").val(data);
+			  }
+			});
+		}
+		
 	</script>
 </body>
 

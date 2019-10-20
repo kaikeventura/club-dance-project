@@ -5,6 +5,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -42,8 +43,12 @@ public class EventoController {
 	}
 
 	@PostMapping("/evento/cadastrar-evento")
-	public String salvarEvento(@Valid EventoEntity eventoEntity) {
+	public String salvarEvento(@Valid EventoEntity eventoEntity, BindingResult bindingResult) {
 
+		if (bindingResult.hasErrors()) {
+			return "evento/cadastrar-evento";
+		}
+		
 		eventoService.salvar(eventoEntity);
 
 		return "redirect:/evento/cadastrar-evento";

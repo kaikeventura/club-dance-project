@@ -60,7 +60,13 @@ public class ProdutoServiceImpl implements ProdutoService {
 	@Override
 	public void lancarEntradaDeProduto(Double preco, int qtdeEstoque, Long id) {
 		
-		dao.LancarEntradaDeProduto(preco, qtdeEstoque, id);
+		dao.lancarEntradaDeProduto(preco, qtdeEstoque, id);
+	}
+
+	@Override
+	public void retirarQtdeEstoque(int qtdeEstoque, Long id) {
+
+		dao.retirarQtdeEstoque(qtdeEstoque, id);
 	}
 
 }

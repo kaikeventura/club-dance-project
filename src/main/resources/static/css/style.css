@@ -147,3 +147,14 @@ body {
 	padding: 0.8%;
 }
 /* ----------------------------------- */
+
+/*--------Span error--------*/
+.error-span{
+	color: white;
+    background: red;
+    padding: 0.3%;
+    border-radius: 20px;
+    text-align: center;
+    
+}
+/*--------------------------*/
