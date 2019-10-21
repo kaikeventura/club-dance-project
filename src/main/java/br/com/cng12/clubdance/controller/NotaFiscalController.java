@@ -43,7 +43,7 @@ public class NotaFiscalController {
 	private EntradaDeProdutoComponent entradaDeProdutoComponent;
 
 	@Autowired
-	private static NotaFiscalFornecedorProdutoEntityServiceImpl NFPService;
+	private NotaFiscalFornecedorProdutoEntityServiceImpl NFPService;
 
 	@GetMapping("/estoque/nota-fiscal/selecionar-fornecedor")
 	public String selecionarFornecedor(FornecedorEntity fornecedorEntity, ModelMap modelMap) {
@@ -100,12 +100,14 @@ public class NotaFiscalController {
 		NotaFiscalFornecedorProdutoEntity NFPEntity = new NotaFiscalFornecedorProdutoEntity(notaFiscal, fornecedor,
 				produto, notaFiscalAux.getValorUnitario(), notaFiscalAux.getQtde());
 
+		System.out.println(temp.getIdFornecedorTemp());
+		System.out.println(temp.getIdNotaFiscalTemp());
+		System.out.println(idProduto);
+		
 		entradaDeProdutoComponent.lancamentoDeEntradaDeProduto(notaFiscalAux.getValorUnitario(),
 				notaFiscalAux.getQtde(), idProduto);
 		NFPService.salvar(NFPEntity);
 		
-		System.out.println(temp.getIdFornecedorTemp());
-		System.out.println(temp.getIdNotaFiscalTemp());
 
 		return "redirect:/estoque/nota-fiscal/lancar/lancar-produto";
 	}
