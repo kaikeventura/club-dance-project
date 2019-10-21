@@ -100,15 +100,10 @@ public class NotaFiscalController {
 		NotaFiscalFornecedorProdutoEntity NFPEntity = new NotaFiscalFornecedorProdutoEntity(notaFiscal, fornecedor,
 				produto, notaFiscalAux.getValorUnitario(), notaFiscalAux.getQtde());
 
-		System.out.println(temp.getIdFornecedorTemp());
-		System.out.println(temp.getIdNotaFiscalTemp());
-		System.out.println(idProduto);
-		
 		entradaDeProdutoComponent.lancamentoDeEntradaDeProduto(notaFiscalAux.getValorUnitario(),
 				notaFiscalAux.getQtde(), idProduto);
 		NFPService.salvar(NFPEntity);
 		
-
 		return "redirect:/estoque/nota-fiscal/lancar/lancar-produto";
 	}
 

@@ -113,9 +113,10 @@
 					th:object="${notaFiscalEntity}" method="POST">
 					<div class="row">
 						<div class="input-field col s6">
-							<input type="text" class="validate" th:field="*{numero}"
-								required="required" onkeypress="$(this).mask('000000000');">
-							<label>Número da Nota Fiscal</label>
+							<input type="text" class="validate" th:field="*{numero}" min="1"
+								max="999999999" required="required"
+								onkeypress="$(this).mask('000000000');"> <label>Número
+								da Nota Fiscal</label>
 						</div>
 						<div class="input-field col s6">
 							<input type="date" class="validate" th:field="*{dataEmissao}"
