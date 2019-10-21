@@ -113,12 +113,13 @@
 					th:object="${notaFiscalEntity}" method="POST">
 					<div class="row">
 						<div class="input-field col s6">
-							<input type="number" class="validate" th:field="*{numero}">
+							<input type="text" class="validate" th:field="*{numero}"
+								required="required" onkeypress="$(this).mask('000000000');">
 							<label>Número da Nota Fiscal</label>
 						</div>
 						<div class="input-field col s6">
-							<input type="date" class="validate" th:field="*{dataEmissao}">
-							<label>Data de Emissão</label>
+							<input type="date" class="validate" th:field="*{dataEmissao}"
+								required="required"> <label>Data de Emissão</label>
 						</div>
 						<div class="input-field col s12">
 							<button id="btn-vender-ingresso" type="submit"
@@ -138,6 +139,9 @@
 	<script type="text/javascript" th:src="@{/js/materialize.js}"></script>
 	<!--Moment JS-->
 	<script type="text/javascript" th:src="@{/js/moment.js}"></script>
+	<!--JQuery Maskedinput-->
+	<script type="text/javascript" th:src="@{/js/jquery.mask.js}"></script>
+
 
 	<script>
 		$(document).ready(function() {

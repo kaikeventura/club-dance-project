@@ -103,6 +103,9 @@ public class NotaFiscalController {
 		entradaDeProdutoComponent.lancamentoDeEntradaDeProduto(notaFiscalAux.getValorUnitario(),
 				notaFiscalAux.getQtde(), idProduto);
 		NFPService.salvar(NFPEntity);
+		
+		System.out.println(temp.getIdFornecedorTemp());
+		System.out.println(temp.getIdNotaFiscalTemp());
 
 		return "redirect:/estoque/nota-fiscal/lancar/lancar-produto";
 	}
