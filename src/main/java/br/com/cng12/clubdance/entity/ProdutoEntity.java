@@ -7,6 +7,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.springframework.format.annotation.NumberFormat;
+import org.springframework.format.annotation.NumberFormat.Style;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -28,7 +31,8 @@ public class ProdutoEntity {
 	@Column(nullable = false)
 	private String marca;
 	
-	@Column(nullable = true)
+	@NumberFormat(style = Style.CURRENCY, pattern = "#,###,###,##0.00")
+	@Column(nullable = false, columnDefinition = "DECIMAL(12,2) DEFAULT 0.00")
 	private Double preco;
 	
 	@Column(nullable = false)

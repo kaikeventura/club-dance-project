@@ -1,5 +1,6 @@
 package br.com.cng12.clubdance.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import br.com.cng12.clubdance.entity.ProdutoEntity;
@@ -20,7 +21,7 @@ public interface ProdutoService {
 
 	List<ProdutoEntity> buscarPorNome(String nome);
 	
-	void lancarEntradaDeProduto(Double preco, int qtdeEstoque, Long id);
+	void lancarEntradaDeProduto(BigDecimal preco, int qtdeEstoque, Long id);
 	
 	void retirarQtdeEstoque(int qtdeEstoque, Long id);
 }

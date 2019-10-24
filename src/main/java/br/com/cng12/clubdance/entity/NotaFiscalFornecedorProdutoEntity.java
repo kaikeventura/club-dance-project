@@ -1,11 +1,17 @@
 package br.com.cng12.clubdance.entity;
 
+import java.math.BigDecimal;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import org.springframework.format.annotation.NumberFormat;
+import org.springframework.format.annotation.NumberFormat.Style;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -31,12 +37,14 @@ public class NotaFiscalFornecedorProdutoEntity {
 	@ManyToOne
 	private ProdutoEntity produtoEntity;
 
-	private Double valorUnitario;
+	@NumberFormat(style = Style.CURRENCY, pattern = "###,###,###,##0.00")
+	@Column(nullable = false, columnDefinition = "DECIMAL(12,2) DEFAULT 0.00")
+	private BigDecimal valorUnitario;
 
 	private int qtde;
 
 	public NotaFiscalFornecedorProdutoEntity(NotaFiscalEntity notaFiscalEntity, FornecedorEntity fornecedorEntity,
-			ProdutoEntity produtoEntity, Double valorUnitario, int qtde) {
+			ProdutoEntity produtoEntity, BigDecimal valorUnitario, int qtde) {
 		super();
 		this.notaFiscalEntity = notaFiscalEntity;
 		this.fornecedorEntity = fornecedorEntity;

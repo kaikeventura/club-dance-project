@@ -1,5 +1,6 @@
 package br.com.cng12.clubdance.service.impl;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,15 +59,15 @@ public class ProdutoServiceImpl implements ProdutoService {
 	}
 
 	@Override
-	public void lancarEntradaDeProduto(Double preco, int qtdeEstoque, Long id) {
-		
-		dao.lancarEntradaDeProduto(preco, qtdeEstoque, id);
-	}
-
-	@Override
 	public void retirarQtdeEstoque(int qtdeEstoque, Long id) {
 
 		dao.retirarQtdeEstoque(qtdeEstoque, id);
+	}
+
+	@Override
+	public void lancarEntradaDeProduto(BigDecimal preco, int qtdeEstoque, Long id) {
+
+		dao.lancarEntradaDeProduto(preco, qtdeEstoque, id);		
 	}
 
 }

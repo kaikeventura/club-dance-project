@@ -1,5 +1,6 @@
 package br.com.cng12.clubdance.dao;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -31,7 +32,7 @@ public interface ProdutoDAO extends JpaRepository<ProdutoEntity, Long> {
 	@Transactional
 	@Modifying
 	@Query("UPDATE ProdutoEntity p SET p.preco =:preco, p.qtdeEstoque =:qtdeEstoque WHERE p.id =:id")
-	void lancarEntradaDeProduto(@Param("preco") Double preco, @Param("qtdeEstoque") int qtdeEstoque,
+	void lancarEntradaDeProduto(@Param("preco") BigDecimal preco, @Param("qtdeEstoque") int qtdeEstoque,
 			@Param("id") Long id);
 	
 	@Transactional

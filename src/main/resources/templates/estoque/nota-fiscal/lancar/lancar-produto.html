@@ -113,12 +113,18 @@
 						</select> <label>Produto</label>
 					</div>
 					<div class="input-field col s3">
-						<i class="material-icons prefix">gps_fixed</i> <input
+						<i class="material-icons prefix money">gps_fixed</i> <input
 							id="icon_prefix" type="text" class="validate"
 							th:field="*{valorUnitario}" required="required"
-							onKeyPress="return(moeda(this,'.',',',event))"> <label
+							data-mask="#.###.###.##0,00" data-mask-reverse="true"> <label
 							for="icon_prefix">Valor Unitário</label>
 					</div>
+					<!-- 					<div class="input-field col s3">
+						<i class="material-icons prefix money">gps_fixed</i> <input
+							id="icon_prefix" type="text" class="validate"
+							th:field="*{valorUnitario}" required="required"> <label
+							for="icon_prefix">Valor Unitário</label>
+					</div> -->
 					<div class="input-field col s3">
 						<i class="material-icons prefix">gps_fixed</i> <input
 							id="icon_prefix" type="number" class="validate"
@@ -209,6 +215,20 @@ function moeda(a, e, r, t) {
     }
     return !1
 }
+ </script>
+	<script>
+ $(document).ready(function(){
+	  $('.date').mask('11/11/1111');
+	  $('.time').mask('00:00:00');
+	  $('.date_time').mask('00/00/0000 00:00:00');
+	  $('.cep').mask('00000-000');
+	  $('.phone').mask('0000-0000');
+	  $('.phone_with_ddd').mask('(00) 0000-0000');
+	  $('.phone_us').mask('(000) 000-0000');
+	  $('.mixed').mask('AAA 000-S0S');
+	  $('.cpf').mask('000.000.000-00', {reverse: true});
+	  $('.money').mask('000.000.000.000.000,00', {reverse: true});
+	});
  </script>
 </body>
 
