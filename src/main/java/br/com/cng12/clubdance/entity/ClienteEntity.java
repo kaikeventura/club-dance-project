@@ -1,5 +1,7 @@
 package br.com.cng12.clubdance.entity;
 
+import java.time.LocalDate;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,7 +10,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 import lombok.Data;
 
@@ -25,9 +31,14 @@ public class ClienteEntity {
 	@Column(nullable = true)
 	private String nome;
 
-	@Size(min = 1, max = 15, message = "Entre 1 e 20 caracteres.")
+	@Size(min = 1, max = 15, message = "Entre 1 e 15 caracteres.")
 	@Column(nullable = true)
 	private String cpf;
+	
+	@NotNull(message = "Campo obrigatório.")
+	@Column(nullable = true)
+	@DateTimeFormat(iso = ISO.DATE)
+	private LocalDate dataNascimento;
 	
 	@ManyToOne
 	@JoinColumn(nullable = false)

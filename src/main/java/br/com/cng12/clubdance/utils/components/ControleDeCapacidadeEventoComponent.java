@@ -2,6 +2,7 @@ package br.com.cng12.clubdance.utils.components;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.cng12.clubdance.entity.ClienteEntity;
 import br.com.cng12.clubdance.entity.EventoEntity;
@@ -28,8 +29,9 @@ public class ControleDeCapacidadeEventoComponent {
 			eventoService.editarCapacidadeDoEvento(capacidadeDepois, evento.getId());
 			return true;
 		} else {
-			throw new IngressoException("INGRESSOS ESGOTADOS");
+			return false;
 		}
+		
 
 	}
 

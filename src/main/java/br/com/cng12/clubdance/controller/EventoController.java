@@ -106,7 +106,8 @@ public class EventoController {
 	}
 
 	@PostMapping("/evento/vender-ingresso-cliente")
-	public String venderIngressoCliente(@Valid ClienteEntity clienteEntity) throws IngressoException {
+	public String venderIngressoCliente(@Valid ClienteEntity clienteEntity, RedirectAttributes attr)
+			throws IngressoException {
 
 		EventoEntity eventoEntity = eventoService.buscarPorId(idEvento);
 		clienteEntity.setEventoEntity(eventoEntity);
@@ -117,18 +118,25 @@ public class EventoController {
 			controleDeCapacidadeEvento.vendaIngressoNormalEVip(eventoEntity);
 			clienteService.salvar(clienteEntity);
 			clienteController.criarComanda(clienteEntity, eventoEntity, valorIngresso);
+			attr.addFlashAttribute("success", "Salvo com sucesso.");
 		}
 		if (clienteEntity.getTipoIngresso().equals("VIP")) {
 			valorIngresso = eventoEntity.getPrecoIngressoVip();
-			controleDeCapacidadeEvento.vendaIngressoNormalEVip(eventoEntity);
-			clienteService.salvar(clienteEntity);
-			clienteController.criarComanda(clienteEntity, eventoEntity, valorIngresso);
+			if (controleDeCapacidadeEvento.vendaIngressoNormalEVip(eventoEntity) == true) {
+				clienteService.salvar(clienteEntity);
+				clienteController.criarComanda(clienteEntity, eventoEntity, valorIngresso);
+				attr.addFlashAttribute("success", "Salvo com sucesso.");
+			} else {
+				attr.addFlashAttribute("error", "Ingressos NORMAL esgotados.");
+			}
+
 		}
 		if (clienteEntity.getTipoIngresso().equals("CAMAROTE")) {
 			valorIngresso = eventoEntity.getPrecoIngressoCamarote();
 			controleDeCapacidadeEvento.vendaIngressoCamarote(eventoEntity);
 			clienteService.salvar(clienteEntity);
 			clienteController.criarComanda(clienteEntity, eventoEntity, valorIngresso);
+			attr.addFlashAttribute("success", "Salvo com sucesso.");
 		}
 
 		return "redirect:/evento/vender-ingresso/" + idEvento;

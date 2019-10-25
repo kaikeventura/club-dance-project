@@ -83,6 +83,9 @@
 					<div th:if="${success} != null">
 						<span class="success-span z-depth-1 col s12" th:text="${success}"></span>
 					</div>
+					<div th:if="${error} != null">
+						<span class="success-span z-depth-1 col s12" th:text="${error}"></span>
+					</div>
 					<!-- Formulário de cadastro -->
 					<div class="row">
 						<form class="col s12"
@@ -141,24 +144,21 @@
 							<div class="row">
 								<div class="input-field col s2">
 									<i class="material-icons prefix">attach_money</i> <input
-										id="icon_prefix" type="text" class="validate"
-										th:field="*{precoIngressoNormal}" required="required"
-										onkeypress="$(this).mask('999.990,00')"> <label
-										for="icon_prefix">Normal</label>
+										id="icon_prefix" type="text" class="validate money"
+										th:field="*{precoIngressoNormal}" required="required">
+									<label for="icon_prefix">Normal</label>
 								</div>
 								<div class="input-field col s2">
 									<i class="material-icons prefix">attach_money</i> <input
-										id="icon_prefix" type="text" class="validate"
-										th:field="*{precoIngressoVip}" required="required"
-										onkeypress="$(this).mask('999.990,00')"> <label
-										for="icon_prefix">Vip</label>
+										id="icon_prefix" type="text" class="validate money"
+										th:field="*{precoIngressoVip}" required="required">
+									<label for="icon_prefix">Vip</label>
 								</div>
 								<div class="input-field col s2">
 									<i class="material-icons prefix">attach_money</i> <input
-										id="icon_prefix" type="text" class="validate"
-										th:field="*{precoIngressoCamarote}" required="required"
-										onkeypress="$(this).mask('999.990,00')"> <label
-										for="icon_prefix">Camarote</label>
+										id="icon_prefix" type="text" class="validate money"
+										th:field="*{precoIngressoCamarote}" required="required">
+									<label for="icon_prefix">Camarote</label>
 								</div>
 								<div class="input-field col s2">
 									<i class="material-icons prefix">account_circle</i> <select
@@ -205,6 +205,24 @@
 		});
 		$(document).ready(function() {
 			$('select').formSelect();
+		});
+	</script>
+	<script>
+		$(document).ready(function() {
+			$('.date').mask('11/11/1111');
+			$('.time').mask('00:00:00');
+			$('.date_time').mask('00/00/0000 00:00:00');
+			$('.cep').mask('00000-000');
+			$('.phone').mask('0000-0000');
+			$('.phone_with_ddd').mask('(00) 0000-0000');
+			$('.phone_us').mask('(000) 000-0000');
+			$('.mixed').mask('AAA 000-S0S');
+			$('.cpf').mask('000.000.000-00', {
+				reverse : true
+			});
+			$('.money').mask('000.000.000.000,00', {
+				reverse : true
+			});
 		});
 	</script>
 </body>

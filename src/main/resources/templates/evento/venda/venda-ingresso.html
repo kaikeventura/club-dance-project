@@ -127,6 +127,9 @@
 			</div>
 
 			<div class="lista-clientes col s6">
+				<div th:if="${success} != null">
+					<span class="success-span z-depth-1 col s12" th:text="${success}"></span>
+				</div>
 				<div class="row">
 					<form class="col s12"
 						th:action="@{/evento/vender-ingresso-cliente}"
@@ -147,6 +150,11 @@
 								<span class="error-span z-depth-1 center-align col s12"
 									th:if="${#fields.hasErrors('cpf')}" th:errors="*{nome}">Name
 									error</span>
+							</div>
+							<div class="input-field col s6">
+								<input id="icon_prefix" type="date" class="validate"
+									th:field="*{dataNascimento}" required="required"> <label
+									for="icon_prefix">Data de nascimento</label>
 							</div>
 							<div class="input-field col s6 m6">
 								<select class="icons" th:field="*{tipoIngresso}"
@@ -187,6 +195,7 @@
 					<tr>
 						<th>Nome</th>
 						<th>CPF</th>
+						<th>Data de nascimento</th>
 						<th>Tipo de Ingresso</th>
 						<th>Editar</th>
 					</tr>
@@ -196,6 +205,7 @@
 					<tr>
 						<td th:text="${c.nome}"></td>
 						<td th:text="${c.cpf}"></td>
+						<td th:text="${#temporals.format(c.dataNascimento, 'dd/MM/yyyy')}"></td>
 						<td th:text="${c.tipoIngresso}"></td>
 						<td><a
 							th:href="@{/evento/venda/editar-venda/{id} (id=${c.id})}"

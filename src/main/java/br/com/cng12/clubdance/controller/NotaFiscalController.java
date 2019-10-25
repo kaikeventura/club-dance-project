@@ -93,6 +93,8 @@ public class NotaFiscalController {
 	@PostMapping("/estoque/nota-fiscal/lancar/lancar-produto")
 	public String lancarProduto(@Valid NotaFiscalAux notaFiscalAux) {
 
+		System.out.println(notaFiscalAux.getValorUnitario());
+		
 		Long idProduto = Long.parseLong(notaFiscalAux.getNomeProduto());
 		NotaFiscalEntity notaFiscal = notaFiscalService.buscarPorId(temp.getIdNotaFiscalTemp());
 		FornecedorEntity fornecedor = fornecedorService.buscarPorId(temp.getIdFornecedorTemp());

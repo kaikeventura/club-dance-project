@@ -7,6 +7,9 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.springframework.format.annotation.NumberFormat;
+import org.springframework.format.annotation.NumberFormat.Style;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -31,6 +34,7 @@ public class NotaFiscalFornecedorProdutoEntity {
 	@ManyToOne
 	private ProdutoEntity produtoEntity;
 
+	@NumberFormat(style = Style.CURRENCY, pattern = "###,###,###,##0.00")
 	private Double valorUnitario;
 
 	private int qtde;

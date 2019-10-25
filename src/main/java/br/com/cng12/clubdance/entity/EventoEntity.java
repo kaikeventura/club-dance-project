@@ -13,6 +13,8 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
+import org.springframework.format.annotation.NumberFormat;
+import org.springframework.format.annotation.NumberFormat.Style;
 
 import lombok.Data;
 
@@ -48,23 +50,26 @@ public class EventoEntity {
 
 	@Column(nullable = false)
 	private int capacidade;
-	
+
 	@Column(nullable = false)
 	private int capacidadeCamarote;
 
 	@NotNull(message = "Campo obrigatório.")
+	@NumberFormat(style = Style.CURRENCY, pattern = "###,###,###,##0.00")
 	@Column(nullable = false)
 	private Double precoIngressoNormal;
-	
+
 	@NotNull(message = "Campo obrigatório.")
+	@NumberFormat(style = Style.CURRENCY, pattern = "###,###,###,##0.00")
 	@Column(nullable = false)
 	private Double precoIngressoVip;
-	
+
 	@NotNull(message = "Campo obrigatório.")
+	@NumberFormat(style = Style.CURRENCY, pattern = "###,###,###,##0.00")
 	@Column(nullable = false)
 	private Double precoIngressoCamarote;
-	
+
 	@Column(nullable = true)
 	private String status;
-	
+
 }
