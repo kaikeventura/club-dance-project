@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.cng12.clubdance.entity.ClienteEntity;
 import br.com.cng12.clubdance.entity.EventoEntity;
@@ -87,7 +88,7 @@ public class BarController {
 	}
 
 	@PostMapping("/bar/vender/selecionar-produto")
-	public String selecionarProduto(@Valid ComandaAux comandaAux) throws EstoqueException {
+	public String selecionarProduto(@Valid ComandaAux comandaAux, RedirectAttributes attr) throws EstoqueException {
 
 		Long idProduto = Long.parseLong(comandaAux.getNomeProduto());
 		ProdutoEntity produtoEntity = produtoService.buscarPorId(idProduto);
@@ -97,14 +98,17 @@ public class BarController {
 				comandaProdutoService.salvar(comandaProdutoComponent.novaComandaProdutoEntity(temp.getIdClienteTemp(),
 						temp.getIdEventoTemp(), produtoEntity, comandaAux.getQtde()));
 				int qtdeEstoque = produtoEntity.getQtdeEstoque() - comandaAux.getQtde();
-				produtoService.retirarQtdeEstoque(qtdeEstoque, produtoEntity.getId());	
+				produtoService.retirarQtdeEstoque(qtdeEstoque, produtoEntity.getId());
+				attr.addFlashAttribute("success", "O produto "+produtoEntity.getNome()+" foi vendido com sucesso.");
 			}
 			else {
-				throw new EstoqueException("QUANTIDADE SOLICITADA É MAIOR QUE A QUANTIDADE DISPONÍVEL");
+				attr.addFlashAttribute("error", "A quantidade solicitada é maior que a quantidade disponível.");
+				return "redirect:/bar/vender/selecionar-cliente/" + temp.getIdClienteTemp();
 			}
 		}
 		else {
-			throw new EstoqueException("ESTOQUE ZERADO");
+			attr.addFlashAttribute("error", "O estoque do produto "+produtoEntity.getNome()+" está zerado.");
+			return "redirect:/bar/vender/selecionar-cliente/" + temp.getIdClienteTemp();
 		}
 
 		return "redirect:/bar/vender/selecionar-cliente/" + temp.getIdClienteTemp();

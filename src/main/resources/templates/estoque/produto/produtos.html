@@ -35,6 +35,11 @@
 								<label for="icon_prefix">Buscar Produto</label>
 							</div>
 						</form>
+						<div class="input-field col s3 right-align">
+							<a th:href="@{/estoque/produto/cadastrar-produto}"
+								id="btn-cad-evento"
+								class="waves-effect waves-light btn pink darken-1">Cadastrar Produto</a>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -71,12 +76,6 @@
 	</ul>
 
 	<div class="body-principal">
-		<div class="row right-align">
-			<a th:href="@{/estoque/produto/cadastrar-produto}"
-				id="btn-cad-evento"
-				class="waves-effect waves-light btn pink darken-1"><i
-				class="material-icons right">border_color</i>Cadastrar Produto</a>
-		</div>
 		<div class="row">
 			<div class="col s12 m12">
 				<div class="card style-table">

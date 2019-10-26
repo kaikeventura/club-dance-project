@@ -164,7 +164,17 @@ body {
     background: green;
     padding: 0.6% !important;
     border-radius: 20px;
-    text-align: center;    
+    text-align: center;
+    margin-top: 0.5%;
+}
+
+.error-span{
+	color: white;
+    background: red;
+    padding: 0.6% !important;
+    border-radius: 20px;
+    text-align: center;
+    margin-top: 0.5%;
 }
 /*----------------------------*/
 

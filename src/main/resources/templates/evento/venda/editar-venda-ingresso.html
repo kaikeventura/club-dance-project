@@ -70,6 +70,12 @@
 	<div class="body-principal">
 		<div class="row">
 			<div class="lista-clientes col s6">
+				<div th:if="${success} != null">
+					<span class="success-span z-depth-1 col s12" th:text="${success}"></span>
+				</div>
+				<div th:if="${error} != null">
+					<span class="error-span z-depth-1 col s12" th:text="${error}"></span>
+				</div>
 				<div class="row">
 					<form class="col s12"
 						th:action="${clienteEntity.id == null} ? @{/} : @{/evento/venda/editar-venda}"
@@ -78,15 +84,27 @@
 							<div class="input-field col s6">
 								<input type="text" class="validate" th:field="*{nome}"
 									required="required" size="40" maxlength="40"> <label>Nome
-									completo</label>
+									completo</label> <span
+									class="error-span z-depth-1 center-align col s12"
+									th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}">Name
+									error</span>
 							</div>
 							<div class="input-field col s6">
 								<input type="text" class="validate" th:field="*{cpf}"
 									required="required"
 									onkeypress="$(this).mask('000.000.000-00');"> <label>CPF</label>
+								<span class="error-span z-depth-1 center-align col s12"
+									th:if="${#fields.hasErrors('cpf')}" th:errors="*{nome}">Name
+									error</span>
+							</div>
+							<div class="input-field col s6">
+								<input id="icon_prefix" type="date" class="validate"
+									th:field="*{dataNascimento}" required="required"> <label
+									for="icon_prefix">Data de nascimento</label>
 							</div>
 							<div class="input-field col s6 m6">
-								<select class="icons" th:field="*{tipoIngresso}">
+								<select class="icons" th:field="*{tipoIngresso}"
+									required="required">
 									<option th:value="NORMAL" th:text="NORMAL"
 										th:data-icon="@{/img/normal.png}">Normal</option>
 									<option th:value="VIP" th:text="VIP"
@@ -117,7 +135,7 @@
 	<script type="text/javascript" th:src="@{/js/moment.js}"></script>
 	<!--JQuery Maskedinput-->
 	<script type="text/javascript" th:src="@{/js/jquery.mask.js}"></script>
-	
+
 
 
 	<script>

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.cng12.clubdance.entity.ClienteEntity;
 import br.com.cng12.clubdance.entity.ComandaEntity;
@@ -54,7 +55,7 @@ public class ClienteController {
 	}
 
 	@PostMapping("/evento/venda/editar-venda")
-	public String editarEvento(@Valid ClienteEntity clienteEntity) throws IngressoException {
+	public String editarEvento(@Valid ClienteEntity clienteEntity, RedirectAttributes attr) throws IngressoException {
 
 		ClienteEntity clienteEntityAtual = clienteService.buscarPorId(clienteEntity.getId());
 		EventoEntity eventoEntity = eventoService.buscarPorId(eventoController.getIdEvento());
@@ -62,7 +63,9 @@ public class ClienteController {
 		if (clienteEntityAtual.getTipoIngresso().contentEquals(clienteEntity.getTipoIngresso())) {
 			clienteService.editar(clienteEntity.getCpf(), clienteEntity.getNome(), clienteEntity.getTipoIngresso(),
 					clienteEntity.getId());
-			return "redirect:/evento/eventos";
+			attr.addFlashAttribute("success", "Editado com sucesso.");
+			return "redirect:/evento/venda/editar-venda/"+clienteEntity.getId();
+			
 		}
 
 		if (clienteEntity.getTipoIngresso().equals("CAMAROTE")) {
@@ -71,12 +74,12 @@ public class ClienteController {
 				clienteService.editar(clienteEntity.getCpf(), clienteEntity.getNome(), clienteEntity.getTipoIngresso(),
 						clienteEntity.getId());
 				controleDeCapacidadeEvento.retornaIngressoNormalVip(eventoEntity);
-
 				controleDeCapacidadeEvento.editaOValorDoIngressoTrocado(eventoEntity.getPrecoIngressoCamarote(),
 						clienteEntity, eventoEntity);
+				attr.addFlashAttribute("success", "Editado com sucesso.");
 			} 
 			else {
-				throw new IngressoException("CAMAROTES ESGOTADOS");
+				attr.addFlashAttribute("error", "Ingressos do tipo CAMAROTE esgotaram.");
 			}
 		} 
 		else {
@@ -86,6 +89,7 @@ public class ClienteController {
 						clienteEntity.getId());
 				controleDeCapacidadeEvento.editaOValorDoIngressoTrocado(eventoEntity.getPrecoIngressoVip(),
 						clienteEntity, eventoEntity);
+				attr.addFlashAttribute("success", "Editado com sucesso.");
 			} 
 			else if (clienteEntityAtual.getTipoIngresso().equals("VIP")
 					&& clienteEntity.getTipoIngresso().equals("NORMAL")) {
@@ -93,24 +97,39 @@ public class ClienteController {
 						clienteEntity.getId());
 				controleDeCapacidadeEvento.editaOValorDoIngressoTrocado(eventoEntity.getPrecoIngressoNormal(),
 						clienteEntity, eventoEntity);
+				attr.addFlashAttribute("success", "Editado com sucesso.");
 			} 
 			else if (clienteEntityAtual.getTipoIngresso().equals("CAMAROTE")
 					&& clienteEntity.getTipoIngresso().equals("NORMAL")) {
-				clienteService.editar(clienteEntity.getCpf(), clienteEntity.getNome(), clienteEntity.getTipoIngresso(),
-						clienteEntity.getId());
-				controleDeCapacidadeEvento.vendaIngressoNormalEVip(eventoEntity);
-				controleDeCapacidadeEvento.retornaIngressoCamarote(eventoEntity);
-				controleDeCapacidadeEvento.editaOValorDoIngressoTrocado(eventoEntity.getPrecoIngressoNormal(),
-						clienteEntity, eventoEntity);
+				if (eventoEntity.getCapacidade() != 0) {
+					clienteService.editar(clienteEntity.getCpf(), clienteEntity.getNome(), clienteEntity.getTipoIngresso(),
+							clienteEntity.getId());
+					controleDeCapacidadeEvento.vendaIngressoNormalEVip(eventoEntity);
+					controleDeCapacidadeEvento.retornaIngressoCamarote(eventoEntity);
+					controleDeCapacidadeEvento.editaOValorDoIngressoTrocado(eventoEntity.getPrecoIngressoNormal(),
+							clienteEntity, eventoEntity);
+					attr.addFlashAttribute("success", "Editado com sucesso.");
+				}
+				else {
+					attr.addFlashAttribute("error", "Ingressos do tipo NORMAL esgotaram.");
+				}
+				
 			} 
 			else if (clienteEntityAtual.getTipoIngresso().equals("CAMAROTE")
 					&& clienteEntity.getTipoIngresso().equals("VIP")) {
-				clienteService.editar(clienteEntity.getCpf(), clienteEntity.getNome(), clienteEntity.getTipoIngresso(),
-						clienteEntity.getId());
-				controleDeCapacidadeEvento.vendaIngressoNormalEVip(eventoEntity);
-				controleDeCapacidadeEvento.retornaIngressoCamarote(eventoEntity);
-				controleDeCapacidadeEvento.editaOValorDoIngressoTrocado(eventoEntity.getPrecoIngressoVip(),
-						clienteEntity, eventoEntity);
+				if (eventoEntity.getCapacidadeCamarote() != 0) {
+					clienteService.editar(clienteEntity.getCpf(), clienteEntity.getNome(), clienteEntity.getTipoIngresso(),
+							clienteEntity.getId());
+					controleDeCapacidadeEvento.vendaIngressoNormalEVip(eventoEntity);
+					controleDeCapacidadeEvento.retornaIngressoCamarote(eventoEntity);
+					controleDeCapacidadeEvento.editaOValorDoIngressoTrocado(eventoEntity.getPrecoIngressoVip(),
+							clienteEntity, eventoEntity);
+					attr.addFlashAttribute("success", "Editado com sucesso.");
+				}
+				else {
+					attr.addFlashAttribute("error", "Ingressos do tipo VIP esgotaram.");
+				}
+				
 			} 
 			else if (controleDeCapacidadeEvento.vendaIngressoNormalEVip(eventoEntity) == true) {
 				clienteService.editar(clienteEntity.getCpf(), clienteEntity.getNome(), clienteEntity.getTipoIngresso(),
@@ -122,7 +141,7 @@ public class ClienteController {
 			}
 		}
 
-		return "redirect:/evento/eventos";
+		return "redirect:/evento/venda/editar-venda/"+clienteEntity.getId();
 	}
 
 	// Erro ao chamar a página

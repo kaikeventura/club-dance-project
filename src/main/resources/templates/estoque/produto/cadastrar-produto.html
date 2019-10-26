@@ -27,7 +27,12 @@
 		<nav class="pink darken-1">
 			<div class="nav-wrapper">
 				<div class="row">
-					<div class="col s12"></div>
+					<div class="col s2">
+						<div class="row right-align">
+							<a th:href="@{/estoque/produto/produtos}" id="btn-cad-evento"
+								class="waves-effect waves-light btn pink darken-1">Lista de produtos</a>
+						</div>
+					</div>
 				</div>
 			</div>
 		</nav>
@@ -63,11 +68,6 @@
 	</ul>
 
 	<div class="body-principal">
-		<div class="row right-align">
-			<a th:href="@{/estoque/produto/produtos}" id="btn-cad-evento"
-				class="waves-effect waves-light btn pink darken-1"><i
-				class="material-icons right">border_color</i>Lista de produtos</a>
-		</div>
 		<div class="row">
 			<div class="col s12 m12">
 				<div class="card">

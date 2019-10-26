@@ -35,6 +35,12 @@
 								<label for="icon_prefix">Buscar Produto</label>
 							</div>
 						</form>
+						<div class="input-field col s3 right-align">
+							<a th:href="@{/estoque/fornecedor/cadastrar-fornecedor}"
+								id="btn-cad-evento"
+								class="waves-effect waves-light btn pink darken-1">Cadastrar
+								Fornecedor</a>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -71,11 +77,6 @@
 	</ul>
 
 	<div class="body-principal">
-		<div class="row right-align">
-			<a th:href="@{/estoque/fornecedor/cadastrar-fornecedor}" id="btn-cad-evento"
-				class="waves-effect waves-light btn pink darken-1"><i
-				class="material-icons right">border_color</i>Cadastrar Fornecedor</a>
-		</div>
 		<div class="row">
 			<div class="col s12 m12">
 				<div class="card style-table">
@@ -103,10 +104,11 @@
 								<td th:text="${f.nomeFantasia}"></td>
 								<td th:text="${f.razaoSocial}"></td>
 								<td th:text="${f.cnpj}"></td>
-								<td th:text="${f.telefone}"></td>	
-								<td th:text="${f.nomeContato}"></td>	
-								<td th:text="${f.status}"></td>						
-								<td><a th:href="@{/estoque/fornecedor/detalhes/fornecedor-detalhes/{id} (id=${f.id})}"
+								<td th:text="${f.telefone}"></td>
+								<td th:text="${f.nomeContato}"></td>
+								<td th:text="${f.status}"></td>
+								<td><a
+									th:href="@{/estoque/fornecedor/detalhes/fornecedor-detalhes/{id} (id=${f.id})}"
 									class="btn-floating btn-small waves-effect waves-light blue pulse"><i
 										class="material-icons">info_outline</i></a></td>
 							</tr>

@@ -59,7 +59,7 @@ public class ProdutoController {
 		
 		produtoService.editar(produtoEntity.getNome(), produtoEntity.getMarca(), produtoEntity.getUnidadeMedida(),
 				produtoEntity.getMargemLucro(), produtoEntity.getStatus(), produtoEntity.getId());
-		attr.addFlashAttribute("success", "Salvo com sucesso.");
+		attr.addFlashAttribute("success", "Editado com sucesso.");
 		return "redirect:/estoque/produto/cadastrar-produto";
 	}
 

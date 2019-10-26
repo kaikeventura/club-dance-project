@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.cng12.clubdance.entity.FornecedorEntity;
 import br.com.cng12.clubdance.entity.NotaFiscalEntity;
@@ -91,10 +92,8 @@ public class NotaFiscalController {
 	}
 
 	@PostMapping("/estoque/nota-fiscal/lancar/lancar-produto")
-	public String lancarProduto(@Valid NotaFiscalAux notaFiscalAux) {
+	public String lancarProduto(@Valid NotaFiscalAux notaFiscalAux, RedirectAttributes attr) {
 
-		System.out.println(notaFiscalAux.getValorUnitario());
-		
 		Long idProduto = Long.parseLong(notaFiscalAux.getNomeProduto());
 		NotaFiscalEntity notaFiscal = notaFiscalService.buscarPorId(temp.getIdNotaFiscalTemp());
 		FornecedorEntity fornecedor = fornecedorService.buscarPorId(temp.getIdFornecedorTemp());
@@ -106,6 +105,7 @@ public class NotaFiscalController {
 				notaFiscalAux.getQtde(), idProduto);
 		NFPService.salvar(NFPEntity);
 		
+		attr.addFlashAttribute("success", "Produto lançado com sucesso.");
 		return "redirect:/estoque/nota-fiscal/lancar/lancar-produto";
 	}
 

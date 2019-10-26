@@ -62,7 +62,7 @@ public class FornecedorController {
 	}
 
 	@PostMapping("/estoque/fornecedor/detalhes/fornecedor-detalhes/editar-fornecedor")
-	public String editarProduto(@Valid FornecedorEntity fornecedorEntity, RedirectAttributes attr) {
+	public String editarFornecedor(@Valid FornecedorEntity fornecedorEntity, RedirectAttributes attr) {
 
 		fornecedorService.editar(fornecedorEntity.getNomeFantasia(), fornecedorEntity.getRazaoSocial(),
 				fornecedorEntity.getAtividadePrincipal(), fornecedorEntity.getCnpj(),
@@ -70,7 +70,7 @@ public class FornecedorController {
 				fornecedorEntity.getCidade(), fornecedorEntity.getUf(), fornecedorEntity.getCep(),
 				fornecedorEntity.getTelefone(), fornecedorEntity.getCelular(), fornecedorEntity.getEmail(),
 				fornecedorEntity.getNomeContato(), fornecedorEntity.getStatus(), fornecedorEntity.getId());
-		attr.addFlashAttribute("success", "Salvo com sucesso.");
+		attr.addFlashAttribute("success", "Editado com sucesso.");
 
 		return "redirect:/estoque/fornecedor/cadastrar-fornecedor";
 	}
