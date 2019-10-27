@@ -1,4 +1,4 @@
-package br.com.cng12.clubdance.utils.auxiliares;
+package br.com.cng12.clubdance.utils.dto;
 
 import org.springframework.format.annotation.NumberFormat;
 import org.springframework.format.annotation.NumberFormat.Style;
@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class NotaFiscalAux {
+public class NotaFiscalDTO {
 
 	private String nomeProduto;
 	@NumberFormat(style = Style.CURRENCY, pattern = "###,###,###,##0.00")

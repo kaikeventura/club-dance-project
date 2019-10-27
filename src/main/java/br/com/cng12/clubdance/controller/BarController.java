@@ -20,9 +20,9 @@ import br.com.cng12.clubdance.service.impl.ClienteServiceImpl;
 import br.com.cng12.clubdance.service.impl.ComandaProdutoServiceImpl;
 import br.com.cng12.clubdance.service.impl.EventoServiceImpl;
 import br.com.cng12.clubdance.service.impl.ProdutoServiceImpl;
-import br.com.cng12.clubdance.utils.auxiliares.ComandaAux;
 import br.com.cng12.clubdance.utils.components.ComandaProdutoComponent;
 import br.com.cng12.clubdance.utils.components.TemporarioComponent;
+import br.com.cng12.clubdance.utils.dto.ComandaVendaProdutoDTO;
 
 @Controller
 public class BarController {
@@ -74,7 +74,7 @@ public class BarController {
 
 	@GetMapping("/bar/vender/selecionar-cliente/{id}")
 	public String selecionarCliente(@PathVariable("id") Long id, ModelMap model, EventoEntity eventoEntity,
-			ClienteEntity clienteEntity, ProdutoEntity produtoEntity, ComandaAux comandaAux) {
+			ClienteEntity clienteEntity, ProdutoEntity produtoEntity, ComandaVendaProdutoDTO comandaAux) {
 
 		EventoEntity eventoEntity2 = eventoService.buscarPorId(temp.getIdEventoTemp());
 
@@ -88,7 +88,7 @@ public class BarController {
 	}
 
 	@PostMapping("/bar/vender/selecionar-produto")
-	public String selecionarProduto(@Valid ComandaAux comandaAux, RedirectAttributes attr) throws EstoqueException {
+	public String selecionarProduto(@Valid ComandaVendaProdutoDTO comandaAux, RedirectAttributes attr) throws EstoqueException {
 
 		Long idProduto = Long.parseLong(comandaAux.getNomeProduto());
 		ProdutoEntity produtoEntity = produtoService.buscarPorId(idProduto);
