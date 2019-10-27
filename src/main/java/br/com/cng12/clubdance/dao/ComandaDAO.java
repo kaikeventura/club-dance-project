@@ -28,5 +28,14 @@ public interface ComandaDAO extends JpaRepository<ComandaEntity, Long> {
 	@Query("select c from ComandaEntity c WHERE c.clienteEntity =:clienteEntity and c.eventoEntity =:eventoEntity")
 	ComandaEntity buscarPorIdClienteIdEvento(@Param("clienteEntity") ClienteEntity clienteEntity,
 			@Param("eventoEntity") EventoEntity eventoEntity);
+	
+	@Query("select c from ComandaEntity c WHERE c.clienteEntity =:clienteEntity")
+	ComandaEntity buscarComandaDoCliente(@Param("clienteEntity") ClienteEntity clienteEntity);
+	
+//	@Query("select ClienteEntity.nome, ClienteEntity.cpf, EventoEntity.nome, ComandaEntity.id from ComandaEntity inner join ClienteEntity on ComandaEntity.clienteEntity = ClienteEntity.id inner join EventoEntity on ComandaEntoty.eventoEntity = EventoEntity.id where EventoEntity.id =: id")
+//	List<ComandaListaVendasDTO> buscarClientesDoEventoComAComanda(@Param("id") Long idEvento);
+	
+//	@Query("select new br.com.cng12.clubdance.utils.dto.ComandaVendaProdutoDTO(ClienteEntity.nome, ClienteEntity.cpf, EventoEntity.nome, ComandaEntity.id) from ComandaEntity ce inner join ClienteEntity on ComandaEntity.clienteEntity = ClienteEntity.id inner join EventoEntity on ComandaEntoty.eventoEntity = EventoEntity.id")
+//	List<ComandaListaVendasDTO> buscarClientesDoEventoComAComanda();
 
 }

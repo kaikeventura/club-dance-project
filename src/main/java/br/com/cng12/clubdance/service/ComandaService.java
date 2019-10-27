@@ -17,4 +17,8 @@ public interface ComandaService {
 			EventoEntity eventoEntity);
 	
 	ComandaEntity buscarPorIdClienteIdEvento(ClienteEntity clienteEntity, EventoEntity eventoEntity);
+	
+//	List<ComandaListaVendasDTO> buscarClientesDoEventoComAComanda();
+	
+	ComandaEntity buscarComandaDoCliente(ClienteEntity clienteEntity);
 }

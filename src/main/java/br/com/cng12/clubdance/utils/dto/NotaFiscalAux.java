@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class NotaFiscalDTO {
+public class NotaFiscalAux {
 
 	private String nomeProduto;
 	@NumberFormat(style = Style.CURRENCY, pattern = "###,###,###,##0.00")

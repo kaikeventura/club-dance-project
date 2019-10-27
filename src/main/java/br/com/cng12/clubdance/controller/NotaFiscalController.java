@@ -23,7 +23,7 @@ import br.com.cng12.clubdance.service.impl.NotaFiscalServiceImpl;
 import br.com.cng12.clubdance.service.impl.ProdutoServiceImpl;
 import br.com.cng12.clubdance.utils.components.EntradaDeProdutoComponent;
 import br.com.cng12.clubdance.utils.components.TemporarioComponent;
-import br.com.cng12.clubdance.utils.dto.NotaFiscalDTO;
+import br.com.cng12.clubdance.utils.dto.NotaFiscalAux;
 
 @Controller
 public class NotaFiscalController {
@@ -82,7 +82,7 @@ public class NotaFiscalController {
 
 	@GetMapping("/estoque/nota-fiscal/lancar/lancar-produto")
 	public String preLancarProduto(FornecedorEntity fornecedorEntity, NotaFiscalEntity notaFiscalEntity,
-			ProdutoEntity produtoEntity, NotaFiscalDTO notaFiscalAux, ModelMap modelMap) {
+			ProdutoEntity produtoEntity, NotaFiscalAux notaFiscalAux, ModelMap modelMap) {
 
 		modelMap.addAttribute("fornecedorEntity", fornecedorService.buscarPorId(temp.getIdFornecedorTemp()));
 		modelMap.addAttribute("notaFiscalEntity", notaFiscalService.buscarPorId(temp.getIdNotaFiscalTemp()));
@@ -92,7 +92,7 @@ public class NotaFiscalController {
 	}
 
 	@PostMapping("/estoque/nota-fiscal/lancar/lancar-produto")
-	public String lancarProduto(@Valid NotaFiscalDTO notaFiscalAux, RedirectAttributes attr) {
+	public String lancarProduto(@Valid NotaFiscalAux notaFiscalAux, RedirectAttributes attr) {
 
 		Long idProduto = Long.parseLong(notaFiscalAux.getNomeProduto());
 		NotaFiscalEntity notaFiscal = notaFiscalService.buscarPorId(temp.getIdNotaFiscalTemp());

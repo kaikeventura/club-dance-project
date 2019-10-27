@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ComandaVendaProdutoDTO {
+public class ComandaAux {
 
 	private String nomeProduto;
 	private int qtde;

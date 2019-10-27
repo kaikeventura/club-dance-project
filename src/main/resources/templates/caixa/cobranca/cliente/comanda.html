@@ -3,7 +3,7 @@
 	xmlns:th="http://www.thymeleaf.org">
 
 <head>
-<title>Caixa - Selecionar Cliente</title>
+<title>Caixa - Comanda</title>
 <meta charset="utf-8">
 <link rel="icon" type="imagem/png" th:href="@{/img/minilogo.png}" />
 
@@ -25,16 +25,7 @@
 	<!-- NAVBAR -->
 	<header>
 		<nav class="pink darken-1">
-			<div class="nav-wrapper">
-				<div class="row">
-					<div class="col s12">
-						<div class="input-field col s12 right-align">
-							<a th:href="@{/caixa/inicio-caixa}"
-								class="waves-effect waves-light btn pink darken-1">Cancelar</a>
-						</div>
-					</div>
-				</div>
-			</div>
+			<div class="nav-wrapper"></div>
 		</nav>
 	</header>
 
@@ -56,8 +47,7 @@
 			<div class="divider"></div>
 		</li>
 		<li><a><i class="material-icons">store</i>Estoque</a></li>
-		<li><a th:href="@{/estoque/inicio-estoque}"><i
-				class="material-icons">chevron_right</i>Consultar</a></li>
+		<li><a href="#"><i class="material-icons">chevron_right</i>Consulta</a></li>
 		<li>
 			<div class="divider"></div>
 		</li>
@@ -69,57 +59,75 @@
 	</ul>
 
 	<div class="body-principal">
-		<br>
-		<div class="row">
-			<div class="detalhes-fornecedor">
-				<div th:object="${eventoEntity}">
-					<div class="row">
-						<br>
-						<div class="input-field col s10">
-							<input id="icon_prefix" type="text" class="validate"
-								th:field="*{nome}" disabled="disabled"> <label
-								for="icon_prefix">Nome Evento</label>
-						</div>
-						<div class="input-field col s2">
-							<input id="dataEvento" type="text" class="validate"
-								th:field="*{data}" disabled="disabled"> <label
-								for="icon_prefix">Data</label>
-						</div>
-					</div>
+
+		<div class="detalhes-fornecedor col s12">
+			<div class="row">
+				<div class="input-field col s6" th:object="${cliente}">
+					<input id="icon_prefix" type="text" class="validate"
+						th:field="*{tipoIngresso}" disabled="disabled"> <label
+						for="icon_prefix">Tipo do Ingresso</label>
+				</div>
+				<div class="input-field col s6" th:object="${comanda}">
+					<input id="icon_prefix" type="text" class="validate"
+						th:field="*{precoIngresso}" disabled="disabled"> <label
+						for="icon_prefix">Valor do Ingresso</label>
 				</div>
 			</div>
 		</div>
+
 		<div class="row">
 			<div class="col s12 m12">
 				<div class="card style-table">
 					<div class="card-action center black">
-						<strong><a class="white-text">Selecionar Cliente</a></strong>
+						<strong><a class="white-text">Consumo</a></strong>
 					</div>
+					<div class="divider"></div>
 
 					<!-- Tabela -->
 					<table class="highlight">
 						<thead>
 							<tr>
-								<th>Nome Cliente</th>
-								<th>CPF</th>
-								<th>Selecionar</th>
+								<th>Nome Produto</th>
+								<th>Quantidade</th>
+								<th>Valor Unitário</th>
+								<th>Valor Total</th>
+
 							</tr>
 						</thead>
-						<tbody th:each="c : ${clientes}">
+
+						<tbody th:each="c : ${comandaProdutos}">
 							<tr>
-								<td th:text="${c.nome}"></td>
-								<td th:text="${c.cpf}"></td>
-								<td><a
-									th:href="@{/caixa/cobranca/cliente/selecionar-cliente/{id} (id=${c.id})}"
-									class="btn-floating btn-small waves-effect waves-light green pulse"><i
-										class="material-icons">playlist_add_check</i></a></td>
+								<td th:text="${c.produtoEntity.nome}"></td>
+								<td th:text="${c.qtde}"></td>
+								<td th:text="${c.valorUnitario}"></td>
+								<td th:text="${c.valorTotal}"></td>
 							</tr>
 						</tbody>
 					</table>
 				</div>
 			</div>
 		</div>
+		<div class="detalhes-fornecedor col s12">
+			<div class="row">
+				<div class="input-field col s4" th:object="${valorTotalAPagar}">
+					<input id="icon_prefix" type="text" class="validate"
+						th:field="*{totalComanda}" disabled="disabled"> <label
+						for="icon_prefix">Valor Total da Comanda</label>
+				</div>
+				<div class="input-field col s4" th:object="${comanda}">
+					<input id="icon_prefix" type="text" class="validate"
+						th:field="*{precoIngresso}" disabled="disabled"> <label
+						for="icon_prefix">Valor do Ingresso</label>
+				</div>
+				<div class="input-field col s4" th:object="${valorTotalAPagar}">
+					<input id="icon_prefix" type="text" class="validate"
+						th:field="*{total}" disabled="disabled"> <label
+						for="icon_prefix">Valor Total a Pagar</label>
+				</div>
+			</div>
+		</div>
 	</div>
+
 
 	<!--JQuery-->
 	<script type="text/javascript" th:src="@{/js/jquery-3.4.1.js}"></script>
@@ -127,6 +135,7 @@
 	<script type="text/javascript" th:src="@{/js/materialize.js}"></script>
 	<!--Moment JS-->
 	<script type="text/javascript" th:src="@{/js/moment.js}"></script>
+
 
 	<script>
 		$(document).ready(function() {
@@ -138,17 +147,6 @@
 				edge : 'right'
 			});
 		});
-		$(document).ready(function() {
-			$('select').formSelect();
-		});
-	</script>
-	<script>
-		let dateVariavel = document.getElementById('dataEvento');
-		var data = new Date(dateVariavel.value);
-		var result = data.toISOString().substr(0, 10).split('-').reverse()
-				.join('/');
-		console.log(result);
-		dateVariavel.value = result;
 	</script>
 </body>
 

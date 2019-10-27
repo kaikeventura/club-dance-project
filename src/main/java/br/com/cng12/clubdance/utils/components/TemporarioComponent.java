@@ -13,5 +13,7 @@ public class TemporarioComponent {
 	private Long idEventoTemp;
 	private Long idClienteTemp;
 	private Long idComandaProdutoEntityTemp;
+	private Long idEventoTempCaixa;
+	private Long idClienteTempCaixa;
 	
 }

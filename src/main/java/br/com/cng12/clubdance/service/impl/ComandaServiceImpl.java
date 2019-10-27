@@ -43,8 +43,14 @@ public class ComandaServiceImpl implements ComandaService {
 
 	@Override
 	public ComandaEntity buscarPorIdClienteIdEvento(ClienteEntity clienteEntity, EventoEntity eventoEntity) {
-		
+
 		return dao.buscarPorIdClienteIdEvento(clienteEntity, eventoEntity);
+	}
+
+	@Override
+	public ComandaEntity buscarComandaDoCliente(ClienteEntity clienteEntity) {
+
+		return dao.buscarComandaDoCliente(clienteEntity);
 	}
 
 }
