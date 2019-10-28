@@ -17,38 +17,26 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Table(name = "produto")
+@Table(name = "cartao_debito")
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProdutoEntity implements Serializable {
+public class CartaoDebitoEntity implements Serializable {
 
-	private static final long serialVersionUID = -3850064760645377964L;
+	private static final long serialVersionUID = 3884262469137121015L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	@Column(nullable = false, unique = true)
+	private String numeroCartao;
+	
+	@Column(nullable = false)
+	private int senha;
 
-	@Column(nullable = true, unique = true)
-	private String nome;
-	
 	@Column(nullable = false)
-	private String marca;
-	
-	@Column(nullable = true)
 	@NumberFormat(style = Style.CURRENCY, pattern = "###,###,###,##0.00")
-	private Double preco;
-	
-	@Column(nullable = false)
-	private int qtdeEstoque;
-	
-	@Column(nullable = true)
-	private String unidadeMedida;
-	
-	@Column(nullable = false)
-	private Double margemLucro;
-	
-	@Column(nullable = true)
-	private String status;
+	private Double saldo;
 	
 }

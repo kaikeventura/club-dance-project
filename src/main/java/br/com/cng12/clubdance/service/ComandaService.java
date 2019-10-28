@@ -21,4 +21,6 @@ public interface ComandaService {
 //	List<ComandaListaVendasDTO> buscarClientesDoEventoComAComanda();
 	
 	ComandaEntity buscarComandaDoCliente(ClienteEntity clienteEntity);
+	
+	void atualizaStatusComanda(String status, Long id);
 }

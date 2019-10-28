@@ -4,6 +4,7 @@ import java.util.List;
 
 import br.com.cng12.clubdance.entity.ComandaEntity;
 import br.com.cng12.clubdance.entity.ComandaProdutoEntity;
+import br.com.cng12.clubdance.entity.ProdutoEntity;
 
 public interface ComandaProdutoService {
 
@@ -11,4 +12,5 @@ public interface ComandaProdutoService {
 
 	List<ComandaProdutoEntity> buscarLancamentosDaComanda(ComandaEntity comandaEntity);
 
+	List<ComandaProdutoEntity> buscarComandasQuePossuemProdutosVinculados(ProdutoEntity produtoEntity);
 }

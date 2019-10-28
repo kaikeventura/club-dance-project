@@ -1,5 +1,7 @@
 package br.com.cng12.clubdance.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,7 +19,9 @@ import lombok.NoArgsConstructor;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class ComandaProdutoEntity {
+public class ComandaProdutoEntity implements Serializable {
+
+	private static final long serialVersionUID = 7612140320276983428L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

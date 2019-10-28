@@ -1,23 +1,34 @@
 package br.com.cng12.clubdance.controller;
 
+import java.time.LocalDate;
 import java.util.List;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import br.com.cng12.clubdance.dao.ComandaDAO;
-import br.com.cng12.clubdance.dao.ComandaProdutoDAO;
+import br.com.cng12.clubdance.entity.CartaoCreditoEntity;
+import br.com.cng12.clubdance.entity.CartaoDebitoEntity;
 import br.com.cng12.clubdance.entity.ClienteEntity;
 import br.com.cng12.clubdance.entity.ComandaEntity;
 import br.com.cng12.clubdance.entity.ComandaProdutoEntity;
 import br.com.cng12.clubdance.entity.EventoEntity;
+import br.com.cng12.clubdance.entity.PagamentoCaixaEntity;
+import br.com.cng12.clubdance.service.impl.CartaoCreditoServiceImpl;
+import br.com.cng12.clubdance.service.impl.CartaoDebitoServiceImpl;
 import br.com.cng12.clubdance.service.impl.ClienteServiceImpl;
 import br.com.cng12.clubdance.service.impl.ComandaProdutoServiceImpl;
 import br.com.cng12.clubdance.service.impl.ComandaServiceImpl;
 import br.com.cng12.clubdance.service.impl.EventoServiceImpl;
+import br.com.cng12.clubdance.service.impl.PagamentoCaixaServiceImpl;
+import br.com.cng12.clubdance.utils.FormaPagamento;
 import br.com.cng12.clubdance.utils.components.TemporarioComponent;
 import br.com.cng12.clubdance.utils.dto.TotalDTO;
 
@@ -37,7 +48,18 @@ public class CaixaController {
 	private ComandaServiceImpl comandaService;
 
 	@Autowired
+	private PagamentoCaixaServiceImpl pagamentoService;
+
+	@Autowired
 	private ComandaProdutoServiceImpl comandaProdutoService;
+
+	@Autowired
+	private CartaoCreditoServiceImpl cartaoCreditoService;
+
+	@Autowired
+	private CartaoDebitoServiceImpl cartaoDebitoService;
+
+	TotalDTO totalDTO = new TotalDTO();
 
 	@GetMapping("/caixa/inicio-caixa")
 	public String paginaInicialDoCaixa() {
@@ -69,19 +91,18 @@ public class CaixaController {
 	@GetMapping("/caixa/cobranca/cliente/selecionar-cliente/{id}")
 	public String selecionarCliente(@PathVariable("id") Long id, ModelMap model, EventoEntity eventoEntity,
 			ClienteEntity clienteEntity, ComandaEntity comandaEntity, ComandaProdutoEntity comandaProdutoEntity,
-			TotalDTO dto) {
+			TotalDTO dto, PagamentoCaixaEntity pagamentoCaixaEntity) {
 
-		ClienteEntity cliente = clienteService.buscarPorId(id);
 		EventoEntity evento = eventoService.buscarPorId(temp.getIdEventoTempCaixa());
 		ComandaEntity comanda = comandaService.buscarComandaDoCliente(clienteEntity);
 		List<ComandaProdutoEntity> comandaProdutos = comandaProdutoService.buscarLancamentosDaComanda(comanda);
-		TotalDTO totalDTO = new TotalDTO();
+
 		Double totalComanda = 0D;
-		
+
 		for (int i = 0; i < comandaProdutos.size(); i++) {
 			totalComanda += comandaProdutos.get(i).getValorTotal();
 		}
-		
+
 		totalDTO.setTotalComanda(totalComanda);
 		totalDTO.setTotal(totalComanda + comanda.getPrecoIngresso());
 
@@ -92,17 +113,99 @@ public class CaixaController {
 		model.addAttribute("cliente", clienteService.buscarPorId(id));
 		model.addAttribute("valorTotalAPagar", totalDTO);
 
-		System.out.println(comandaProdutos.toString());
-
 		temp.setIdClienteTempCaixa(id);
 
-		return "caixa/cobranca/cliente/comanda";
+		return "caixa/cobranca/cliente/pagamento/comanda";
 	}
 
-	@GetMapping("/caixa/cobranca/cliente/")
-	public String comandaCliente() {
+	@ModelAttribute("formasPagamento")
+	public FormaPagamento[] getFormasPagamento() {
+		return FormaPagamento.values();
+	}
 
-		return "";
+	@PostMapping("/caixa/cobranca/cliente/pagamento/realizar-pagamento")
+	public String comandaCliente(@Valid PagamentoCaixaEntity pagamentoCaixaEntity, RedirectAttributes attr) {
+
+		EventoEntity evento = eventoService.buscarPorId(temp.getIdEventoTempCaixa());
+		ClienteEntity cliente = clienteService.buscarPorId(temp.getIdClienteTempCaixa());
+		ComandaEntity comanda = comandaService.buscarComandaDoCliente(cliente);
+
+		pagamentoCaixaEntity.setData(LocalDate.now());
+		pagamentoCaixaEntity.setNomeCliente(cliente.getNome());
+		pagamentoCaixaEntity.setNomeEvento(evento.getNome());
+		pagamentoCaixaEntity.setValor(totalDTO.getTotal());
+
+		if (pagamentoCaixaEntity.getFormaPagamento().equals("CREDITO")) {
+			List<CartaoCreditoEntity> cartaoCredito = cartaoCreditoService
+					.buscarPorNumeroDoCartao(pagamentoCaixaEntity.getNumeroCartao());
+
+			if (!cartaoCredito.isEmpty()) {
+				
+				if (cartaoCredito.get(0).getSenha() == pagamentoCaixaEntity.getSenha()) {
+					
+					pagamentoCaixaEntity.setSenha(0000);
+					pagamentoCaixaEntity.setNumeroCartao("****-****-****-"+
+					pagamentoCaixaEntity.getNumeroCartao().substring(15, 19));
+					
+					pagamentoService.salvar(pagamentoCaixaEntity);
+					comandaService.atualizaStatusComanda("FECHADO", comanda.getId());
+					cartaoCreditoService.atualizaLimiteCartao(
+							(cartaoCredito.get(0).getLimite() - pagamentoCaixaEntity.getValor()), 
+							cartaoCredito.get(0).getId());
+					
+					return "redirect:/";
+				}
+				else {
+					attr.addFlashAttribute("error", "Senha incorreta.");
+					return "redirect:/caixa/cobranca/cliente/selecionar-cliente/"+temp.getIdClienteTempCaixa();
+				}
+				
+			} 
+			else {
+				attr.addFlashAttribute("error", "Número do cartão de crédito está incorreto.");
+				return "redirect:/caixa/cobranca/cliente/selecionar-cliente/"+temp.getIdClienteTempCaixa();
+			}
+		}
+		if (pagamentoCaixaEntity.getFormaPagamento().equals("DEBITO")) {
+			List<CartaoDebitoEntity> cartaoDebito = cartaoDebitoService
+					.buscarPorNumeroDoCartao(pagamentoCaixaEntity.getNumeroCartao());
+
+			if (!cartaoDebito.isEmpty()) {
+				
+				if (cartaoDebito.get(0).getSenha() == pagamentoCaixaEntity.getSenha()) {
+					
+					pagamentoCaixaEntity.setSenha(0000);
+					pagamentoCaixaEntity.setNumeroCartao("****-****-****-"+
+					pagamentoCaixaEntity.getNumeroCartao().substring(15, 19));
+					
+					pagamentoService.salvar(pagamentoCaixaEntity);
+					comandaService.atualizaStatusComanda("FECHADO", comanda.getId());
+					cartaoCreditoService.atualizaLimiteCartao(
+							(cartaoDebito.get(0).getSaldo() - pagamentoCaixaEntity.getValor()), 
+							cartaoDebito.get(0).getId());
+					
+					return "redirect:/";
+				}
+				else {
+					attr.addFlashAttribute("error", "Senha incorreta.");
+					return "redirect:/caixa/cobranca/cliente/selecionar-cliente/"+temp.getIdClienteTempCaixa();
+				}
+				
+			} 
+			else {
+				attr.addFlashAttribute("error", "Número do cartão de débito está incorreto.");
+				return "redirect:/caixa/cobranca/cliente/selecionar-cliente/"+temp.getIdClienteTempCaixa();
+			}
+		}
+		if (pagamentoCaixaEntity.getFormaPagamento().equals("DINHEIRO")) {
+			pagamentoCaixaEntity.setSenha(0000);
+			pagamentoCaixaEntity.setNumeroCartao("n/a");
+			pagamentoService.salvar(pagamentoCaixaEntity);
+			comandaService.atualizaStatusComanda("FECHADO", comanda.getId());
+			return "redirect:/";
+		}
+
+		return "redirect:/";
 	}
 
 }

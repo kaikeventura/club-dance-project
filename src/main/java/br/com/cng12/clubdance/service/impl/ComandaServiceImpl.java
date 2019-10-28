@@ -53,4 +53,10 @@ public class ComandaServiceImpl implements ComandaService {
 		return dao.buscarComandaDoCliente(clienteEntity);
 	}
 
+	@Override
+	public void atualizaStatusComanda(String status, Long id) {
+
+		dao.atualizaStatusComanda(status, id);
+	}
+
 }

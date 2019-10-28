@@ -41,8 +41,9 @@ public class ClienteController {
 	protected Long idCliente;
 
 	public void criarComanda(ClienteEntity clienteEntity, EventoEntity eventoEntity, Double precoIngresso) {
-
+		
 		ComandaEntity comandaEntity = new ComandaEntity();
+		comandaEntity.setStatus("ABERTO");
 		comandaService.salvar(comandaEntity, clienteEntity, eventoEntity, precoIngresso);
 	}
 
