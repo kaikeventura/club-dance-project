@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Cielo - Simulador de máquininha de cartão</title>
+    <link rel="icon" type="imagem/png" th:href="@{/img/logocielo.png}" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <!-- <link type="text/css" rel="stylesheet" th:href="@{/css/style.css}" /> -->
+  </head>
+  <style>  
+    .principal{
+        width: 260px;
+        height: 500px;
+        margin:auto;    
+    }
+    #img_maquininha{
+        width: 250px;
+        height: auto;
+    }
+
+    .btn{
+      position: fixed;
+      background: #abb1b6;
+      color: black;
+      border-color: #47494a;
+      padding: 2px 14px 2px 14px;
+      transition: 0.3s;
+      cursor: pointer;
+    }
+
+    .btn:hover{
+      transition: 0.3s;
+      background: #272727;
+    }
+
+    /* Primeira linha de botoes */
+    #btn1{
+      top: 369px;
+      margin-left: 41px;
+    }
+
+    #btn2{
+      top: 372px;
+      margin-left: 82px;
+    }
+
+    #btn3{
+      top: 370px;
+      margin-left: 123px;
+    }
+
+    /* Segunda linha de botoes */
+    #btn4{
+      top: 393px;
+      margin-left: 41px;
+    }
+
+    #btn5{
+      top: 396px;
+      margin-left: 82px;
+    }
+
+    #btn6{
+      top: 395px;
+      margin-left: 123px;
+    }
+
+    #btnC{
+      top: 390px;
+      margin-left: 165px;
+      background:#ec3636
+    }
+
+    /* Terceira linha de botoes */
+    #btn7{
+      top: 415px;
+      margin-left: 41px;
+    }
+
+    #btn8{
+      top: 417px;
+      margin-left: 82px;
+    }
+
+    #btn9{
+      top: 419px;
+      margin-left: 123px;
+    }
+
+    #btnL{
+      top: 415px;
+      margin-left: 165px;
+      background:#d6d610
+    }
+
+    /* Quarta linha de botoes */
+
+    #btn0{
+      top: 440px;
+      margin-left: 82px;
+    }
+
+    #btnF{
+      top: 440px;
+      margin-left: 165px;
+      background:#10d210;
+    }
+
+    #div_img_maquininha{
+      height: auto;
+      width: auto;
+    }
+
+    .negrito{
+      color: white;
+      font-weight: 900;
+      text-shadow: 0px 0px 1px black;
+    }
+
+    #telinha{
+      top: 180px;
+      margin-left: 41px;
+      width: 159px;
+      height: 159px;
+      position: fixed;
+    }
+
+
+  </style>
+  <body>
+    <div class="principal">
+        <div id="div_img_maquininha">
+          
+          <div id="telinha">
+            <input type="text" style="height: 50%;width: 100%;">
+            <input type="text" style="height: 50%;width: 100%;">
+          </div>
+        
+
+          <!-- Primeira linha de botoes -->
+          <button id="btn1" class="btn">1</button>
+          <button id="btn2" class="btn">2</button>
+          <button id="btn3" class="btn">3</button>
+
+          <!-- Segunda linha de botoes -->
+          <button id="btn4" class="btn">4</button>
+          <button id="btn5" class="btn">5</button>
+          <button id="btn6" class="btn">6</button>
+
+          <button id="btnC" class="btn negrito">C</button>
+
+          <!-- Terceira linha de botoes -->
+          <button id="btn7" class="btn">7</button>
+          <button id="btn8" class="btn">8</button>
+          <button id="btn9" class="btn">9</button>
+
+          <button id="btnL" class="btn negrito">L</button>
+
+          <!-- Quarta linhda de botoes -->
+          <button id="btn0" class="btn">0</button>
+
+          <button id="btnF" class="btn negrito">F</button>
+
+          <img id="img_maquininha" th:src="@{/img/maquina.png}" >
+        </div>        
+    </div>
+</html>
