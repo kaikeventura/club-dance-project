@@ -1,169 +1,258 @@
 <!doctype html>
 <html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <title>Cielo - Simulador de máquininha de cartão</title>
-    <link rel="icon" type="imagem/png" th:href="@{/img/logocielo.png}" />
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
-    <!-- <link type="text/css" rel="stylesheet" th:href="@{/css/style.css}" /> -->
-  </head>
-  <style>  
-    .principal{
-        width: 260px;
-        height: 500px;
-        margin:auto;    
-    }
-    #img_maquininha{
-        width: 250px;
-        height: auto;
-    }
+<head>
+<title>Cielo - Simulador de máquininha de cartão</title>
+<link rel="icon" type="imagem/png" th:href="@{/img/logocielo.png}" />
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    .btn{
-      position: fixed;
-      background: #abb1b6;
-      color: black;
-      border-color: #47494a;
-      padding: 2px 14px 2px 14px;
-      transition: 0.3s;
-      cursor: pointer;
-    }
+<!-- <link type="text/css" rel="stylesheet" th:href="@{/css/style.css}" /> -->
+</head>
+<style>
+.principal {
+	width: 260px;
+	height: 500px;
+	margin: auto;
+}
 
-    .btn:hover{
-      transition: 0.3s;
-      background: #272727;
-    }
+#img_maquininha {
+	width: 250px;
+	height: auto;
+}
 
-    /* Primeira linha de botoes */
-    #btn1{
-      top: 369px;
-      margin-left: 41px;
-    }
+.btn {
+	position: fixed;
+	background: #abb1b6;
+	color: black;
+	border-color: #47494a;
+	padding: 2px 14px 2px 14px;
+	transition: 0.3s;
+	cursor: pointer;
+}
 
-    #btn2{
-      top: 372px;
-      margin-left: 82px;
-    }
+.btn:hover {
+	transition: 0.3s;
+	background: #272727;
+}
 
-    #btn3{
-      top: 370px;
-      margin-left: 123px;
-    }
+/* Primeira linha de botoes */
+#btn1 {
+	top: 369px;
+	margin-left: 41px;
+}
 
-    /* Segunda linha de botoes */
-    #btn4{
-      top: 393px;
-      margin-left: 41px;
-    }
+#btn2 {
+	top: 372px;
+	margin-left: 82px;
+}
 
-    #btn5{
-      top: 396px;
-      margin-left: 82px;
-    }
+#btn3 {
+	top: 370px;
+	margin-left: 123px;
+}
 
-    #btn6{
-      top: 395px;
-      margin-left: 123px;
-    }
+/* Segunda linha de botoes */
+#btn4 {
+	top: 393px;
+	margin-left: 41px;
+}
 
-    #btnC{
-      top: 390px;
-      margin-left: 165px;
-      background:#ec3636
-    }
+#btn5 {
+	top: 396px;
+	margin-left: 82px;
+}
 
-    /* Terceira linha de botoes */
-    #btn7{
-      top: 415px;
-      margin-left: 41px;
-    }
+#btn6 {
+	top: 395px;
+	margin-left: 123px;
+}
 
-    #btn8{
-      top: 417px;
-      margin-left: 82px;
-    }
+#btnC {
+	top: 390px;
+	margin-left: 165px;
+	background: #ec3636
+}
 
-    #btn9{
-      top: 419px;
-      margin-left: 123px;
-    }
+/* Terceira linha de botoes */
+#btn7 {
+	top: 415px;
+	margin-left: 41px;
+}
 
-    #btnL{
-      top: 415px;
-      margin-left: 165px;
-      background:#d6d610
-    }
+#btn8 {
+	top: 417px;
+	margin-left: 82px;
+}
 
-    /* Quarta linha de botoes */
+#btn9 {
+	top: 419px;
+	margin-left: 123px;
+}
 
-    #btn0{
-      top: 440px;
-      margin-left: 82px;
-    }
+#btnL {
+	top: 415px;
+	margin-left: 165px;
+	background: #d6d610
+}
 
-    #btnF{
-      top: 440px;
-      margin-left: 165px;
-      background:#10d210;
-    }
+/* Quarta linha de botoes */
+#btn0 {
+	top: 440px;
+	margin-left: 82px;
+}
 
-    #div_img_maquininha{
-      height: auto;
-      width: auto;
-    }
+#btnF {
+	top: 440px;
+	margin-left: 165px;
+	background: #10d210;
+}
 
-    .negrito{
-      color: white;
-      font-weight: 900;
-      text-shadow: 0px 0px 1px black;
-    }
+#div_img_maquininha {
+	height: auto;
+	width: auto;
+}
 
-    #telinha{
-      top: 180px;
-      margin-left: 41px;
-      width: 159px;
-      height: 159px;
-      position: fixed;
-    }
+.negrito {
+	color: white;
+	font-weight: 900;
+	text-shadow: 0px 0px 1px black;
+}
+
+#telinha {
+	top: 180px;
+	margin-left: 41px;
+	width: 159px;
+	height: 159px;
+	position: fixed;
+}
+</style>
+<body>
+
+	<!-- <form
+		th:action="@{/caixa/cobranca/cliente/pagamento/realizar-pagamento}"
+		th:object="${pagamentoCaixaEntity}" method="POST">
+		<div>
+			<div>
+				<select th:field="*{formaPagamento}">
+					<option value="">Selecione...</option>
+					<option th:each="fp : ${formasPagamento}" th:value="${fp}"
+						th:text="${fp.formaPagamento}"></option>
+				</select> <label>Forma de pagamento</label>
+			</div>
+			<div>
+				<input placeholder="0000-0000-0000-0000" type="text"
+					class="validate numero_cartao" required="required"
+					th:field="*{numeroCartao}"> <label>Número Cartão de
+					Crédito</label>
+			</div>
+		</div>
+	</form> -->
+
+	<div class="principal">
+
+		<div id="div_img_maquininha">
+
+			<form name="form-cielo"
+				th:action="@{/caixa/cobranca/cliente/pagamento/realizar-pagamento}"
+				th:object="${pagamentoCaixaEntity}" method="POST">
+				<div id="telinha">
+					<input th:object="${valorTotalAPagar}" th:field="*{total}"
+						disabled="disabled" class="money" type="text"
+						data-mask-reverse="true"
+						style="height: 50%; width: 100%; text-align: center; font-size: 20pt;">
+					<input class="mixed" id="visor" type="password"
+						style="height: 50%; width: 100%; text-align: center; font-size: 25pt;">
+				</div>
+
+				<!-- Primeira linha de botoes -->
+				<input type="button" id="btn1" class="btn" value="1"
+					onclick='populaTela("1")' /> <input type="button" id="btn2"
+					class="btn" value="2" onclick='populaTela("2")' /> <input
+					type="button" id="btn3" class="btn" value="3"
+					onclick='populaTela("3")' />
+
+				<!-- Segunda linha de botoes -->
+				<input type="button" id="btn4" class="btn" value="4"
+					onclick='populaTela("4")' /> <input type="button" id="btn5"
+					class="btn" value="5" onclick='populaTela("5")' /> <input
+					type="button" id="btn6" class="btn" value="6"
+					onclick='populaTela("6")' />
+
+				<button id="btnC" class="btn negrito">C</button>
+
+				<!-- Terceira linha de botoes -->
+				<input type="button" id="btn7" class="btn" value="7"
+					onclick='populaTela("7")' /> <input type="button" id="btn8"
+					class="btn" value="8" onclick='populaTela("8")' /> <input
+					type="button" id="btn9" class="btn" value="9"
+					onclick='populaTela("9")' /> <input type="button" id="btnL"
+					class="btn negrito" value="L" onclick='limpaTela("")' />
+
+				<!-- Quarta linhda de botoes -->
+				<input type="button" id="btn0" class="btn" value="0"
+					onclick='populaTela("0")' />
+
+				<button id="btnF" class="btn negrito">F</button>
+
+				<img id="img_maquininha" th:src="@{/img/maquina.png}">
+
+				<div>
+					<div>
+						<label>Forma de pagamento</label></br> <select
+							th:field="*{formaPagamento}">
+							<option value="">Selecione...</option>
+							<option th:each="fp : ${formasPagamento}" th:value="${fp}"
+								th:text="${fp.formaPagamento}"></option>
+						</select>
+					</div>
+					<div>
+						<label>Número Cartão de Crédito</label> <input
+							placeholder="0000-0000-0000-0000" type="text"
+							class="validate numero_cartao" required="required"
+							th:field="*{numeroCartao}">
+					</div>
+				</div>
 
 
-  </style>
-  <body>
-    <div class="principal">
-        <div id="div_img_maquininha">
-          
-          <div id="telinha">
-            <input type="text" style="height: 50%;width: 100%;">
-            <input type="text" style="height: 50%;width: 100%;">
-          </div>
-        
 
-          <!-- Primeira linha de botoes -->
-          <button id="btn1" class="btn">1</button>
-          <button id="btn2" class="btn">2</button>
-          <button id="btn3" class="btn">3</button>
+			</form>
+		</div>
+	</div>
 
-          <!-- Segunda linha de botoes -->
-          <button id="btn4" class="btn">4</button>
-          <button id="btn5" class="btn">5</button>
-          <button id="btn6" class="btn">6</button>
+	<!--JQuery-->
+	<script type="text/javascript" th:src="@{/js/jquery-3.4.1.js}"></script>
+	<!--JQuery Maskedinput-->
+	<script type="text/javascript" th:src="@{/js/jquery.mask.js}"></script>
 
-          <button id="btnC" class="btn negrito">C</button>
+	<script>
+		$(document).ready(function() {
+			$('.date').mask('11/11/1111');
+			$('.time').mask('00:00:00');
+			$('.date_time').mask('00/00/0000 00:00:00');
+			$('.cep').mask('00000-000');
+			$('.phone').mask('0000-0000');
+			$('.phone_with_ddd').mask('(00) 0000-0000');
+			$('.phone_us').mask('(000) 000-0000');
+			$('.mixed').mask('0000');
+			$('.numero_cartao').mask('0000-0000-0000-0000');
+			$('.cpf').mask('000.000.000-00', {
+				reverse : true
+			});
+			$('.money').mask('000.000.000.000,00', {
+				reverse : true
+			});
+		});
+	</script>
+	<script type="text/javascript">
+		function populaTela(valor) {
+			document.getElementById("visor").value += valor;
+		}
+		function limpaTela(valor) {
+			document.getElementById("visor").value = valor;
+		}
+	</script>
 
-          <!-- Terceira linha de botoes -->
-          <button id="btn7" class="btn">7</button>
-          <button id="btn8" class="btn">8</button>
-          <button id="btn9" class="btn">9</button>
-
-          <button id="btnL" class="btn negrito">L</button>
-
-          <!-- Quarta linhda de botoes -->
-          <button id="btn0" class="btn">0</button>
-
-          <button id="btnF" class="btn negrito">F</button>
-
-          <img id="img_maquininha" th:src="@{/img/maquina.png}" >
-        </div>        
-    </div>
+</body>
 </html>

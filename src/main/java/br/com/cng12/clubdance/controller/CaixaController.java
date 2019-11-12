@@ -123,6 +123,16 @@ public class CaixaController {
 		return FormaPagamento.values();
 	}
 
+	@GetMapping("/cielo/cielo-pagamentos")
+	public String cielo(ModelMap model, EventoEntity eventoEntity, ClienteEntity clienteEntity,
+			ComandaEntity comandaEntity, ComandaProdutoEntity comandaProdutoEntity, TotalDTO dto,
+			PagamentoCaixaEntity pagamentoCaixaEntity) {
+
+		model.addAttribute("valorTotalAPagar", totalDTO);
+
+		return "cielo/cielo";
+	}
+
 	@PostMapping("/caixa/cobranca/cliente/pagamento/realizar-pagamento")
 	public String comandaCliente(@Valid PagamentoCaixaEntity pagamentoCaixaEntity, RedirectAttributes attr) {
 
@@ -140,30 +150,28 @@ public class CaixaController {
 					.buscarPorNumeroDoCartao(pagamentoCaixaEntity.getNumeroCartao());
 
 			if (!cartaoCredito.isEmpty()) {
-				
+
 				if (cartaoCredito.get(0).getSenha() == pagamentoCaixaEntity.getSenha()) {
-					
+
 					pagamentoCaixaEntity.setSenha(0000);
-					pagamentoCaixaEntity.setNumeroCartao("****-****-****-"+
-					pagamentoCaixaEntity.getNumeroCartao().substring(15, 19));
-					
+					pagamentoCaixaEntity.setNumeroCartao(
+							"****-****-****-" + pagamentoCaixaEntity.getNumeroCartao().substring(15, 19));
+
 					pagamentoService.salvar(pagamentoCaixaEntity);
 					comandaService.atualizaStatusComanda("FECHADO", comanda.getId());
 					cartaoCreditoService.atualizaLimiteCartao(
-							(cartaoCredito.get(0).getLimite() - pagamentoCaixaEntity.getValor()), 
+							(cartaoCredito.get(0).getLimite() - pagamentoCaixaEntity.getValor()),
 							cartaoCredito.get(0).getId());
-					
+
 					return "redirect:/";
-				}
-				else {
+				} else {
 					attr.addFlashAttribute("error", "Senha incorreta.");
-					return "redirect:/caixa/cobranca/cliente/selecionar-cliente/"+temp.getIdClienteTempCaixa();
+					return "redirect:/caixa/cobranca/cliente/selecionar-cliente/" + temp.getIdClienteTempCaixa();
 				}
-				
-			} 
-			else {
+
+			} else {
 				attr.addFlashAttribute("error", "Número do cartão de crédito está incorreto.");
-				return "redirect:/caixa/cobranca/cliente/selecionar-cliente/"+temp.getIdClienteTempCaixa();
+				return "redirect:/caixa/cobranca/cliente/selecionar-cliente/" + temp.getIdClienteTempCaixa();
 			}
 		}
 		if (pagamentoCaixaEntity.getFormaPagamento().equals("DEBITO")) {
@@ -171,30 +179,28 @@ public class CaixaController {
 					.buscarPorNumeroDoCartao(pagamentoCaixaEntity.getNumeroCartao());
 
 			if (!cartaoDebito.isEmpty()) {
-				
+
 				if (cartaoDebito.get(0).getSenha() == pagamentoCaixaEntity.getSenha()) {
-					
+
 					pagamentoCaixaEntity.setSenha(0000);
-					pagamentoCaixaEntity.setNumeroCartao("****-****-****-"+
-					pagamentoCaixaEntity.getNumeroCartao().substring(15, 19));
-					
+					pagamentoCaixaEntity.setNumeroCartao(
+							"****-****-****-" + pagamentoCaixaEntity.getNumeroCartao().substring(15, 19));
+
 					pagamentoService.salvar(pagamentoCaixaEntity);
 					comandaService.atualizaStatusComanda("FECHADO", comanda.getId());
 					cartaoCreditoService.atualizaLimiteCartao(
-							(cartaoDebito.get(0).getSaldo() - pagamentoCaixaEntity.getValor()), 
+							(cartaoDebito.get(0).getSaldo() - pagamentoCaixaEntity.getValor()),
 							cartaoDebito.get(0).getId());
-					
+
 					return "redirect:/";
-				}
-				else {
+				} else {
 					attr.addFlashAttribute("error", "Senha incorreta.");
-					return "redirect:/caixa/cobranca/cliente/selecionar-cliente/"+temp.getIdClienteTempCaixa();
+					return "redirect:/caixa/cobranca/cliente/selecionar-cliente/" + temp.getIdClienteTempCaixa();
 				}
-				
-			} 
-			else {
+
+			} else {
 				attr.addFlashAttribute("error", "Número do cartão de débito está incorreto.");
-				return "redirect:/caixa/cobranca/cliente/selecionar-cliente/"+temp.getIdClienteTempCaixa();
+				return "redirect:/caixa/cobranca/cliente/selecionar-cliente/" + temp.getIdClienteTempCaixa();
 			}
 		}
 		if (pagamentoCaixaEntity.getFormaPagamento().equals("DINHEIRO")) {

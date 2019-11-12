@@ -125,8 +125,8 @@
 						for="icon_prefix">Valor Total a Pagar</label>
 				</div>
 			</div>
-			<form
-				th:action="@{/caixa/cobranca/cliente/pagamento/realizar-pagamento}"
+		<!-- 	<form
+				action="@{/caixa/cobranca/cliente/pagamento/realizar-pagamento}"
 				th:object="${pagamentoCaixaEntity}" method="POST">
 				<div class="row col s12">
 					<div th:if="${success} != null">
@@ -162,7 +162,12 @@
 						</div>
 					</div>
 				</div>
-			</form>
+			</form> -->
+
+			<div class="row right-align">
+				<a th:href="@{/cielo/cielo-pagamentos}" id="btn-cad-evento"
+					class="waves-effect waves-light btn pink darken-1">Pagar</a>
+			</div>
 
 		</div>
 	</div>
