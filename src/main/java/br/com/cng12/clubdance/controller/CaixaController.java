@@ -133,7 +133,7 @@ public class CaixaController {
 		return "cielo/cielo";
 	}
 
-	@PostMapping("/caixa/cobranca/cliente/pagamento/realizar-pagamento")
+	@PostMapping("/cielo/cielo-pagamentos/processa-pagamento")
 	public String comandaCliente(@Valid PagamentoCaixaEntity pagamentoCaixaEntity, RedirectAttributes attr) {
 
 		EventoEntity evento = eventoService.buscarPorId(temp.getIdEventoTempCaixa());
@@ -163,15 +163,16 @@ public class CaixaController {
 							(cartaoCredito.get(0).getLimite() - pagamentoCaixaEntity.getValor()),
 							cartaoCredito.get(0).getId());
 
-					return "redirect:/";
+					attr.addFlashAttribute("success", "Pagamento aprovado.");
+					return "redirect:/cielo/cielo-pagamentos/aprovado";
 				} else {
 					attr.addFlashAttribute("error", "Senha incorreta.");
-					return "redirect:/caixa/cobranca/cliente/selecionar-cliente/" + temp.getIdClienteTempCaixa();
+					return "redirect:/cielo/cielo-pagamentos";
 				}
 
 			} else {
-				attr.addFlashAttribute("error", "Número do cartão de crédito está incorreto.");
-				return "redirect:/caixa/cobranca/cliente/selecionar-cliente/" + temp.getIdClienteTempCaixa();
+				attr.addFlashAttribute("error", "Cartão inválido.");
+				return "redirect:/cielo/cielo-pagamentos";
 			}
 		}
 		if (pagamentoCaixaEntity.getFormaPagamento().equals("DEBITO")) {
@@ -192,26 +193,27 @@ public class CaixaController {
 							(cartaoDebito.get(0).getSaldo() - pagamentoCaixaEntity.getValor()),
 							cartaoDebito.get(0).getId());
 
-					return "redirect:/";
+					attr.addFlashAttribute("success", "Pagamento aprovado.");
+					return "redirect:/cielo/cielo-pagamentos/aprovado";
 				} else {
 					attr.addFlashAttribute("error", "Senha incorreta.");
-					return "redirect:/caixa/cobranca/cliente/selecionar-cliente/" + temp.getIdClienteTempCaixa();
+					return "redirect:/cielo/cielo-pagamentos";
 				}
 
 			} else {
-				attr.addFlashAttribute("error", "Número do cartão de débito está incorreto.");
-				return "redirect:/caixa/cobranca/cliente/selecionar-cliente/" + temp.getIdClienteTempCaixa();
+				attr.addFlashAttribute("error", "Cartão inválido.");
+				return "redirect:/cielo/cielo-pagamentos";
 			}
 		}
-		if (pagamentoCaixaEntity.getFormaPagamento().equals("DINHEIRO")) {
-			pagamentoCaixaEntity.setSenha(0000);
-			pagamentoCaixaEntity.setNumeroCartao("n/a");
-			pagamentoService.salvar(pagamentoCaixaEntity);
-			comandaService.atualizaStatusComanda("FECHADO", comanda.getId());
-			return "redirect:/";
-		}
-
+		
 		return "redirect:/";
+		
+	}
+	
+	@GetMapping("/cielo/cielo-pagamentos/aprovado")
+	public String pagamentoAprovado() {
+		 
+		return "cielo/pagamento-aprovado";
 	}
 
 }
