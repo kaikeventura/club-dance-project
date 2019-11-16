@@ -23,6 +23,10 @@ import br.com.cng12.clubdance.utils.components.ControleDeCapacidadeEventoCompone
 @Controller
 public class ClienteController {
 
+	private static final String PRE_EDITAR_EVENTO = "/evento/venda/editar-venda/{id}";
+	private static final String EDITAR_EVENTO = "/evento/venda/editar-venda";
+	private static final String BUSCAR_CLIENTE_POR_NOME = "/evento/venda/buscar/cpf";
+	
 	@Autowired
 	private ComandaServiceImpl comandaService;
 
@@ -47,7 +51,7 @@ public class ClienteController {
 		comandaService.salvar(comandaEntity, clienteEntity, eventoEntity, precoIngresso);
 	}
 
-	@GetMapping("/evento/venda/editar-venda/{id}")
+	@GetMapping(PRE_EDITAR_EVENTO)
 	public String preEditarEvento(@PathVariable("id") Long id, ModelMap model) {
 		model.addAttribute("clienteEntity", clienteService.buscarPorId(id));
 		this.idCliente = id;
@@ -55,7 +59,7 @@ public class ClienteController {
 		return "evento/venda/editar-venda-ingresso";
 	}
 
-	@PostMapping("/evento/venda/editar-venda")
+	@PostMapping(EDITAR_EVENTO)
 	public String editarEvento(@Valid ClienteEntity clienteEntity, RedirectAttributes attr) throws IngressoException {
 
 		ClienteEntity clienteEntityAtual = clienteService.buscarPorId(clienteEntity.getId());
@@ -70,7 +74,6 @@ public class ClienteController {
 		}
 
 		if (clienteEntity.getTipoIngresso().equals("CAMAROTE")) {
-			// Verifica se ainda possui ingressos disponiveis do tipo camarote
 			if (controleDeCapacidadeEvento.vendaIngressoCamarote(eventoEntity) == true) {
 				clienteService.editar(clienteEntity.getCpf(), clienteEntity.getNome(), clienteEntity.getTipoIngresso(),
 						clienteEntity.getId());
@@ -146,7 +149,7 @@ public class ClienteController {
 	}
 
 	// Erro ao chamar a página
-	@GetMapping("/evento/venda/buscar/cpf")
+	@GetMapping(BUSCAR_CLIENTE_POR_NOME)
 	public String buscarClientePorCpf(@RequestParam("cpf") String cpf, ModelMap model) {
 		model.addAttribute("clientes", clienteService.buscarPorCpf(cpf, eventoController.getIdEvento()));
 

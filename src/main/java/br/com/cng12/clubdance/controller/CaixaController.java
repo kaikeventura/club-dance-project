@@ -34,6 +34,14 @@ import br.com.cng12.clubdance.utils.dto.TotalDTO;
 
 @Controller
 public class CaixaController {
+	
+	private static final String PAGINA_INICIAL_CAIXA = "/caixa/inicio-caixa";
+	private static final String SELECIONAR_EVENTO_LISTA = "/caixa/cobranca/selecionar-evento";
+	private static final String SELECIONAR_EVENTO = "/caixa/cobranca/selecionar-evento/{id}";
+	private static final String SELECIONAR_CLIENTE = "/caixa/cobranca/cliente/selecionar-cliente/{id}";
+	private static final String CIELO_MAQUININHA = "/cielo/cielo-pagamentos";
+	private static final String COMANDA_CLIENTE = "/cielo/cielo-pagamentos/processa-pagamento";
+	private static final String PAGAMENTO_APROVADO = "/cielo/cielo-pagamentos/aprovado";
 
 	@Autowired
 	private EventoServiceImpl eventoService;
@@ -61,21 +69,21 @@ public class CaixaController {
 
 	TotalDTO totalDTO = new TotalDTO();
 
-	@GetMapping("/caixa/inicio-caixa")
+	@GetMapping(PAGINA_INICIAL_CAIXA)
 	public String paginaInicialDoCaixa() {
 
 		return "caixa/inicio-caixa";
 	}
 
-	@GetMapping("/caixa/cobranca/selecionar-evento")
-	public String selecionarEvento(EventoEntity eventoEntity, ModelMap modelMap) {
+	@GetMapping(SELECIONAR_EVENTO_LISTA)
+	public String selecionarEventoLista(EventoEntity eventoEntity, ModelMap modelMap) {
 
 		modelMap.addAttribute("eventos", eventoService.listarEventosAtivos());
 
 		return "caixa/cobranca/selecionar-evento";
 	}
 
-	@GetMapping("/caixa/cobranca/selecionar-evento/{id}")
+	@GetMapping(SELECIONAR_EVENTO)
 	public String selecionarEvento(@PathVariable("id") Long id, ModelMap model, EventoEntity eventoEntity) {
 
 		EventoEntity eventoEntity2 = eventoService.buscarPorId(id);
@@ -88,7 +96,7 @@ public class CaixaController {
 		return "caixa/cobranca/cliente/selecionar-cliente";
 	}
 
-	@GetMapping("/caixa/cobranca/cliente/selecionar-cliente/{id}")
+	@GetMapping(SELECIONAR_CLIENTE)
 	public String selecionarCliente(@PathVariable("id") Long id, ModelMap model, EventoEntity eventoEntity,
 			ClienteEntity clienteEntity, ComandaEntity comandaEntity, ComandaProdutoEntity comandaProdutoEntity,
 			TotalDTO dto, PagamentoCaixaEntity pagamentoCaixaEntity) {
@@ -123,7 +131,7 @@ public class CaixaController {
 		return FormaPagamento.values();
 	}
 
-	@GetMapping("/cielo/cielo-pagamentos")
+	@GetMapping(CIELO_MAQUININHA)
 	public String cielo(ModelMap model, EventoEntity eventoEntity, ClienteEntity clienteEntity,
 			ComandaEntity comandaEntity, ComandaProdutoEntity comandaProdutoEntity, TotalDTO dto,
 			PagamentoCaixaEntity pagamentoCaixaEntity) {
@@ -133,7 +141,7 @@ public class CaixaController {
 		return "cielo/cielo";
 	}
 
-	@PostMapping("/cielo/cielo-pagamentos/processa-pagamento")
+	@PostMapping(COMANDA_CLIENTE)
 	public String comandaCliente(@Valid PagamentoCaixaEntity pagamentoCaixaEntity, RedirectAttributes attr) {
 
 		EventoEntity evento = eventoService.buscarPorId(temp.getIdEventoTempCaixa());
@@ -210,7 +218,7 @@ public class CaixaController {
 		
 	}
 	
-	@GetMapping("/cielo/cielo-pagamentos/aprovado")
+	@GetMapping(PAGAMENTO_APROVADO)
 	public String pagamentoAprovado() {
 		 
 		return "cielo/pagamento-aprovado";

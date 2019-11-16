@@ -15,6 +15,10 @@ import br.com.cng12.clubdance.service.impl.CartaoDebitoServiceImpl;
 
 @Controller
 public class GeradorDeCartoesController {
+	
+	private static final String GERADOR_CARTOES = "/cartoes";
+	private static final String GERADOR_CARTAO_DE_CREDITO = "/cartoes/gerador-cartoes/gerar-cartao-credito";
+	private static final String GERADOR_CARTAO_DE_DEBITO = "/cartoes/gerador-cartoes/gerar-cartao-debito";
 
 	@Autowired
 	private CartaoCreditoServiceImpl cartaoCreditoService;
@@ -22,13 +26,13 @@ public class GeradorDeCartoesController {
 	@Autowired
 	private CartaoDebitoServiceImpl cartaoDebitoService;
 
-	@GetMapping("/cartoes")
-	public String gerador(CartaoCreditoEntity cartaoCreditoEntity, CartaoDebitoEntity cartaoDebitoEntity) {
+	@GetMapping(GERADOR_CARTOES)
+	public String geradorCartoes(CartaoCreditoEntity cartaoCreditoEntity, CartaoDebitoEntity cartaoDebitoEntity) {
 
 		return "cartoes/gerador-cartoes";
 	}
 
-	@PostMapping("/cartoes/gerador-cartoes/gerar-cartao-credito")
+	@PostMapping(GERADOR_CARTAO_DE_CREDITO)
 	public String gerarCartaoCredito(@Valid CartaoCreditoEntity cartaoCreditoEntity, RedirectAttributes attr) {
 
 		cartaoCreditoService.salvar(cartaoCreditoEntity);
@@ -37,7 +41,7 @@ public class GeradorDeCartoesController {
 		return "redirect:/cartoes";
 	}
 
-	@PostMapping("/cartoes/gerador-cartoes/gerar-cartao-debito")
+	@PostMapping(GERADOR_CARTAO_DE_DEBITO)
 	public String gerarCartaoDebito(@Valid CartaoDebitoEntity cartaoDebitoEntity, RedirectAttributes attr) {
 
 		cartaoDebitoService.salvar(cartaoDebitoEntity);

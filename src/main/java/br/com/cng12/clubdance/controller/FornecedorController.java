@@ -20,17 +20,26 @@ import br.com.cng12.clubdance.utils.UF;
 
 @Controller
 public class FornecedorController {
+	
+	private static final String CADASTRO_DE_PRODUTO = "/estoque/fornecedor/cadastrar-fornecedor";
+	private static final String SALVAR_FORNECEDOR = "/estoque/fornecedor/cadastrar-fornecedor";
+	private static final String LISTAR_FORNECEDORES = "/estoque/fornecedor/fornecedores";
+	private static final String DETALHES_FORNECEDOR = "/estoque/fornecedor/detalhes/fornecedor-detalhes/{id}";
+	private static final String PRE_EDITAR_FORNECEDOR = "/estoque/fornecedor/detalhes/fornecedor-detalhes/editar/{id}";
+	private static final String EDITAR_FORNECEDOR = "/estoque/fornecedor/detalhes/fornecedor-detalhes/editar-fornecedor";
+	private static final String EXCLUIR_FORNECEDOR = "/estoque/fornecedor/detalhes/fornecedor-detalhes/excluir/{id}";
+	private static final String BUSCAR_FORNECEDOR_POR_NOME = "/estoque/fornecedor/buscar/nome";
 
 	@Autowired
 	private FornecedorServiceImpl fornecedorService;
 
-	@GetMapping("/estoque/fornecedor/cadastrar-fornecedor")
+	@GetMapping(CADASTRO_DE_PRODUTO)
 	public String cadastroDeProduto(FornecedorEntity fornecedorEntity) {
 
 		return "estoque/fornecedor/cadastrar-fornecedor";
 	}
 
-	@PostMapping("/estoque/fornecedor/cadastrar-fornecedor")
+	@PostMapping(SALVAR_FORNECEDOR)
 	public String salvarFornecedor(@Valid FornecedorEntity fornecedorEntity, RedirectAttributes attr) {
 
 		fornecedorService.salvar(fornecedorEntity);
@@ -39,15 +48,15 @@ public class FornecedorController {
 		return "redirect:/estoque/fornecedor/cadastrar-fornecedor";
 	}
 
-	@GetMapping("/estoque/fornecedor/fornecedores")
-	public String listarFornecedor(ModelMap model) {
+	@GetMapping(LISTAR_FORNECEDORES)
+	public String listarFornecedores(ModelMap model) {
 
 		model.addAttribute("fornecedores", fornecedorService.listar());
 
 		return "estoque/fornecedor/fornecedores";
 	}
 
-	@GetMapping("/estoque/fornecedor/detalhes/fornecedor-detalhes/{id}")
+	@GetMapping(DETALHES_FORNECEDOR)
 	public String detalhesFornecedor(@PathVariable("id") Long id, ModelMap model) {
 
 		model.addAttribute("fornecedorEntity", fornecedorService.buscarPorId(id));
@@ -55,13 +64,13 @@ public class FornecedorController {
 		return "estoque/fornecedor/detalhes/fornecedor-detalhes";
 	}
 
-	@GetMapping("/estoque/fornecedor/detalhes/fornecedor-detalhes/editar/{id}")
+	@GetMapping(PRE_EDITAR_FORNECEDOR)
 	public String preEditarFornecedor(@PathVariable("id") Long id, ModelMap model) {
 		model.addAttribute("fornecedorEntity", fornecedorService.buscarPorId(id));
 		return "estoque/fornecedor/cadastrar-fornecedor";
 	}
 
-	@PostMapping("/estoque/fornecedor/detalhes/fornecedor-detalhes/editar-fornecedor")
+	@PostMapping(EDITAR_FORNECEDOR)
 	public String editarFornecedor(@Valid FornecedorEntity fornecedorEntity, RedirectAttributes attr) {
 
 		fornecedorService.editar(fornecedorEntity.getNomeFantasia(), fornecedorEntity.getRazaoSocial(),
@@ -75,7 +84,7 @@ public class FornecedorController {
 		return "redirect:/estoque/fornecedor/cadastrar-fornecedor";
 	}
 
-	@GetMapping("/estoque/fornecedor/detalhes/fornecedor-detalhes/excluir/{id}")
+	@GetMapping(EXCLUIR_FORNECEDOR)
 	public String excluirFornecedor(@PathVariable("id") Long id) {
 
 		fornecedorService.excluir(id);
@@ -98,7 +107,7 @@ public class FornecedorController {
 		return Status.values();
 	}
 
-	@GetMapping("/estoque/fornecedor/buscar/nome")
+	@GetMapping(BUSCAR_FORNECEDOR_POR_NOME)
 	public String buscarFornecedorPorNome(@RequestParam("nome") String nome, ModelMap model) {
 		model.addAttribute("fornecedores", fornecedorService.buscarPorNome(nome));
 		

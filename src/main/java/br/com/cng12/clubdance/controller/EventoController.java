@@ -24,6 +24,16 @@ import lombok.Getter;
 
 @Controller
 public class EventoController {
+	
+	private static final String CADASTRAR_EVENTO = "/evento/cadastrar-evento";
+	private static final String SALVAR_EVENTO = "/evento/cadastrar-evento";
+	private static final String LISTAR_EVENTOS = "/evento/eventos";
+	private static final String PRE_EDITAR_EVENTO = "/evento/editar-evento/{id}";
+	private static final String EDITAR_EVENTO = "/evento/editar-evento";
+	private static final String EXCLUIR_EVENTO = "/evento/excluir-evento/{id}";
+	private static final String PRE_VENDA_INGRESSO = "/evento/vender-ingresso/{id}";
+	private static final String VENDA_INGRESSO = "/evento/vender-ingresso-cliente";
+	private static final String BUSCAR_EVENTO_POR_NOME = "/evento/buscar/nome";
 
 	@Autowired
 	private EventoServiceImpl eventoService;
@@ -40,12 +50,12 @@ public class EventoController {
 	@Getter
 	private Long idEvento = 0L;
 
-	@GetMapping("/evento/cadastrar-evento")
+	@GetMapping(CADASTRAR_EVENTO)
 	public String cadastroDeEvento(EventoEntity eventoEntity) {
 		return "evento/cadastrar-evento";
 	}
 
-	@PostMapping("/evento/cadastrar-evento")
+	@PostMapping(SALVAR_EVENTO)
 	public String salvarEvento(@Valid EventoEntity eventoEntity, BindingResult bindingResult, RedirectAttributes attr) {
 
 		if (bindingResult.hasErrors()) {
@@ -63,7 +73,7 @@ public class EventoController {
 		return Status.values();
 	}
 
-	@GetMapping("/evento/eventos")
+	@GetMapping(LISTAR_EVENTOS)
 	public String listarEventos(ModelMap model) {
 
 		model.addAttribute("eventos", eventoService.listar());
@@ -71,7 +81,7 @@ public class EventoController {
 		return "evento/eventos";
 	}
 
-	@GetMapping("/evento/editar-evento/{id}")
+	@GetMapping(PRE_EDITAR_EVENTO)
 	public String preEditarEvento(@PathVariable("id") Long id, ModelMap model) {
 
 		model.addAttribute("eventoEntity", eventoService.buscarPorId(id));
@@ -79,7 +89,7 @@ public class EventoController {
 		return "evento/cadastrar-evento";
 	}
 
-	@PostMapping("/evento/editar-evento")
+	@PostMapping(EDITAR_EVENTO)
 	public String editarEvento(@Valid EventoEntity eventoEntity, RedirectAttributes attr) {
 
 		eventoService.editar(eventoEntity);
@@ -88,7 +98,7 @@ public class EventoController {
 		return "redirect:/evento/cadastrar-evento";
 	}
 
-	@GetMapping("/evento/excluir-evento/{id}")
+	@GetMapping(EXCLUIR_EVENTO)
 	public String excluirEvento(@PathVariable("id") Long id) {
 
 		eventoService.excluir(id);
@@ -96,7 +106,7 @@ public class EventoController {
 		return "redirect:/evento/eventos";
 	}
 
-	@GetMapping("/evento/vender-ingresso/{id}")
+	@GetMapping(PRE_VENDA_INGRESSO)
 	public String preVendaIngresso(@PathVariable("id") Long id, ModelMap model, ClienteEntity clienteEntity) {
 
 		this.idEvento = id;
@@ -105,7 +115,7 @@ public class EventoController {
 		return "evento/venda/venda-ingresso";
 	}
 
-	@PostMapping("/evento/vender-ingresso-cliente")
+	@PostMapping(VENDA_INGRESSO)
 	public String venderIngressoCliente(@Valid ClienteEntity clienteEntity, RedirectAttributes attr)
 			throws IngressoException {
 
@@ -150,7 +160,7 @@ public class EventoController {
 		return "redirect:/evento/vender-ingresso/" + idEvento;
 	}
 
-	@GetMapping("/evento/buscar/nome")
+	@GetMapping(BUSCAR_EVENTO_POR_NOME)
 	public String buscarEventoPorNome(@RequestParam("nome") String nome, ModelMap model) {
 		model.addAttribute("eventos", eventoService.buscarPorNome(nome));
 		return "evento/eventos";

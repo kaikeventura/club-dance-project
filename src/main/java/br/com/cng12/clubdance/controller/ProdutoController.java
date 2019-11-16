@@ -25,6 +25,14 @@ import br.com.cng12.clubdance.utils.UnidadeMedida;
 
 @Controller
 public class ProdutoController {
+	
+	private static final String CADASTRO_DE_PRODUTO = "/estoque/produto/cadastrar-produto";
+	private static final String SALVAR_PRODUTO = "/estoque/produto/cadastrar-produto";
+	private static final String LISTAR_PRODUTOS = "/estoque/produto/produtos";
+	private static final String PRE_EDITAR_PRODUTO = "/estoque/produto/editar-produto/{id}";
+	private static final String EDITAR_PRODUTO = "/estoque/produto/editar-produto";
+	private static final String EXCLUIR_PRODUTO = "/estoque/produto/excluir-produto/{id}";
+	private static final String BUSCAR_PRODUTO_POR_NOME = "/estoque/produto/buscar/nome";
 
 	@Autowired
 	private ProdutoServiceImpl produtoService;
@@ -35,13 +43,13 @@ public class ProdutoController {
 	@Autowired
 	private NotaFiscalFornecedorProdutoEntityServiceImpl NFPService;
 
-	@GetMapping("/estoque/produto/cadastrar-produto")
+	@GetMapping(CADASTRO_DE_PRODUTO)
 	public String cadastroDeProduto(ProdutoEntity produtoEntity) {
 
 		return "estoque/produto/cadastrar-produto";
 	}
 
-	@PostMapping("/estoque/produto/cadastrar-produto")
+	@PostMapping(SALVAR_PRODUTO)
 	public String salvarProduto(@Valid ProdutoEntity produtoEntity, RedirectAttributes attr) {
 
 		produtoEntity.setQtdeEstoque(0);
@@ -52,7 +60,7 @@ public class ProdutoController {
 		return "redirect:/estoque/produto/cadastrar-produto";
 	}
 
-	@GetMapping("/estoque/produto/produtos")
+	@GetMapping(LISTAR_PRODUTOS)
 	public String listarProdutos(ModelMap model) {
 
 		model.addAttribute("produtos", produtoService.listar());
@@ -60,13 +68,13 @@ public class ProdutoController {
 		return "estoque/produto/produtos";
 	}
 
-	@GetMapping("/estoque/produto/editar-produto/{id}")
+	@GetMapping(PRE_EDITAR_PRODUTO)
 	public String preEditarProduto(@PathVariable("id") Long id, ModelMap model) {
 		model.addAttribute("produtoEntity", produtoService.buscarPorId(id));
 		return "estoque/produto/cadastrar-produto";
 	}
 
-	@PostMapping("/estoque/produto/editar-produto")
+	@PostMapping(EDITAR_PRODUTO)
 	public String editarProduto(@Valid ProdutoEntity produtoEntity, RedirectAttributes attr) {
 
 		produtoService.editar(produtoEntity.getNome(), produtoEntity.getMarca(), produtoEntity.getUnidadeMedida(),
@@ -75,7 +83,7 @@ public class ProdutoController {
 		return "redirect:/estoque/produto/cadastrar-produto";
 	}
 
-	@GetMapping("/estoque/produto/excluir-produto/{id}")
+	@GetMapping(EXCLUIR_PRODUTO)
 	public String excluirProduto(@PathVariable("id") Long id, RedirectAttributes attr) {
 
 		ProdutoEntity produtoEntity = produtoService.buscarPorId(id);
@@ -112,7 +120,7 @@ public class ProdutoController {
 		return Status.values();
 	}
 
-	@GetMapping("/estoque/produto/buscar/nome")
+	@GetMapping(BUSCAR_PRODUTO_POR_NOME)
 	public String buscarProdutoPorNome(@RequestParam("nome") String nome, ModelMap model) {
 		model.addAttribute("produtos", produtoService.buscarPorNome(nome));
 		return "estoque/produto/produtos";
