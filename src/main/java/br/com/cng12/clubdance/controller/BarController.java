@@ -18,7 +18,6 @@ import br.com.cng12.clubdance.entity.ProdutoEntity;
 import br.com.cng12.clubdance.exceptions.EstoqueException;
 import br.com.cng12.clubdance.service.impl.ClienteServiceImpl;
 import br.com.cng12.clubdance.service.impl.ComandaProdutoServiceImpl;
-import br.com.cng12.clubdance.service.impl.ComandaServiceImpl;
 import br.com.cng12.clubdance.service.impl.EventoServiceImpl;
 import br.com.cng12.clubdance.service.impl.ProdutoServiceImpl;
 import br.com.cng12.clubdance.utils.components.ComandaProdutoComponent;
@@ -27,6 +26,14 @@ import br.com.cng12.clubdance.utils.dto.ComandaAux;
 
 @Controller
 public class BarController {
+	
+	private static final String INICIO_BAR = "/bar/inicio";
+	private static final String SELECIONAR_EVENTO_LISTA = "/bar/vender/selecionar-evento";
+	private static final String SELECIONAR_EVENTO = "/bar/vender/selecionar-evento/{id}";
+	private static final String SELECIONAR_CLIENTE = "/bar/vender/selecionar-cliente/{id}";
+	private static final String SELECIONAR_PRODUTO = "/bar/vender/selecionar-produto";
+	private static final String QUANTIDADE_ATUAL_EM_ESTOQUE = "/bar/vender/quantidade-produto";
+	private static final String SELECIONAR_VENDA_CLIENTE = "/bar/vender/editar/selecionar-cliente";
 
 	@Autowired
 	private EventoServiceImpl eventoService;
@@ -45,25 +52,22 @@ public class BarController {
 
 	@Autowired
 	private ComandaProdutoComponent comandaProdutoComponent;
-	
-	@Autowired
-	private ComandaServiceImpl comandaService;
 
-	@GetMapping("/bar/inicio")
+	@GetMapping(INICIO_BAR)
 	public String inicioBar() {
 
 		return "bar/inicio-bar";
 	}
 
-	@GetMapping("/bar/vender/selecionar-evento")
-	public String selecionarEvento(EventoEntity eventoEntity, ModelMap modelMap) {
+	@GetMapping(SELECIONAR_EVENTO_LISTA)
+	public String selecionarEventoLista(EventoEntity eventoEntity, ModelMap modelMap) {
 
 		modelMap.addAttribute("eventos", eventoService.listarEventosAtivos());
 
 		return "bar/vender/selecionar-evento";
 	}
 
-	@GetMapping("/bar/vender/selecionar-evento/{id}")
+	@GetMapping(SELECIONAR_EVENTO)
 	public String selecionarEvento(@PathVariable("id") Long id, ModelMap model, EventoEntity eventoEntity) {
 
 		EventoEntity eventoEntity2 = eventoService.buscarPorId(id);
@@ -76,7 +80,7 @@ public class BarController {
 		return "bar/vender/selecionar-cliente";
 	}
 
-	@GetMapping("/bar/vender/selecionar-cliente/{id}")
+	@GetMapping(SELECIONAR_CLIENTE)
 	public String selecionarCliente(@PathVariable("id") Long id, ModelMap model, EventoEntity eventoEntity,
 			ClienteEntity clienteEntity, ProdutoEntity produtoEntity, ComandaAux comandaAux) {
 
@@ -91,7 +95,7 @@ public class BarController {
 		return "bar/vender/selecionar-produto";
 	}
 
-	@PostMapping("/bar/vender/selecionar-produto")
+	@PostMapping(SELECIONAR_PRODUTO)
 	public String selecionarProduto(@Valid ComandaAux comandaAux, RedirectAttributes attr) throws EstoqueException {
 
 		Long idProduto = Long.parseLong(comandaAux.getNomeProduto());
@@ -118,7 +122,7 @@ public class BarController {
 		return "redirect:/bar/vender/selecionar-cliente/" + temp.getIdClienteTemp();
 	}
 
-	@GetMapping("/bar/vender/quantidade-produto")
+	@GetMapping(QUANTIDADE_ATUAL_EM_ESTOQUE)
 	public @ResponseBody int quantidadeAtualProduto(@RequestParam Long id) {
 
 		ProdutoEntity produtoEntity = produtoService.buscarPorId(id);
@@ -126,7 +130,7 @@ public class BarController {
 		return produtoEntity.getQtdeEstoque();
 	}
 	
-	@GetMapping("/bar/vender/editar/selecionar-cliente")
+	@GetMapping(SELECIONAR_VENDA_CLIENTE)
 	public String slecionarVendaCliente(ComandaAux comandaVendaProdutoDTO, ModelMap model) {
 		
 //		model.addAttribute("comandaVendaProdutoDTO", comandaService.buscarClientesDoEventoComAComanda());
