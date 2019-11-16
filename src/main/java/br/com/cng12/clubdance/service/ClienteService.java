@@ -24,4 +24,8 @@ public interface ClienteService {
 	List<ClienteEntity> buscarClientesEvento(Long idEvento, String tipoIngresso);
 	
 	List<ClienteEntity> buscarClientesDoEvento(EventoEntity eventoEntity);
+	
+	boolean verificarMaiorIdade(ClienteEntity clienteEntity);
+	
+	boolean verificarCPFValido(ClienteEntity clienteEntity);
 }

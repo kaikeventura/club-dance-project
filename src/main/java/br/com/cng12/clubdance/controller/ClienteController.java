@@ -1,5 +1,7 @@
 package br.com.cng12.clubdance.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,86 +67,108 @@ public class ClienteController {
 		ClienteEntity clienteEntityAtual = clienteService.buscarPorId(clienteEntity.getId());
 		EventoEntity eventoEntity = eventoService.buscarPorId(eventoController.getIdEvento());
 
-		if (clienteEntityAtual.getTipoIngresso().contentEquals(clienteEntity.getTipoIngresso())) {
-			clienteService.editar(clienteEntity.getCpf(), clienteEntity.getNome(), clienteEntity.getTipoIngresso(),
-					clienteEntity.getId());
-			attr.addFlashAttribute("success", "Editado com sucesso.");
-			return "redirect:/evento/venda/editar-venda/"+clienteEntity.getId();
-			
-		}
-
-		if (clienteEntity.getTipoIngresso().equals("CAMAROTE")) {
-			if (controleDeCapacidadeEvento.vendaIngressoCamarote(eventoEntity) == true) {
-				clienteService.editar(clienteEntity.getCpf(), clienteEntity.getNome(), clienteEntity.getTipoIngresso(),
-						clienteEntity.getId());
-				controleDeCapacidadeEvento.retornaIngressoNormalVip(eventoEntity);
-				controleDeCapacidadeEvento.editaOValorDoIngressoTrocado(eventoEntity.getPrecoIngressoCamarote(),
-						clienteEntity, eventoEntity);
-				attr.addFlashAttribute("success", "Editado com sucesso.");
-			} 
-			else {
-				attr.addFlashAttribute("error", "Ingressos do tipo CAMAROTE esgotaram.");
+		List<ClienteEntity> clientesDoEvento = clienteService.buscarClientesDoEvento(eventoEntity);
+		
+		if(!(clienteEntityAtual.getCpf().equals(clienteEntity.getCpf()))) {
+			for(int i = 0; i < clientesDoEvento.size(); i++) {
+				if(clienteEntity.getCpf().equals(clientesDoEvento.get(i).getCpf())) {
+					attr.addFlashAttribute("error", "Já existe um cliente com esse cpf no evento!");
+					return "redirect:/evento/venda/editar-venda/"+clienteEntity.getId();
+				}
 			}
-		} 
+		}
+		
+		if(clienteService.verificarMaiorIdade(clienteEntity) == true) {
+			if(clienteService.verificarCPFValido(clienteEntity)) {
+				if (clienteEntityAtual.getTipoIngresso().contentEquals(clienteEntity.getTipoIngresso())) {
+					clienteService.editar(clienteEntity.getCpf(), clienteEntity.getNome(), clienteEntity.getTipoIngresso(),
+							clienteEntity.getId());
+					attr.addFlashAttribute("success", "Editado com sucesso.");
+					return "redirect:/evento/venda/editar-venda/"+clienteEntity.getId();
+					
+				}
+
+				if (clienteEntity.getTipoIngresso().equals("CAMAROTE")) {
+					if (controleDeCapacidadeEvento.vendaIngressoCamarote(eventoEntity) == true) {
+						clienteService.editar(clienteEntity.getCpf(), clienteEntity.getNome(), clienteEntity.getTipoIngresso(),
+								clienteEntity.getId());
+						controleDeCapacidadeEvento.retornaIngressoNormalVip(eventoEntity);
+						controleDeCapacidadeEvento.editaOValorDoIngressoTrocado(eventoEntity.getPrecoIngressoCamarote(),
+								clienteEntity, eventoEntity);
+						attr.addFlashAttribute("success", "Editado com sucesso.");
+					} 
+					else {
+						attr.addFlashAttribute("error", "Ingressos do tipo CAMAROTE esgotaram.");
+					}
+				} 
+				else {
+					if (clienteEntityAtual.getTipoIngresso().equals("NORMAL")
+							&& clienteEntity.getTipoIngresso().equals("VIP")) {
+						clienteService.editar(clienteEntity.getCpf(), clienteEntity.getNome(), clienteEntity.getTipoIngresso(),
+								clienteEntity.getId());
+						controleDeCapacidadeEvento.editaOValorDoIngressoTrocado(eventoEntity.getPrecoIngressoVip(),
+								clienteEntity, eventoEntity);
+						attr.addFlashAttribute("success", "Editado com sucesso.");
+					} 
+					else if (clienteEntityAtual.getTipoIngresso().equals("VIP")
+							&& clienteEntity.getTipoIngresso().equals("NORMAL")) {
+						clienteService.editar(clienteEntity.getCpf(), clienteEntity.getNome(), clienteEntity.getTipoIngresso(),
+								clienteEntity.getId());
+						controleDeCapacidadeEvento.editaOValorDoIngressoTrocado(eventoEntity.getPrecoIngressoNormal(),
+								clienteEntity, eventoEntity);
+						attr.addFlashAttribute("success", "Editado com sucesso.");
+					} 
+					else if (clienteEntityAtual.getTipoIngresso().equals("CAMAROTE")
+							&& clienteEntity.getTipoIngresso().equals("NORMAL")) {
+						if (eventoEntity.getCapacidade() != 0) {
+							clienteService.editar(clienteEntity.getCpf(), clienteEntity.getNome(), clienteEntity.getTipoIngresso(),
+									clienteEntity.getId());
+							controleDeCapacidadeEvento.vendaIngressoNormalEVip(eventoEntity);
+							controleDeCapacidadeEvento.retornaIngressoCamarote(eventoEntity);
+							controleDeCapacidadeEvento.editaOValorDoIngressoTrocado(eventoEntity.getPrecoIngressoNormal(),
+									clienteEntity, eventoEntity);
+							attr.addFlashAttribute("success", "Editado com sucesso.");
+						}
+						else {
+							attr.addFlashAttribute("error", "Ingressos do tipo NORMAL esgotaram.");
+						}
+						
+					} 
+					else if (clienteEntityAtual.getTipoIngresso().equals("CAMAROTE")
+							&& clienteEntity.getTipoIngresso().equals("VIP")) {
+						if (eventoEntity.getCapacidadeCamarote() != 0) {
+							clienteService.editar(clienteEntity.getCpf(), clienteEntity.getNome(), clienteEntity.getTipoIngresso(),
+									clienteEntity.getId());
+							controleDeCapacidadeEvento.vendaIngressoNormalEVip(eventoEntity);
+							controleDeCapacidadeEvento.retornaIngressoCamarote(eventoEntity);
+							controleDeCapacidadeEvento.editaOValorDoIngressoTrocado(eventoEntity.getPrecoIngressoVip(),
+									clienteEntity, eventoEntity);
+							attr.addFlashAttribute("success", "Editado com sucesso.");
+						}
+						else {
+							attr.addFlashAttribute("error", "Ingressos do tipo VIP esgotaram.");
+						}
+						
+					} 
+					else if (controleDeCapacidadeEvento.vendaIngressoNormalEVip(eventoEntity) == true) {
+						clienteService.editar(clienteEntity.getCpf(), clienteEntity.getNome(), clienteEntity.getTipoIngresso(),
+								clienteEntity.getId());
+						controleDeCapacidadeEvento.retornaIngressoCamarote(eventoEntity);
+					} 
+					else {
+						throw new IngressoException("INGRESSOS ESGOTADOS");
+					}
+				}
+			}
+			else {
+				attr.addFlashAttribute("error", "O cpf é inválido!");
+				return "redirect:/evento/venda/editar-venda/"+clienteEntity.getId();
+			}
+		}
 		else {
-			if (clienteEntityAtual.getTipoIngresso().equals("NORMAL")
-					&& clienteEntity.getTipoIngresso().equals("VIP")) {
-				clienteService.editar(clienteEntity.getCpf(), clienteEntity.getNome(), clienteEntity.getTipoIngresso(),
-						clienteEntity.getId());
-				controleDeCapacidadeEvento.editaOValorDoIngressoTrocado(eventoEntity.getPrecoIngressoVip(),
-						clienteEntity, eventoEntity);
-				attr.addFlashAttribute("success", "Editado com sucesso.");
-			} 
-			else if (clienteEntityAtual.getTipoIngresso().equals("VIP")
-					&& clienteEntity.getTipoIngresso().equals("NORMAL")) {
-				clienteService.editar(clienteEntity.getCpf(), clienteEntity.getNome(), clienteEntity.getTipoIngresso(),
-						clienteEntity.getId());
-				controleDeCapacidadeEvento.editaOValorDoIngressoTrocado(eventoEntity.getPrecoIngressoNormal(),
-						clienteEntity, eventoEntity);
-				attr.addFlashAttribute("success", "Editado com sucesso.");
-			} 
-			else if (clienteEntityAtual.getTipoIngresso().equals("CAMAROTE")
-					&& clienteEntity.getTipoIngresso().equals("NORMAL")) {
-				if (eventoEntity.getCapacidade() != 0) {
-					clienteService.editar(clienteEntity.getCpf(), clienteEntity.getNome(), clienteEntity.getTipoIngresso(),
-							clienteEntity.getId());
-					controleDeCapacidadeEvento.vendaIngressoNormalEVip(eventoEntity);
-					controleDeCapacidadeEvento.retornaIngressoCamarote(eventoEntity);
-					controleDeCapacidadeEvento.editaOValorDoIngressoTrocado(eventoEntity.getPrecoIngressoNormal(),
-							clienteEntity, eventoEntity);
-					attr.addFlashAttribute("success", "Editado com sucesso.");
-				}
-				else {
-					attr.addFlashAttribute("error", "Ingressos do tipo NORMAL esgotaram.");
-				}
-				
-			} 
-			else if (clienteEntityAtual.getTipoIngresso().equals("CAMAROTE")
-					&& clienteEntity.getTipoIngresso().equals("VIP")) {
-				if (eventoEntity.getCapacidadeCamarote() != 0) {
-					clienteService.editar(clienteEntity.getCpf(), clienteEntity.getNome(), clienteEntity.getTipoIngresso(),
-							clienteEntity.getId());
-					controleDeCapacidadeEvento.vendaIngressoNormalEVip(eventoEntity);
-					controleDeCapacidadeEvento.retornaIngressoCamarote(eventoEntity);
-					controleDeCapacidadeEvento.editaOValorDoIngressoTrocado(eventoEntity.getPrecoIngressoVip(),
-							clienteEntity, eventoEntity);
-					attr.addFlashAttribute("success", "Editado com sucesso.");
-				}
-				else {
-					attr.addFlashAttribute("error", "Ingressos do tipo VIP esgotaram.");
-				}
-				
-			} 
-			else if (controleDeCapacidadeEvento.vendaIngressoNormalEVip(eventoEntity) == true) {
-				clienteService.editar(clienteEntity.getCpf(), clienteEntity.getNome(), clienteEntity.getTipoIngresso(),
-						clienteEntity.getId());
-				controleDeCapacidadeEvento.retornaIngressoCamarote(eventoEntity);
-			} 
-			else {
-				throw new IngressoException("INGRESSOS ESGOTADOS");
-			}
+			attr.addFlashAttribute("error", "O cliente é menor de idade!");
+			return "redirect:/evento/venda/editar-venda/"+clienteEntity.getId();
 		}
-
 		return "redirect:/evento/venda/editar-venda/"+clienteEntity.getId();
 	}
 

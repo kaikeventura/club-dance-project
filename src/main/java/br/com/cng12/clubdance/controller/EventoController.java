@@ -1,5 +1,7 @@
 package br.com.cng12.clubdance.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -118,45 +120,66 @@ public class EventoController {
 	@PostMapping(VENDA_INGRESSO)
 	public String venderIngressoCliente(@Valid ClienteEntity clienteEntity, RedirectAttributes attr)
 			throws IngressoException {
-
+		
 		EventoEntity eventoEntity = eventoService.buscarPorId(idEvento);
-		clienteEntity.setEventoEntity(eventoEntity);
-		Double valorIngresso = 0.0D;
-
-		if (clienteEntity.getTipoIngresso().equals("NORMAL")) {
-			valorIngresso = eventoEntity.getPrecoIngressoNormal();
-			if (controleDeCapacidadeEvento.vendaIngressoNormalEVip(eventoEntity) == true) {
-				clienteService.salvar(clienteEntity);
-				clienteController.criarComanda(clienteEntity, eventoEntity, valorIngresso);
-				attr.addFlashAttribute("success", "Ingresso vendido com sucesso.");
-			} else {
-				attr.addFlashAttribute("error", "Ingressos do tipo NORMAL esgotaram.");
+		List<ClienteEntity> clientesDoEvento = clienteService.buscarClientesDoEvento(eventoEntity);
+		
+		for(int i = 0; i < clientesDoEvento.size(); i++) {
+			if(clienteEntity.getCpf().equals(clientesDoEvento.get(i).getCpf())) {
+				attr.addFlashAttribute("error", "Já existe um cliente com esse cpf no evento!");
+				return "redirect:/evento/vender-ingresso/" + idEvento;
 			}
-			
 		}
-		if (clienteEntity.getTipoIngresso().equals("VIP")) {
-			valorIngresso = eventoEntity.getPrecoIngressoVip();
-			if (controleDeCapacidadeEvento.vendaIngressoNormalEVip(eventoEntity) == true) {
-				clienteService.salvar(clienteEntity);
-				clienteController.criarComanda(clienteEntity, eventoEntity, valorIngresso);
-				attr.addFlashAttribute("success", "Ingresso vendido com sucesso.");
-			} else {
-				attr.addFlashAttribute("error", "Ingressos do tipo VIP esgotaram.");
-			}
+		
+		if(clienteService.verificarMaiorIdade(clienteEntity) == true) {
+			if(clienteService.verificarCPFValido(clienteEntity)) {
+				
+				clienteEntity.setEventoEntity(eventoEntity);
+				Double valorIngresso = 0.0D;
 
-		}
-		if (clienteEntity.getTipoIngresso().equals("CAMAROTE")) {
-			valorIngresso = eventoEntity.getPrecoIngressoCamarote();
-			if (controleDeCapacidadeEvento.vendaIngressoCamarote(eventoEntity) == true) {
-				clienteService.salvar(clienteEntity);
-				clienteController.criarComanda(clienteEntity, eventoEntity, valorIngresso);
-				attr.addFlashAttribute("success", "Ingresso vendido com sucesso.");
-			} else {
-				attr.addFlashAttribute("error", "Ingressos do tipo CAMAROTE esgotaram.");
-			}
-			
-		}
+				if (clienteEntity.getTipoIngresso().equals("NORMAL")) {
+					valorIngresso = eventoEntity.getPrecoIngressoNormal();
+					if (controleDeCapacidadeEvento.vendaIngressoNormalEVip(eventoEntity) == true) {
+						clienteService.salvar(clienteEntity);
+						clienteController.criarComanda(clienteEntity, eventoEntity, valorIngresso);
+						attr.addFlashAttribute("success", "Ingresso vendido com sucesso.");
+					} else {
+						attr.addFlashAttribute("error", "Ingressos do tipo NORMAL esgotaram.");
+					}
+					
+				}
+				if (clienteEntity.getTipoIngresso().equals("VIP")) {
+					valorIngresso = eventoEntity.getPrecoIngressoVip();
+					if (controleDeCapacidadeEvento.vendaIngressoNormalEVip(eventoEntity) == true) {
+						clienteService.salvar(clienteEntity);
+						clienteController.criarComanda(clienteEntity, eventoEntity, valorIngresso);
+						attr.addFlashAttribute("success", "Ingresso vendido com sucesso.");
+					} else {
+						attr.addFlashAttribute("error", "Ingressos do tipo VIP esgotaram.");
+					}
 
+				}
+				if (clienteEntity.getTipoIngresso().equals("CAMAROTE")) {
+					valorIngresso = eventoEntity.getPrecoIngressoCamarote();
+					if (controleDeCapacidadeEvento.vendaIngressoCamarote(eventoEntity) == true) {
+						clienteService.salvar(clienteEntity);
+						clienteController.criarComanda(clienteEntity, eventoEntity, valorIngresso);
+						attr.addFlashAttribute("success", "Ingresso vendido com sucesso.");
+					} else {
+						attr.addFlashAttribute("error", "Ingressos do tipo CAMAROTE esgotaram.");
+					}
+					
+				}
+			}
+			else {
+				attr.addFlashAttribute("error", "O cpf é inválido!");
+				return "redirect:/evento/vender-ingresso/" + idEvento;
+			}
+		}
+		else {
+			attr.addFlashAttribute("error", "O cliente é menor de idade!");
+			return "redirect:/evento/vender-ingresso/" + idEvento;
+		}
 		return "redirect:/evento/vender-ingresso/" + idEvento;
 	}
 
