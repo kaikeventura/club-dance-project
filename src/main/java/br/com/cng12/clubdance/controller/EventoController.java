@@ -78,7 +78,7 @@ public class EventoController {
 	@GetMapping(LISTAR_EVENTOS)
 	public String listarEventos(ModelMap model) {
 
-		model.addAttribute("eventos", eventoService.listar());
+		model.addAttribute("eventos", eventoService.listarEventosAtivos());
 
 		return "evento/eventos";
 	}
