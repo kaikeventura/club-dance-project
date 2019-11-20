@@ -53,7 +53,8 @@
 			<div class="divider"></div>
 		</li>
 		<li><a><i class="material-icons">attach_money</i>Caixa</a></li>
-		<li><a th:href="@{/caixa/inicio-caixa}"><i class="material-icons">chevron_right</i>Consultar</a></li>
+		<li><a th:href="@{/caixa/inicio-caixa}"><i
+				class="material-icons">chevron_right</i>Consultar</a></li>
 		<li>
 			<div class="divider"></div>
 		</li>
@@ -63,6 +64,51 @@
 			<div class="divider"></div>
 		</li>
 	</ul>
+
+	<div class="body-principal">
+
+		<div class="row">
+			<a class='dropdown-trigger btn-large col s6' href='#' data-target='dropdown-evento'>Evento</a>
+			<ul id='dropdown-evento' class='dropdown-content'>
+				<li><a class="modal-trigger" href="#modal-eventos-finalizados">Relatório - Eventos finalizados</a></li>
+				<li class="divider" tabindex="-1"></li>
+				<li><a href="#!">Relatório - Próximos eventos</a></li>
+			</ul>
+		</div>
+		
+		<div id="modal-eventos-finalizados" class="modal">
+		    <div class="modal-content">
+		   		<h4>Emitir relatório - Eventos encerrados</h4>
+			    <div class="row">
+					<form class="col s12" th:action="@{/relatorio/eventos-finalizados}"
+						th:object="${periodoRelatorio}" method="POST">
+						<div class="row">
+							<div class="input-field col s4">
+								<i class="material-icons prefix">date_range</i> <input
+									id="icon_prefix" type="date" class="validate"
+									th:field="*{dataInicio}" required="required"> <label
+									for="icon_prefix">Data</label>
+							</div>
+							<div class="input-field col s4">
+								<i class="material-icons prefix">date_range</i> <input
+									id="icon_prefix" type="date" class="validate"
+									th:field="*{dataFim}" required="required"> <label
+									for="icon_prefix">Data</label>
+							</div>
+							<div class="input-field col s4">
+								<div class="row right-align">
+									<button id="btn-svr-evento" type="submit"
+										class="waves-effect waves-light btn pink darken-1">
+										<i class="material-icons right">border_color</i>Emitir
+									</button>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>  
+		    </div>
+  		</div>
+	</div>
 
 	<!--JQuery-->
 	<script type="text/javascript" th:src="@{/js/jquery-3.4.1.js}"></script>
@@ -78,6 +124,10 @@
 			$('#sidenav-2').sidenav({
 				edge : 'right'
 			});
+		});
+		$('.dropdown-trigger').dropdown();
+		$(document).ready(function(){
+		    $('.modal').modal();
 		});
 	</script>
 </body>
