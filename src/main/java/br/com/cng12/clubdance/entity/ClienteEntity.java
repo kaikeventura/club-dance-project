@@ -28,7 +28,7 @@ public class ClienteEntity {
 	private Long id;
 
 	@Size(min = 1, max = 40, message = "Entre 1 e 40 caracteres.")
-	@Column(nullable = true)
+	@Column(name = "nome_cliente", nullable = true)
 	private String nome;
 
 	@Size(min = 1, max = 15, message = "Entre 1 e 15 caracteres.")

@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -45,11 +46,11 @@ public class PagamentoCaixaEntity implements Serializable {
 	@NumberFormat(style = Style.CURRENCY, pattern = "###,###,###,##0.00")
 	private Double valor;
 	
-	@Column(nullable = true)
-	private String nomeCliente;
+	@ManyToOne
+	private ClienteEntity clienteEntity;
 	
-	@Column(nullable = true)
-	private String nomeEvento;
+	@ManyToOne
+	private EventoEntity eventoEntity;
 	
 	@DateTimeFormat(iso = ISO.DATE)
 	private LocalDate data;

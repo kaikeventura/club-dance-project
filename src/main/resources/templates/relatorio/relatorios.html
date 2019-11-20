@@ -67,19 +67,41 @@
 
 	<div class="body-principal">
 
-		<div class="row">
-			<a class='dropdown-trigger btn-large col s6' href='#' data-target='dropdown-evento'>Evento</a>
-			<ul id='dropdown-evento' class='dropdown-content'>
-				<li><a class="modal-trigger" href="#modal-eventos-finalizados">Relatório - Eventos finalizados</a></li>
-				<li class="divider" tabindex="-1"></li>
-				<li><a href="#!">Relatório - Próximos eventos</a></li>
-			</ul>
+		<!-- Tipos de relatórios -->
+		<div class="row col s12">
+			<!-- Relatorios de eventos -->
+			<div class="col s6">
+				<a class='dropdown-trigger btn-large col s12' href='#'
+					data-target='dropdown-evento'>Evento</a>
+				<ul id='dropdown-evento' class='dropdown-content'>
+					<li><a class="modal-trigger" href="#modal-eventos-finalizados">Relatório
+							- Eventos finalizados</a></li>
+					<li class="divider" tabindex="-1"></li>
+					<li><a href="#!">Relatório - Próximos eventos</a></li>
+				</ul>
+			</div>
+			<!-- Relatorios do caixa -->
+			<div class="col s6">
+				<a class='dropdown-trigger btn-large col s12' href='#'
+					data-target='dropdown-caixa'>Caixa</a>
+				<ul id='dropdown-caixa' class='dropdown-content'>
+					<li><a class="modal-trigger" href="#modal-caixa-geral">Relatório
+							- Entrada de caixa geral</a></li>
+					<li class="divider" tabindex="-1"></li>
+					<li><a class="modal-trigger" href="#modal-caixa-por-evento">Relatório
+							- Entrada de caixa por evento</a></li>
+					<li class="divider" tabindex="-1"></li>
+					<li><a class="modal-trigger" href="#modal-caixa-por-produto">Relatório
+							- Entrada de caixa por produto</a></li>
+				</ul>
+			</div>
 		</div>
-		
+
+		<!-- Relatorios de eventos (Modals) -->
 		<div id="modal-eventos-finalizados" class="modal">
-		    <div class="modal-content">
-		   		<h4>Emitir relatório - Eventos encerrados</h4>
-			    <div class="row">
+			<div class="modal-content">
+				<h4>Emitir relatório - Eventos encerrados</h4>
+				<div class="row">
 					<form class="col s12" th:action="@{/relatorio/eventos-finalizados}"
 						th:object="${periodoRelatorio}" method="POST">
 						<div class="row">
@@ -87,13 +109,13 @@
 								<i class="material-icons prefix">date_range</i> <input
 									id="icon_prefix" type="date" class="validate"
 									th:field="*{dataInicio}" required="required"> <label
-									for="icon_prefix">Data</label>
+									for="icon_prefix">Data inicio</label>
 							</div>
 							<div class="input-field col s4">
 								<i class="material-icons prefix">date_range</i> <input
 									id="icon_prefix" type="date" class="validate"
 									th:field="*{dataFim}" required="required"> <label
-									for="icon_prefix">Data</label>
+									for="icon_prefix">Data fim</label>
 							</div>
 							<div class="input-field col s4">
 								<div class="row right-align">
@@ -105,9 +127,86 @@
 							</div>
 						</div>
 					</form>
-				</div>  
-		    </div>
-  		</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Relatorios caixa (Modals) -->
+		<!-- Entrada caixa geral -->
+		<div id="modal-caixa-geral" class="modal">
+			<div class="modal-content">
+				<h4>Emitir relatório - Entrada de geral</h4>
+				<div class="row">
+					<form class="col s12" th:action="@{/relatorio/caixa-geral}"
+						th:object="${periodoRelatorio}" method="POST">
+						<div class="row">
+							<div class="input-field col s4">
+								<i class="material-icons prefix">date_range</i> <input
+									id="icon_prefix" type="date" class="validate"
+									th:field="*{dataInicio}" required="required"> <label
+									for="icon_prefix">Data inicio</label>
+							</div>
+							<div class="input-field col s4">
+								<i class="material-icons prefix">date_range</i> <input
+									id="icon_prefix" type="date" class="validate"
+									th:field="*{dataFim}" required="required"> <label
+									for="icon_prefix">Data fim</label>
+							</div>
+							<div class="input-field col s4">
+								<div class="row right-align">
+									<button id="btn-svr-evento" type="submit"
+										class="waves-effect waves-light btn pink darken-1">
+										<i class="material-icons right">border_color</i>Emitir
+									</button>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<!-- Entrada caixa por evento -->
+		<div id="modal-caixa-por-evento" class="modal">
+			<div class="modal-content">
+				<h4>Emitir relatório - Entrada de caixa por produto</h4>
+				<div class="row">
+					<form class="col s12" th:action="@{/relatorio/caixa-por-produto}"
+						th:object="${parametroId}" method="POST">
+						<div class="row">
+							<div class="input-field col s12">
+								<i class="material-icons prefix">account_circle</i> <select
+									th:field="*{idEvento}" required="required">
+									<option value="">Selecione...</option>
+									<option th:each="e : ${eventos}" th:value="${e.id}"
+										th:text="${e.nome}"></option>
+								</select> <label>Eventos</label>
+							</div>
+							<div class="input-field col s10">
+								<i class="material-icons prefix">account_circle</i> <select
+									th:field="*{idProduto}" required="required">
+									<option value="">Selecione...</option>
+									<option th:each="p : ${produtos}" th:value="${p.id}"
+										th:text="${p.nome}"></option>
+								</select> <label>Eventos</label>
+							</div>
+							<div class="input-field col s2">
+								<div class="row right-align">
+									<button id="btn-svr-evento" type="submit"
+										class="waves-effect waves-light btn pink darken-1">
+										<i class="material-icons right">border_color</i>Emitir
+									</button>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+
+
+
 	</div>
 
 	<!--JQuery-->
@@ -126,8 +225,11 @@
 			});
 		});
 		$('.dropdown-trigger').dropdown();
-		$(document).ready(function(){
-		    $('.modal').modal();
+		$(document).ready(function() {
+			$('.modal').modal();
+		});
+		$(document).ready(function() {
+			$('select').formSelect();
 		});
 	</script>
 </body>

@@ -28,7 +28,7 @@ public class EventoEntity {
 	private Long id;
 
 	@NotEmpty(message = "Campo obrigatório.")
-	@Column(nullable = true)
+	@Column(name = "nome_evento", nullable = true)
 	private String nome;
 
 	@NotEmpty(message = "Campo obrigatório.")

@@ -41,6 +41,7 @@ public class CaixaController {
 	private static final String SELECIONAR_CLIENTE = "/caixa/cobranca/cliente/selecionar-cliente/{id}";
 	private static final String CIELO_MAQUININHA = "/cielo/cielo-pagamentos";
 	private static final String COMANDA_CLIENTE = "/cielo/cielo-pagamentos/processa-pagamento";
+	private static final String PAGAMENTO_DINHEIRO = "/caixa/cobranca/pagamentos/dinheiro";
 	private static final String PAGAMENTO_APROVADO = "/cielo/cielo-pagamentos/aprovado";
 
 	@Autowired
@@ -149,8 +150,8 @@ public class CaixaController {
 		ComandaEntity comanda = comandaService.buscarComandaDoCliente(cliente);
 
 		pagamentoCaixaEntity.setData(LocalDate.now());
-		pagamentoCaixaEntity.setNomeCliente(cliente.getNome());
-		pagamentoCaixaEntity.setNomeEvento(evento.getNome());
+		pagamentoCaixaEntity.setClienteEntity(cliente);
+		pagamentoCaixaEntity.setEventoEntity(evento);
 		pagamentoCaixaEntity.setValor(totalDTO.getTotal());
 
 		if (pagamentoCaixaEntity.getFormaPagamento().equals("CREDITO")) {
@@ -213,14 +214,27 @@ public class CaixaController {
 				return "redirect:/cielo/cielo-pagamentos";
 			}
 		}
+		else {
+			
+			pagamentoCaixaEntity.setSenha(0000);
+			pagamentoCaixaEntity.setNumeroCartao("N/A");
+			pagamentoService.salvar(pagamentoCaixaEntity);
+			comandaService.atualizaStatusComanda("FECHADO", comanda.getId());
+			
+			return "redirect:/caixa/cobranca/selecionar-evento";
+		}
 		
-		return "redirect:/";
+	}
+	
+	@PostMapping(PAGAMENTO_DINHEIRO)
+	public String pagamentoComDinheiro() {
 		
+		return "redirect:/caixa/cobranca/selecionar-evento";
 	}
 	
 	@GetMapping(PAGAMENTO_APROVADO)
 	public String pagamentoAprovado() {
-		 
+		
 		return "cielo/pagamento-aprovado";
 	}
 

@@ -125,52 +125,31 @@
 						for="icon_prefix">Valor Total a Pagar</label>
 				</div>
 			</div>
-		<!-- 	<form
-				action="@{/caixa/cobranca/cliente/pagamento/realizar-pagamento}"
-				th:object="${pagamentoCaixaEntity}" method="POST">
-				<div class="row col s12">
-					<div th:if="${success} != null">
-						<span class="success-span z-depth-1 col s12" th:text="${success}"></span>
-					</div>
-					<div th:if="${error} != null">
-						<span class="error-span z-depth-1 col s12" th:text="${error}"></span>
-					</div>
-					<div class="input-field col s2">
-						<select th:field="*{formaPagamento}" required="required">
-							<option value="">Selecione...</option>
-							<option th:each="fp : ${formasPagamento}" th:value="${fp}"
-								th:text="${fp.formaPagamento}"></option>
-						</select> <label>Forma de pagamento</label>
-					</div>
-					<div class="input-field col s3">
-						<input placeholder="0000-0000-0000-0000" id="first_name"
-							type="text" class="validate numero_cartao" required="required"
-							th:field="*{numeroCartao}"> <label for="first_name">Número
-							Cartão de Crédito</label>
-					</div>
-					<div class="input-field col s2">
-						<input id="last_name" type="password" class="validate mixed"
-							placeholder="****" required="required" th:field="*{senha}">
-						<label for="last_name">Senha</label>
-					</div>
-					<div class="input-field col s4">
-						<div class="row right-align">
-							<button id="btn-svr-evento" type="submit"
-								class="waves-effect waves-light btn pink darken-1">
-								<i class="material-icons right">border_color</i>Pagar
-							</button>
-						</div>
-					</div>
-				</div>
-			</form> -->
 
-			<div class="row right-align">
-				<a th:href="@{/caixa/cobranca/selecionar-evento}" id="btn-cad-evento"
-					class="waves-effect waves-light btn pink darken-1">Cobrar com dinheiro</a>
-			</div>
+			<!-- <div class="input-field col s3">
+				<div class="row right-align">
+					<input type="hidden" id="id" th:field="*{id}" />
+					<button id="btn-svr-evento" type="submit"
+						class="waves-effect waves-light btn pink darken-1">
+						<i class="material-icons right">border_color</i>Salvar
+					</button>
+				</div>
+			</div> -->
+
+			<form th:action="@{/cielo/cielo-pagamentos/processa-pagamento}"
+				th:object="${pagamentoCaixaEntity}" method="POST">
+				<div class="row right-align">
+					<button id="btn-svr-evento" type="submit"
+						class="waves-effect waves-light btn pink darken-1">
+						<i class="material-icons right">border_color</i>Cobrar com
+						dinheiro
+					</button>
+				</div>
+			</form>
 			<div class="row right-align">
 				<a th:href="@{/cielo/cielo-pagamentos}" id="btn-cad-evento"
-					class="waves-effect waves-light btn pink darken-1">Cobrar com cartão</a>
+					class="waves-effect waves-light btn pink darken-1">Cobrar com
+					cartão</a>
 			</div>
 
 		</div>
