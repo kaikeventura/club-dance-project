@@ -66,7 +66,7 @@
 	</ul>
 
 	<div class="body-principal">
-
+		<br>
 		<!-- Tipos de relatórios -->
 		<div class="row col s12">
 			<!-- Relatorios de eventos -->
@@ -135,7 +135,7 @@
 		<!-- Entrada caixa geral -->
 		<div id="modal-caixa-geral" class="modal">
 			<div class="modal-content">
-				<h4>Emitir relatório - Entrada de geral</h4>
+				<h4>Emitir relatório - Caixa geral</h4>
 				<div class="row">
 					<form class="col s12" th:action="@{/relatorio/caixa-geral}"
 						th:object="${periodoRelatorio}" method="POST">
@@ -169,25 +169,17 @@
 		<!-- Entrada caixa por evento -->
 		<div id="modal-caixa-por-evento" class="modal">
 			<div class="modal-content">
-				<h4>Emitir relatório - Entrada de caixa por produto</h4>
+				<h4>Emitir relatório - Caixa por evento</h4>
 				<div class="row">
-					<form class="col s12" th:action="@{/relatorio/caixa-por-produto}"
+					<form class="col s12" th:action="@{/relatorio/caixa-por-evento}"
 						th:object="${parametroId}" method="POST">
 						<div class="row">
-							<div class="input-field col s12">
+							<div class="input-field col s10">
 								<i class="material-icons prefix">account_circle</i> <select
 									th:field="*{idEvento}" required="required">
 									<option value="">Selecione...</option>
 									<option th:each="e : ${eventos}" th:value="${e.id}"
 										th:text="${e.nome}"></option>
-								</select> <label>Eventos</label>
-							</div>
-							<div class="input-field col s10">
-								<i class="material-icons prefix">account_circle</i> <select
-									th:field="*{idProduto}" required="required">
-									<option value="">Selecione...</option>
-									<option th:each="p : ${produtos}" th:value="${p.id}"
-										th:text="${p.nome}"></option>
 								</select> <label>Eventos</label>
 							</div>
 							<div class="input-field col s2">
@@ -203,7 +195,46 @@
 				</div>
 			</div>
 		</div>
+		
+		<!-- Entrada caixa por evento -->
+		<div id="modal-caixa-por-produto" class="modal">
+			<div class="modal-content">
+				<h4>Emitir relatório - Caixa por produto</h4>
+				<div class="row">
+					<form class="col s12" th:action="@{/relatorio/caixa-por-produto}"
+						th:object="${parametroId}" method="POST">
+						<div class="row">
+							<div class="input-field col s12">
+								<i class="material-icons prefix">account_circle</i> <select
+									th:field="*{idEvento}" required="required">
+									<option value="">Selecione...</option>
+									<option th:each="e : ${eventos}" th:value="${e.id}"
+										th:text="${e.nome}"></option>
+								</select> <label>Eventos</label>
+							</div>
+							<div class="input-field col s12">
+								<i class="material-icons prefix">account_circle</i> <select
+									th:field="*{idProduto}" required="required">
+									<option value="">Selecione...</option>
+									<option th:each="p : ${produtos}" th:value="${p.id}"
+										th:text="${p.nome}"></option>
+								</select> <label>Produtos</label>
+							</div>
+							<div class="input-field col s12">
+								<div class="row right-align">
+									<button id="btn-svr-evento" type="submit"
+										class="waves-effect waves-light btn pink darken-1">
+										<i class="material-icons right">border_color</i>Emitir
+									</button>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
 
+		
 
 
 

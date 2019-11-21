@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import br.com.cng12.clubdance.service.impl.EventoServiceImpl;
+import br.com.cng12.clubdance.service.impl.ProdutoServiceImpl;
 import br.com.cng12.clubdance.utils.DataUtils;
 import br.com.cng12.clubdance.utils.dto.PeriodoRelatorio;
 import br.com.cng12.clubdance.utils.dto.ParametroId;
@@ -47,10 +48,14 @@ public class RelatorioController {
 	@Autowired
 	private EventoServiceImpl eventoService;
 	
+	@Autowired
+	private ProdutoServiceImpl produtoService;
+	
 	@GetMapping(INICIO_RELATORIO)
 	public String inicioRelatorios(PeriodoRelatorio periodoRelatorio, ParametroId parametroId, ModelMap model) {
 		
 		model.addAttribute("eventos", eventoService.listar());
+		model.addAttribute("produtos", produtoService.listar());
 		
 		return "relatorio/relatorios";
 	}
@@ -144,7 +149,7 @@ public class RelatorioController {
 		parametros.put("id_evento", idEvento);
 		parametros.put("id_produto", idProduto);
 		
-		InputStream jasperStream = this.getClass().getResourceAsStream("/relatorios/?.jasper");		
+		InputStream jasperStream = this.getClass().getResourceAsStream("/relatorios/relatorio_caixa_por_produto.jasper");		
 		JasperReport jasperReport = (JasperReport) JRLoader.loadObject(jasperStream);		
 		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parametros, dataSource.getConnection());
 		

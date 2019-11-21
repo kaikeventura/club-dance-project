@@ -29,7 +29,7 @@ public class ProdutoEntity implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(nullable = true, unique = true)
+	@Column(name = "nome_produto", nullable = true, unique = true)
 	private String nome;
 	
 	@Column(nullable = false)
