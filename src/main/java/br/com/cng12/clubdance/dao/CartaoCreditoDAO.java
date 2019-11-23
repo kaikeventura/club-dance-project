@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.cng12.clubdance.entity.CartaoCreditoEntity;
-import br.com.cng12.clubdance.entity.FornecedorEntity;
 
 @Repository
 public interface CartaoCreditoDAO extends JpaRepository<CartaoCreditoEntity, Long> {
