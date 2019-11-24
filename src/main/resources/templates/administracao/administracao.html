@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>Administração</title>
+<meta charset="utf-8">
+<link rel="icon" type="imagem/png" th:href="@{/img/minilogo.png}" />
+
+<!--Import Google Icon Font-->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
+<!--Import materialize.css-->
+<link type="text/css" rel="stylesheet" th:href="@{/css/materialize.css}"
+	media="screen,projection" />
+<!--style.css-->
+<link type="text/css" rel="stylesheet" th:href="@{/css/style.css}" />
+<!--Let browser know website is optimized for mobile-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+</head>
+
+<body>
+
+	<!-- NAVBAR -->
+	<header>
+		<nav class="pink darken-1">
+			<div class="nav-wrapper"></div>
+		</nav>
+	</header>
+
+	<!-- LEFT SIDEBAR-->
+	<ul id="sidenav-1" class="sidenav sidenav-fixed">
+
+		<li class="menu-lateral"><a href="#modal-logout"
+			class="tooltipped modal-trigger" data-position="bottom"
+			data-tooltip="Clique para fazer logout"><i class="material-icons">person_pin</i><span
+				class="back-text email" style="text-transform: uppercase;">kaike_ventura</span></a></li>
+		<li>
+		<li>
+			<div class="divider"></div>
+		</li>
+		<li class="menu-lateral"><a th:href="@{/}"><i
+				class="material-icons">home</i>Home</a></li>
+		<li>
+			<div class="divider"></div>
+		</li>
+		<li><a><i class="material-icons">confirmation_number</i>Ingresso</a></li>
+		<li><a th:href="@{/evento/eventos}"><i class="material-icons">chevron_right</i>Eventos</a></li>
+		<li>
+			<div class="divider"></div>
+		</li>
+		<li><a><i class="material-icons">local_bar</i>Bar</a></li>
+		<li><a th:href="@{/bar/inicio}"><i class="material-icons">chevron_right</i>Venda</a></li>
+		<li>
+			<div class="divider"></div>
+		</li>
+		<li><a><i class="material-icons">store</i>Estoque</a></li>
+		<li><a th:href="@{/estoque/inicio-estoque}"><i
+				class="material-icons">chevron_right</i>Consultar</a></li>
+		<li>
+			<div class="divider"></div>
+		</li>
+		<li><a><i class="material-icons">attach_money</i>Caixa</a></li>
+		<li><a th:href="@{/caixa/inicio-caixa}"><i
+				class="material-icons">chevron_right</i>Consultar</a></li>
+		<li>
+			<div class="divider"></div>
+		</li>
+		<li><a><i class="material-icons">content_paste</i>Administração</a></li>
+		<li><a th:href="@{/administracao/inicio}"><i
+				class="material-icons">chevron_right</i>Consultar</a></li>
+		<li>
+			<div class="divider"></div>
+		</li>
+	</ul>
+
+	<div class="body-principal">
+		<div class="row">
+			<div class="col s12 m12">
+				<div class="card style-table">
+					<div class="card-action center black">
+						<strong><a class="white-text">Painel do Administrador</a></strong>
+					</div>
+					<div class="divider"></div>
+					<div class="row">
+						<div class="col s6 m6">
+							<div class="card" style="display: grid;">
+								<div class="card-action center black">
+									<strong><a class="white-text">Usuários</a></strong>
+								</div>
+								<div class="divider"></div>
+								<!-- Usuários -->
+								<div class="col s12" style="margin-top: 1%; margin-bottom: 1%">
+									<a class='btn-large col s12' href='#'>Cadastrar usuário</a>
+								</div>
+								<div class="col s12" style="margin-top: 1%; margin-bottom: 1%">
+									<a class='btn-large col s12' href='#'>Usuários cadastrados
+										- ativos</a>
+								</div>
+								<div class="col s12" style="margin-top: 1%; margin-bottom: 1%">
+									<a class='btn-large col s12' href='#'>Usuários cadastrados
+										- inativos</a>
+								</div>
+							</div>
+						</div>
+						<div class="col s6 m6">
+							<div class="card" style="display: grid;">
+								<div class="card-action center black">
+									<strong><a class="white-text">Relatórios</a></strong>
+								</div>
+								<!-- Relatorios de eventos -->
+								<div class="col s12" style="margin-top: 1%; margin-bottom: 1%">
+									<a class='dropdown-trigger btn-large col s12' href='#'
+										data-target='dropdown-evento'>Evento</a>
+									<ul id='dropdown-evento' class='dropdown-content'>
+										<li><a class="modal-trigger"
+											href="#modal-eventos-finalizados">Relatório - Eventos
+												finalizados</a></li>
+										<li class="divider" tabindex="-1"></li>
+										<li><a href="#!">Relatório - Próximos eventos</a></li>
+									</ul>
+								</div>
+								<!-- Relatorios do caixa -->
+								<div class="col s12" style="margin-top: 1%; margin-bottom: 1%">
+									<a class='dropdown-trigger btn-large col s12' href='#'
+										data-target='dropdown-caixa'>Caixa</a>
+									<ul id='dropdown-caixa' class='dropdown-content'>
+										<li><a class="modal-trigger" href="#modal-caixa-geral">Relatório
+												- Entrada de caixa geral</a></li>
+										<li class="divider" tabindex="-1"></li>
+										<li><a class="modal-trigger"
+											href="#modal-caixa-por-evento">Relatório - Entrada de
+												caixa por evento</a></li>
+										<li class="divider" tabindex="-1"></li>
+										<li><a class="modal-trigger"
+											href="#modal-caixa-por-produto">Relatório - Entrada de
+												caixa por produto</a></li>
+									</ul>
+								</div>
+
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<!-- Relatorios de eventos (Modals) -->
+		<div id="modal-eventos-finalizados" class="modal">
+			<div class="modal-content">
+				<h4>Emitir relatório - Eventos encerrados</h4>
+				<div class="row">
+					<form class="col s12" th:action="@{/administracao/eventos-finalizados}"
+						th:object="${periodoRelatorio}" method="POST">
+						<div class="row">
+							<div class="input-field col s4">
+								<i class="material-icons prefix">date_range</i> <input
+									id="icon_prefix" type="date" class="validate"
+									th:field="*{dataInicio}" required="required"> <label
+									for="icon_prefix">Data inicio</label>
+							</div>
+							<div class="input-field col s4">
+								<i class="material-icons prefix">date_range</i> <input
+									id="icon_prefix" type="date" class="validate"
+									th:field="*{dataFim}" required="required"> <label
+									for="icon_prefix">Data fim</label>
+							</div>
+							<div class="input-field col s4">
+								<div class="row right-align">
+									<button id="btn-svr-evento" type="submit"
+										class="waves-effect waves-light btn pink darken-1">
+										<i class="material-icons right">border_color</i>Emitir
+									</button>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<!-- Relatorios caixa (Modals) -->
+		<!-- Entrada caixa geral -->
+		<div id="modal-caixa-geral" class="modal">
+			<div class="modal-content">
+				<h4>Emitir relatório - Caixa geral</h4>
+				<div class="row">
+					<form class="col s12" th:action="@{/administracao/caixa-geral}"
+						th:object="${periodoRelatorio}" method="POST">
+						<div class="row">
+							<div class="input-field col s4">
+								<i class="material-icons prefix">date_range</i> <input
+									id="icon_prefix" type="date" class="validate"
+									th:field="*{dataInicio}" required="required"> <label
+									for="icon_prefix">Data inicio</label>
+							</div>
+							<div class="input-field col s4">
+								<i class="material-icons prefix">date_range</i> <input
+									id="icon_prefix" type="date" class="validate"
+									th:field="*{dataFim}" required="required"> <label
+									for="icon_prefix">Data fim</label>
+							</div>
+							<div class="input-field col s4">
+								<div class="row right-align">
+									<button id="btn-svr-evento" type="submit"
+										class="waves-effect waves-light btn pink darken-1">
+										<i class="material-icons right">border_color</i>Emitir
+									</button>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<!-- Entrada caixa por evento -->
+		<div id="modal-caixa-por-evento" class="modal">
+			<div class="modal-content">
+				<h4>Emitir relatório - Caixa por evento</h4>
+				<div class="row">
+					<form class="col s12" th:action="@{/administracao/caixa-por-evento}"
+						th:object="${parametroId}" method="POST">
+						<div class="row">
+							<div class="input-field col s10">
+								<i class="material-icons prefix">account_circle</i> <select
+									th:field="*{idEvento}" required="required">
+									<option value="">Selecione...</option>
+									<option th:each="e : ${eventos}" th:value="${e.id}"
+										th:text="${e.nome}"></option>
+								</select> <label>Eventos</label>
+							</div>
+							<div class="input-field col s2">
+								<div class="row right-align">
+									<button id="btn-svr-evento" type="submit"
+										class="waves-effect waves-light btn pink darken-1">
+										<i class="material-icons right">border_color</i>Emitir
+									</button>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<!-- Entrada caixa por evento -->
+		<div id="modal-caixa-por-produto" class="modal">
+			<div class="modal-content">
+				<h4>Emitir relatório - Caixa por produto</h4>
+				<div class="row">
+					<form class="col s12" th:action="@{/administracao/caixa-por-produto}"
+						th:object="${parametroId}" method="POST">
+						<div class="row">
+							<div class="input-field col s12">
+								<i class="material-icons prefix">account_circle</i> <select
+									th:field="*{idEvento}" required="required">
+									<option value="">Selecione...</option>
+									<option th:each="e : ${eventos}" th:value="${e.id}"
+										th:text="${e.nome}"></option>
+								</select> <label>Eventos</label>
+							</div>
+							<div class="input-field col s12">
+								<i class="material-icons prefix">account_circle</i> <select
+									th:field="*{idProduto}" required="required">
+									<option value="">Selecione...</option>
+									<option th:each="p : ${produtos}" th:value="${p.id}"
+										th:text="${p.nome}"></option>
+								</select> <label>Produtos</label>
+							</div>
+							<div class="input-field col s12">
+								<div class="row right-align">
+									<button id="btn-svr-evento" type="submit"
+										class="waves-effect waves-light btn pink darken-1">
+										<i class="material-icons right">border_color</i>Emitir
+									</button>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<!--JQuery-->
+	<script type="text/javascript" th:src="@{/js/jquery-3.4.1.js}"></script>
+	<!--JavaScript at end of body for optimized loading-->
+	<script type="text/javascript" th:src="@{/js/materialize.js}"></script>
+
+	<script>
+		$(document).ready(function() {
+			$('.sidenav').sidenav();
+			$('#sidenav-1').sidenav({
+				edge : 'left'
+			});
+			$('#sidenav-2').sidenav({
+				edge : 'right'
+			});
+		});
+		$('.dropdown-trigger').dropdown();
+		$(document).ready(function() {
+			$('.modal').modal();
+		});
+		$(document).ready(function() {
+			$('select').formSelect();
+		});
+	</script>
+</body>
+
+</html>

@@ -34,13 +34,13 @@ import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
 
 @Controller
-public class RelatorioController {
+public class AdministracaoController {
 
-	private static final String INICIO_RELATORIO = "/relatorio/inicio";
-	private static final String RELATORIO_EVENTOS_FINALIZADOS = "/relatorio/eventos-finalizados";
-	private static final String RELATORIO_CAIXA_GERAL = "/relatorio/caixa-geral";
-	private static final String RELATORIO_CAIXA_POR_EVENTO = "/relatorio/caixa-por-evento";
-	private static final String RELATORIO_CAIXA_POR_PRODUTO = "/relatorio/caixa-por-produto";
+	private static final String INICIO_ADM = "/administracao/inicio";
+	private static final String RELATORIO_EVENTOS_FINALIZADOS = "/administracao/eventos-finalizados";
+	private static final String RELATORIO_CAIXA_GERAL = "/administracao/caixa-geral";
+	private static final String RELATORIO_CAIXA_POR_EVENTO = "/administracao/caixa-por-evento";
+	private static final String RELATORIO_CAIXA_POR_PRODUTO = "/administracao/caixa-por-produto";
 	
 	@Autowired
 	private DataSource dataSource;
@@ -51,13 +51,13 @@ public class RelatorioController {
 	@Autowired
 	private ProdutoServiceImpl produtoService;
 	
-	@GetMapping(INICIO_RELATORIO)
+	@GetMapping(INICIO_ADM)
 	public String inicioRelatorios(PeriodoRelatorio periodoRelatorio, ParametroId parametroId, ModelMap model) {
 		
 		model.addAttribute("eventos", eventoService.listar());
 		model.addAttribute("produtos", produtoService.listar());
 		
-		return "relatorio/relatorios";
+		return "administracao/administracao";
 	}
 	
 	@PostMapping(RELATORIO_EVENTOS_FINALIZADOS)

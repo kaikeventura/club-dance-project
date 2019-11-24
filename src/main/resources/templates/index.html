@@ -22,6 +22,18 @@
 
 <body>
 
+	<!-- MODAL LOGOUT -->
+	<div id="modal-logout" class="modal" style="width: 32%">
+		<div class="modal-content">
+			<h5>Deseja realmente fazer logout?</h5>
+		</div>
+		<div class="modal-footer">
+			<a th:href="@{/logout}" class="modal-close waves-effect waves-green btn-flat">Sim</a>
+			<a href="#!" class="modal-close waves-effect waves-green btn-flat">Não</a>
+		</div>
+	</div>
+
+
 	<!-- NAVBAR -->
 	<header>
 		<nav class="pink darken-1">
@@ -31,6 +43,15 @@
 
 	<!-- LEFT SIDEBAR-->
 	<ul id="sidenav-1" class="sidenav sidenav-fixed">
+
+		<li class="menu-lateral"><a href="#modal-logout"
+			class="tooltipped modal-trigger" data-position="bottom"
+			data-tooltip="Clique para fazer logout"><i class="material-icons">person_pin</i><span
+				class="back-text email" style="text-transform: uppercase;" th:utext="${username}"></span></a></li>
+		<li>
+		<li>
+			<div class="divider"></div>
+		</li>
 		<li class="menu-lateral"><a th:href="@{/}"><i
 				class="material-icons">home</i>Home</a></li>
 		<li>
@@ -53,12 +74,14 @@
 			<div class="divider"></div>
 		</li>
 		<li><a><i class="material-icons">attach_money</i>Caixa</a></li>
-		<li><a th:href="@{/caixa/inicio-caixa}"><i class="material-icons">chevron_right</i>Consultar</a></li>
+		<li><a th:href="@{/caixa/inicio-caixa}"><i
+				class="material-icons">chevron_right</i>Consultar</a></li>
 		<li>
 			<div class="divider"></div>
 		</li>
 		<li><a><i class="material-icons">content_paste</i>Administração</a></li>
-		<li><a th:href="@{/relatorio/inicio}"><i class="material-icons">chevron_right</i>Relatórios</a></li>
+		<li><a th:href="@{/administracao/inicio}"><i
+				class="material-icons">chevron_right</i>Consultar</a></li>
 		<li>
 			<div class="divider"></div>
 		</li>
@@ -82,6 +105,12 @@
 			$('#sidenav-2').sidenav({
 				edge : 'right'
 			});
+		});
+		$(document).ready(function() {
+			$('.tooltipped').tooltip();
+		});
+		$(document).ready(function() {
+			$('.modal').modal();
 		});
 	</script>
 </body>

@@ -20,7 +20,7 @@ public class PaginaDeErro implements ErrorViewResolver {
 		switch (status.value()) {
 				case 403:
 					model.addObject("error", "Acesso negado.");
-					model.addObject("message", "Você não possui permissão para acessar a página '" + map.get("path")+"'.");
+					model.addObject("message", "Você não possui permissão.");
 					break;
 				case 404:
 					model.addObject("error", "Página não encontrada.");
