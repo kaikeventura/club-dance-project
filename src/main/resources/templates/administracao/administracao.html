@@ -34,7 +34,7 @@
 
 		<li class="menu-lateral"><a href="#modal-logout"
 			class="tooltipped modal-trigger" data-position="bottom"
-			data-tooltip="Clique para fazer logout"><i class="material-icons">person_pin</i><span
+			data-tooltip="Clique para fazer logout"><i class="material-icons">person</i><span
 				class="back-text email" style="text-transform: uppercase;">kaike_ventura</span></a></li>
 		<li>
 		<li>
@@ -91,8 +91,13 @@
 								</div>
 								<div class="divider"></div>
 								<!-- Usuários -->
+								<div th:if="${success} != null">
+									<span class="success-span z-depth-1 col s12"
+										th:text="${success}"></span>
+								</div>
 								<div class="col s12" style="margin-top: 1%; margin-bottom: 1%">
-									<a class='btn-large col s12' href='#'>Cadastrar usuário</a>
+									<a class='btn-large col s12 modal-trigger'
+										href="#modal-cadastro-usuario">Cadastrar usuário</a>
 								</div>
 								<div class="col s12" style="margin-top: 1%; margin-bottom: 1%">
 									<a class='btn-large col s12' href='#'>Usuários cadastrados
@@ -138,8 +143,6 @@
 												caixa por produto</a></li>
 									</ul>
 								</div>
-
-
 							</div>
 						</div>
 					</div>
@@ -148,12 +151,63 @@
 		</div>
 
 
+
+
+		<!-- Cadastro de usuário (Modal) -->
+		<div id="modal-cadastro-usuario" class="modal" style="width: 40%">
+			<div class="modal-content">
+				<h4>Cadastrar novo usuário</h4>
+				<div class="row">
+					<form class="col s12" th:action="@{/administracao/salvar-usuario}"
+						th:object="${usuarioEntity}" method="POST">
+						<div class="row">
+							<div class="input-field col s6">
+								<input id="icon_prefix" type="text" class="validate"
+									th:field="*{login}" size="100" maxlength="100"
+									required="required"> <label for="icon_prefix">Nome
+									de usuário</label>
+							</div>
+							<div class="input-field col s6">
+								<input id="icon_prefix" type="text" class="validate"
+									th:field="*{nomeCompleto}" size="100" maxlength="100"
+									required="required"> <label for="icon_prefix">Nome
+									completo</label>
+							</div>
+							<div class="input-field col s6">
+								<input id="icon_prefix" type="password" class="validate"
+									th:field="*{senha}" size="100" maxlength="100"
+									required="required"> <label for="icon_prefix">Senha</label>
+							</div>
+							<div class="input-field col s6">
+								<select th:object="${role}" th:field="*{nomeRole}" required>
+									<option value="">Selecione...</option>
+									<option th:each="role : ${roles}" th:value="${role}"
+										th:text="${role.role}"></option>
+								</select> <label>Tipo de permissão</label>
+							</div>
+							<div class="input-field col s12">
+								<div class="row right-align">
+									<button id="btn-svr-evento" type="submit"
+										class="waves-effect waves-light btn pink darken-1">
+										<i class="material-icons right">border_color</i>Cadastrar
+									</button>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+
+
 		<!-- Relatorios de eventos (Modals) -->
 		<div id="modal-eventos-finalizados" class="modal">
 			<div class="modal-content">
 				<h4>Emitir relatório - Eventos encerrados</h4>
 				<div class="row">
-					<form class="col s12" th:action="@{/administracao/eventos-finalizados}"
+					<form class="col s12"
+						th:action="@{/administracao/eventos-finalizados}"
 						th:object="${periodoRelatorio}" method="POST">
 						<div class="row">
 							<div class="input-field col s4">
@@ -222,7 +276,8 @@
 			<div class="modal-content">
 				<h4>Emitir relatório - Caixa por evento</h4>
 				<div class="row">
-					<form class="col s12" th:action="@{/administracao/caixa-por-evento}"
+					<form class="col s12"
+						th:action="@{/administracao/caixa-por-evento}"
 						th:object="${parametroId}" method="POST">
 						<div class="row">
 							<div class="input-field col s10">
@@ -252,7 +307,8 @@
 			<div class="modal-content">
 				<h4>Emitir relatório - Caixa por produto</h4>
 				<div class="row">
-					<form class="col s12" th:action="@{/administracao/caixa-por-produto}"
+					<form class="col s12"
+						th:action="@{/administracao/caixa-por-produto}"
 						th:object="${parametroId}" method="POST">
 						<div class="row">
 							<div class="input-field col s12">

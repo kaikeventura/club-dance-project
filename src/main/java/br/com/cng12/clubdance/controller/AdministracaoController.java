@@ -19,13 +19,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import br.com.cng12.clubdance.entity.UsuarioEntity;
 import br.com.cng12.clubdance.service.impl.EventoServiceImpl;
 import br.com.cng12.clubdance.service.impl.ProdutoServiceImpl;
 import br.com.cng12.clubdance.utils.DataUtils;
-import br.com.cng12.clubdance.utils.dto.PeriodoRelatorio;
+import br.com.cng12.clubdance.utils.Roles;
 import br.com.cng12.clubdance.utils.dto.ParametroId;
+import br.com.cng12.clubdance.utils.dto.PeriodoRelatorio;
+import br.com.cng12.clubdance.utils.dto.Role;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -51,8 +55,13 @@ public class AdministracaoController {
 	@Autowired
 	private ProdutoServiceImpl produtoService;
 	
+	@ModelAttribute("roles")
+	public Roles[] getRoles() {
+		return Roles.values();
+	}
+	
 	@GetMapping(INICIO_ADM)
-	public String inicioRelatorios(PeriodoRelatorio periodoRelatorio, ParametroId parametroId, ModelMap model) {
+	public String inicioRelatorios(PeriodoRelatorio periodoRelatorio, ParametroId parametroId, ModelMap model, UsuarioEntity usuarioEntity, Role role) {
 		
 		model.addAttribute("eventos", eventoService.listar());
 		model.addAttribute("produtos", produtoService.listar());
