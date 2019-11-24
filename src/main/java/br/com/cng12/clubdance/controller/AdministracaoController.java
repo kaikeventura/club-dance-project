@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import br.com.cng12.clubdance.entity.UsuarioEntity;
 import br.com.cng12.clubdance.service.impl.EventoServiceImpl;
 import br.com.cng12.clubdance.service.impl.ProdutoServiceImpl;
+import br.com.cng12.clubdance.service.impl.UsuarioServiceImpl;
 import br.com.cng12.clubdance.utils.DataUtils;
 import br.com.cng12.clubdance.utils.Roles;
 import br.com.cng12.clubdance.utils.dto.ParametroId;
@@ -55,6 +56,9 @@ public class AdministracaoController {
 	@Autowired
 	private ProdutoServiceImpl produtoService;
 	
+	@Autowired
+	private UsuarioServiceImpl usuarioService;
+	
 	@ModelAttribute("roles")
 	public Roles[] getRoles() {
 		return Roles.values();
@@ -65,6 +69,8 @@ public class AdministracaoController {
 		
 		model.addAttribute("eventos", eventoService.listar());
 		model.addAttribute("produtos", produtoService.listar());
+		model.addAttribute("usuariosAtivos", usuarioService.listarUsuariosAtivos());
+		model.addAttribute("usuariosInativos", usuarioService.listarUsuariosInativos());
 		
 		return "administracao/administracao";
 	}

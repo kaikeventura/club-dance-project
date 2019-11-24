@@ -100,12 +100,14 @@
 										href="#modal-cadastro-usuario">Cadastrar usuário</a>
 								</div>
 								<div class="col s12" style="margin-top: 1%; margin-bottom: 1%">
-									<a class='btn-large col s12' href='#'>Usuários cadastrados
+									<a class='btn-large col s12 modal-trigger'
+										href='#modal-listar-usuarios-ativos'>Usuários cadastrados
 										- ativos</a>
 								</div>
 								<div class="col s12" style="margin-top: 1%; margin-bottom: 1%">
-									<a class='btn-large col s12' href='#'>Usuários cadastrados
-										- inativos</a>
+									<a class='btn-large col s12 modal-trigger'
+										href='#modal-listar-usuarios-inativos'>Usuários
+										cadastrados - inativos</a>
 								</div>
 							</div>
 						</div>
@@ -195,6 +197,68 @@
 							</div>
 						</div>
 					</form>
+				</div>
+			</div>
+		</div>
+
+		<!-- Listar usuários ativos (Modal) -->
+		<div id="modal-listar-usuarios-ativos" class="modal">
+			<div class="modal-content">
+				<h4>Usuários cadastrados - ativos</h4>
+				<div class="row col s12">
+					<table class="highlight">
+						<thead>
+							<tr>
+								<th>Nome de usuário</th>
+								<th>Nome completo</th>
+								<th>Status</th>
+								<th>Editar</th>
+							</tr>
+						</thead>
+
+						<tbody th:each="u : ${usuariosAtivos}">
+							<tr>
+								<td th:text="${u.login}"></td>
+								<td th:text="${u.nomeCompleto}"></td>
+								<td th:text="${u.status}"></td>
+								<td><a
+									th:href="@{/administracao/editar-usuario-ativo/{id} (id=${u.usuario_id})}"
+									class="btn-floating btn-small waves-effect waves-light blue pulse"><i
+										class="material-icons">edit</i></a></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+
+		<!-- Listar usuários inativos (Modal) -->
+		<div id="modal-listar-usuarios-inativos" class="modal">
+			<div class="modal-content">
+				<h4>Usuários cadastrados - inativos</h4>
+				<div class="row col s12">
+					<table class="highlight">
+						<thead>
+							<tr>
+								<th>Nome de usuário</th>
+								<th>Nome completo</th>
+								<th>Status</th>
+								<th>Editar</th>
+							</tr>
+						</thead>
+
+						<tbody th:each="u : ${usuariosInativos}">
+							<tr>
+								<td th:text="${u.login}"></td>
+								<td th:text="${u.nomeCompleto}"></td>
+								<td th:text="${u.status}"></td>
+								<td><a
+									th:href="@{/administracao/editar-usuario-inativo/{id} (id=${u.usuario_id})}"
+									class="btn-floating btn-small waves-effect waves-light blue pulse"><i
+										class="material-icons">edit</i></a></td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
 			</div>
 		</div>

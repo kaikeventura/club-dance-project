@@ -7,7 +7,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import br.com.cng12.clubdance.dao.UsuarioDAO;
-import br.com.cng12.clubdance.entity.ProdutoEntity;
 import br.com.cng12.clubdance.entity.UsuarioEntity;
 import br.com.cng12.clubdance.service.UsuarioService;
 
@@ -24,19 +23,41 @@ public class UsuarioServiceImpl implements UsuarioService {
 	}
 
 	@Override
-	public List<ProdutoEntity> listar() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public String encodeSenha(String senha) {
-		
-		
+			
 		String senhaEncode = new BCryptPasswordEncoder().encode(senha);
 		
 		return senhaEncode;
 	}
-	
+
+	@Override
+	public List<UsuarioEntity> listarUsuariosAtivos() {
+		
+		return dao.listarUsuariosAtivos();
+	}
+
+	@Override
+	public List<UsuarioEntity> listarUsuariosInativos() {
+		
+		return dao.listarUsuariosInativos();
+	}
+
+	@Override
+	public void alterarStatusParaAtivo(String status, Long id) {
+
+		dao.alterarStatusParaAtivo(status, id);		
+	}
+
+	@Override
+	public void alterarStatusParaInativo(String status, Long id) {
+
+		dao.alterarStatusParaInativo(status, id);
+	}
+
+	@Override
+	public UsuarioEntity buscarPorId(Long id) {
+
+		return dao.buscarPorId(id);
+	}
 	
 }

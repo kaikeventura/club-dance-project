@@ -7,6 +7,8 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -20,6 +22,8 @@ import br.com.cng12.clubdance.utils.dto.Role;
 public class UsuarioController {
 
 	private static final String SALVAR_USUARIO = "/administracao/salvar-usuario";
+	private static final String EDITAR_USUARIO_ATIVO = "/administracao/editar-usuario-ativo/{id}";
+	private static final String EDITAR_USUARIO_INATIVO = "/administracao/editar-usuario-inativo/{id}";
 	
 	@Autowired
 	private UsuarioServiceImpl usuarioService;
@@ -88,6 +92,26 @@ public class UsuarioController {
 				return "redirect:/administracao/inicio";
 		}
 		
+		return "redirect:/administracao/inicio";
+	}
+	
+	@GetMapping(EDITAR_USUARIO_ATIVO)
+	public String editarUsuarioAtivo(@PathVariable("id") Long id, RedirectAttributes attr) {
+	
+		UsuarioEntity usuario = usuarioService.buscarPorId(id);
+		usuarioService.alterarStatusParaInativo("INATIVO", usuario.getUsuario_id());
+		
+		attr.addFlashAttribute("success", "Usuário editado com sucesso.");
+		return "redirect:/administracao/inicio";
+	}
+	
+	@GetMapping(EDITAR_USUARIO_INATIVO)
+	public String editarUsuarioInativo(@PathVariable("id") Long id, RedirectAttributes attr) {
+	
+		UsuarioEntity usuario = usuarioService.buscarPorId(id);
+		usuarioService.alterarStatusParaAtivo("ATIVO", usuario.getUsuario_id());
+		
+		attr.addFlashAttribute("success", "Usuário editado com sucesso.");
 		return "redirect:/administracao/inicio";
 	}
 	

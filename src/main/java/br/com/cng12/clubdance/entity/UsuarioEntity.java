@@ -39,6 +39,9 @@ public class UsuarioEntity implements Serializable, UserDetails {
 	@Column(nullable = true, unique = false)
 	private String senha;
 	
+	@Column(nullable = true, unique = false)
+	private String status;
+	
 	@ManyToMany
 	@JoinTable(name = "usuarios_roles", joinColumns = @JoinColumn(name = "usuario_id", referencedColumnName = "usuario_id"),
 	inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "role_id"))
