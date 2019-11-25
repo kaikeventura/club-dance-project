@@ -101,9 +101,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		.antMatchers(HttpMethod.POST, "/cartoes/gerador-cartoes/gerar-cartao-credito").hasAnyRole("ADMIN")
 		.antMatchers(HttpMethod.POST, "/cartoes/gerador-cartoes/gerar-cartao-debito").hasAnyRole("ADMIN")
 		
+		//UsuarioController
+		.antMatchers(HttpMethod.POST, "/administracao/salvar-usuario").hasAnyRole("ADMIN")
+		.antMatchers(HttpMethod.GET, "/administracao/editar-usuario-ativo/{id}").hasAnyRole("ADMIN")
+		.antMatchers(HttpMethod.GET, "/administracao/editar-usuario-inativo/{id}").hasAnyRole("ADMIN")
+		
 		.anyRequest().authenticated()
 		.and().formLogin().permitAll()
 		.and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
+		
+//		.anyRequest().authenticated()
+//		.and().formLogin()
+//		.loginPage("/login")
+//		.failureUrl("/login?error=true").defaultSuccessUrl("/").permitAll().usernameParameter("login")
+//		.passwordParameter("senha").and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+//		.logoutSuccessUrl("/").and().exceptionHandling().accessDeniedPage("/access-denied");
 	}
 	
 	@Override
