@@ -1,13 +1,11 @@
 package br.com.cng12.clubdance.entity;
 
 import java.io.Serializable;
-import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -26,9 +24,6 @@ public class RoleEntity implements Serializable, GrantedAuthority {
 	private Long role_id;
 	
 	private String nomeRole;
-	
-	@ManyToMany
-	private List<UsuarioEntity> usuarios;
 
 	@Override
 	public String getAuthority() {

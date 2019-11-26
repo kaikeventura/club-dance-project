@@ -43,7 +43,7 @@ public class UsuarioEntity implements Serializable, UserDetails {
 	private String status;
 	
 	@ManyToMany
-	@JoinTable(name = "usuarios_roles", joinColumns = @JoinColumn(name = "usuario_id", referencedColumnName = "usuario_id"),
+	@JoinTable(joinColumns = @JoinColumn(name = "usuario_id", referencedColumnName = "usuario_id"),
 	inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "role_id"))
 	private List<RoleEntity> roles;
 
