@@ -28,9 +28,6 @@ public class FornecedorEntity {
 	@Column(nullable = false, unique = true)
 	private String razaoSocial;
 	
-	@Column(nullable = false)
-	private String atividadePrincipal;
-	
 	@Column(nullable = false, unique = true)
 	private String cnpj;
 	

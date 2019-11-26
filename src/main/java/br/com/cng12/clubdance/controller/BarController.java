@@ -1,5 +1,7 @@
 package br.com.cng12.clubdance.controller;
 
+import java.util.ArrayList;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,11 +15,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.cng12.clubdance.entity.ClienteEntity;
+import br.com.cng12.clubdance.entity.ComandaEntity;
 import br.com.cng12.clubdance.entity.EventoEntity;
 import br.com.cng12.clubdance.entity.ProdutoEntity;
 import br.com.cng12.clubdance.exceptions.EstoqueException;
 import br.com.cng12.clubdance.service.impl.ClienteServiceImpl;
 import br.com.cng12.clubdance.service.impl.ComandaProdutoServiceImpl;
+import br.com.cng12.clubdance.service.impl.ComandaServiceImpl;
 import br.com.cng12.clubdance.service.impl.EventoServiceImpl;
 import br.com.cng12.clubdance.service.impl.ProdutoServiceImpl;
 import br.com.cng12.clubdance.utils.components.ComandaProdutoComponent;
@@ -33,6 +37,7 @@ public class BarController {
 	private static final String SELECIONAR_CLIENTE = "/bar/vender/selecionar-cliente/{id}";
 	private static final String SELECIONAR_PRODUTO = "/bar/vender/selecionar-produto";
 	private static final String QUANTIDADE_ATUAL_EM_ESTOQUE = "/bar/vender/quantidade-produto";
+	private static final String PRECO_DO_PRODUTO = "/bar/vender/preco-produto";
 	private static final String SELECIONAR_VENDA_CLIENTE = "/bar/vender/editar/selecionar-cliente";
 
 	@Autowired
@@ -52,6 +57,9 @@ public class BarController {
 
 	@Autowired
 	private ComandaProdutoComponent comandaProdutoComponent;
+	
+	@Autowired
+	private ComandaServiceImpl comandaServiceImpl;
 
 	@GetMapping(INICIO_BAR)
 	public String inicioBar() {
@@ -71,9 +79,18 @@ public class BarController {
 	public String selecionarEvento(@PathVariable("id") Long id, ModelMap model, EventoEntity eventoEntity) {
 
 		EventoEntity eventoEntity2 = eventoService.buscarPorId(id);
-
+		
+		ArrayList<ComandaEntity> comandasAbertas = comandaServiceImpl.listarComandasAbertas(eventoEntity2);
+		
+		ArrayList<ClienteEntity> clientesComAComandaAberta = new ArrayList<ClienteEntity>();
+		
+		for(int i = 0; i < comandasAbertas.size(); i++) {
+			clientesComAComandaAberta.add(comandasAbertas.get(i).getClienteEntity());
+		}
+		
 		model.addAttribute("eventoEntity", eventoService.buscarPorId(id));
-		model.addAttribute("clientes", clienteService.buscarClientesDoEvento(eventoEntity2));
+		
+		model.addAttribute("clientes", clientesComAComandaAberta);
 
 		temp.setIdEventoTemp(id);
 
@@ -128,6 +145,14 @@ public class BarController {
 		ProdutoEntity produtoEntity = produtoService.buscarPorId(id);
 		
 		return produtoEntity.getQtdeEstoque();
+	}
+	
+	@GetMapping(PRECO_DO_PRODUTO)
+	public @ResponseBody Double precoProduto(@RequestParam Long id) {
+
+		ProdutoEntity produtoEntity = produtoService.buscarPorId(id);
+		
+		return produtoEntity.getPreco();
 	}
 	
 	@GetMapping(SELECIONAR_VENDA_CLIENTE)

@@ -1,5 +1,6 @@
 package br.com.cng12.clubdance.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,6 +58,12 @@ public class ComandaServiceImpl implements ComandaService {
 	public void atualizaStatusComanda(String status, Long id) {
 
 		dao.atualizaStatusComanda(status, id);
+	}
+
+	@Override
+	public ArrayList<ComandaEntity> listarComandasAbertas(EventoEntity eventoEntity) {
+
+		return dao.listarComandasAbertas(eventoEntity);
 	}
 
 }

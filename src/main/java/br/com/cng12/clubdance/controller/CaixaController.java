@@ -1,6 +1,7 @@
 package br.com.cng12.clubdance.controller;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -68,6 +69,9 @@ public class CaixaController {
 	@Autowired
 	private CartaoDebitoServiceImpl cartaoDebitoService;
 
+	@Autowired
+	private ComandaServiceImpl comandaServiceImpl;
+	
 	TotalDTO totalDTO = new TotalDTO();
 
 	@GetMapping(PAGINA_INICIAL_CAIXA)
@@ -87,10 +91,19 @@ public class CaixaController {
 	@GetMapping(SELECIONAR_EVENTO)
 	public String selecionarEvento(@PathVariable("id") Long id, ModelMap model, EventoEntity eventoEntity) {
 
-		EventoEntity eventoEntity2 = eventoService.buscarPorId(id);
-
+EventoEntity eventoEntity2 = eventoService.buscarPorId(id);
+		
+		ArrayList<ComandaEntity> comandasAbertas = comandaServiceImpl.listarComandasAbertas(eventoEntity2);
+		
+		ArrayList<ClienteEntity> clientesComAComandaAberta = new ArrayList<ClienteEntity>();
+		
+		for(int i = 0; i < comandasAbertas.size(); i++) {
+			clientesComAComandaAberta.add(comandasAbertas.get(i).getClienteEntity());
+		}
+		
 		model.addAttribute("eventoEntity", eventoService.buscarPorId(id));
-		model.addAttribute("clientes", clienteService.buscarClientesDoEvento(eventoEntity2));
+		
+		model.addAttribute("clientes", clientesComAComandaAberta);
 
 		temp.setIdEventoTempCaixa(id);
 
@@ -226,8 +239,27 @@ public class CaixaController {
 		
 	}
 	
-	@PostMapping(PAGAMENTO_DINHEIRO)
-	public String pagamentoComDinheiro() {
+	@GetMapping(PAGAMENTO_DINHEIRO)
+	public String pagamentoComDinheiro(RedirectAttributes attr) {
+		
+		PagamentoCaixaEntity pagamentoCaixaEntity = new PagamentoCaixaEntity();
+		
+		EventoEntity evento = eventoService.buscarPorId(temp.getIdEventoTempCaixa());
+		ClienteEntity cliente = clienteService.buscarPorId(temp.getIdClienteTempCaixa());
+		ComandaEntity comanda = comandaService.buscarComandaDoCliente(cliente);
+
+		pagamentoCaixaEntity.setData(LocalDate.now());
+		pagamentoCaixaEntity.setClienteEntity(cliente);
+		pagamentoCaixaEntity.setEventoEntity(evento);
+		pagamentoCaixaEntity.setValor(totalDTO.getTotal());
+		pagamentoCaixaEntity.setFormaPagamento("DINHEIRO");
+		
+		pagamentoCaixaEntity.setSenha(0000);
+		pagamentoCaixaEntity.setNumeroCartao("N/A");
+		pagamentoService.salvar(pagamentoCaixaEntity);
+		comandaService.atualizaStatusComanda("FECHADO", comanda.getId());
+		
+		attr.addFlashAttribute("success", "Pagamento realizado com dinheiro.");
 		
 		return "redirect:/caixa/cobranca/selecionar-evento";
 	}

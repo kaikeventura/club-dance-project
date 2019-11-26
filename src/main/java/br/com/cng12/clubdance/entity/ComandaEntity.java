@@ -10,6 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.springframework.format.annotation.NumberFormat;
+import org.springframework.format.annotation.NumberFormat.Style;
+
 import lombok.Data;
 
 @Data
@@ -30,6 +33,7 @@ public class ComandaEntity implements Serializable {
 	private EventoEntity eventoEntity;
 	
 	@Column(nullable = true)
+	@NumberFormat(style = Style.CURRENCY, pattern = "###,###,###,##0.00")
 	private Double precoIngresso;
 	
 	@Column(nullable = true)

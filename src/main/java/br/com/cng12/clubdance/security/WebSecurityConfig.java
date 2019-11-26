@@ -45,6 +45,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		.antMatchers(HttpMethod.GET, "/bar/vender/selecionar-cliente/{id}").hasAnyRole("ADMIN","BAR")
 		.antMatchers(HttpMethod.POST, "/bar/vender/selecionar-produto").hasAnyRole("ADMIN","BAR")
 		.antMatchers(HttpMethod.GET, "/bar/vender/quantidade-produto").hasAnyRole("ADMIN","BAR")
+		.antMatchers(HttpMethod.GET, "/bar/vender/preco-produto").hasAnyRole("ADMIN","BAR")
 		.antMatchers(HttpMethod.GET, "/bar/vender/editar/selecionar-cliente").hasAnyRole("ADMIN")
 		
 		//EstoqueController 
@@ -86,7 +87,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		.antMatchers(HttpMethod.GET, "/caixa/cobranca/cliente/selecionar-cliente/{id}").hasAnyRole("ADMIN","CAIXA")
 		.antMatchers(HttpMethod.GET, "/cielo/cielo-pagamentos").hasAnyRole("ADMIN","CAIXA")
 		.antMatchers(HttpMethod.POST, "/cielo/cielo-pagamentos/processa-pagamento").hasAnyRole("ADMIN","CAIXA")
-		.antMatchers(HttpMethod.POST, "/caixa/cobranca/pagamentos/dinheiro").hasAnyRole("ADMIN","CAIXA")
+		.antMatchers(HttpMethod.GET, "/caixa/cobranca/pagamentos/dinheiro").hasAnyRole("ADMIN","CAIXA")
 		.antMatchers(HttpMethod.GET, "/cielo/cielo-pagamentos/aprovado").hasAnyRole("ADMIN","CAIXA")
 		
 		//AdministracaoController
@@ -106,16 +107,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		.antMatchers(HttpMethod.GET, "/administracao/editar-usuario-ativo/{id}").hasAnyRole("ADMIN")
 		.antMatchers(HttpMethod.GET, "/administracao/editar-usuario-inativo/{id}").hasAnyRole("ADMIN")
 		
-		.anyRequest().authenticated()
-		.and().formLogin().permitAll()
-		.and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
-		
 //		.anyRequest().authenticated()
-//		.and().formLogin()
-//		.loginPage("/login")
-//		.failureUrl("/login?error=true").defaultSuccessUrl("/").permitAll().usernameParameter("login")
-//		.passwordParameter("senha").and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-//		.logoutSuccessUrl("/").and().exceptionHandling().accessDeniedPage("/access-denied");
+//		.and().formLogin().permitAll()
+//		.and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
+		
+		.anyRequest().authenticated()
+		.and().formLogin()
+		.loginPage("/login")
+		.failureUrl("/login?error=true").defaultSuccessUrl("/").permitAll().usernameParameter("login")
+		.passwordParameter("senha").and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+		.logoutSuccessUrl("/");
 	}
 	
 	@Override

@@ -126,32 +126,18 @@
 				</div>
 			</div>
 
-			<!-- <div class="input-field col s3">
-				<div class="row right-align">
-					<input type="hidden" id="id" th:field="*{id}" />
-					<button id="btn-svr-evento" type="submit"
-						class="waves-effect waves-light btn pink darken-1">
-						<i class="material-icons right">border_color</i>Salvar
-					</button>
-				</div>
-			</div> -->
-
-			<form th:action="@{/cielo/cielo-pagamentos/processa-pagamento}"
-				th:object="${pagamentoCaixaEntity}" method="POST">
+			<form th:action="@{/caixa/cobranca/pagamentos/dinheiro}" method="GET">
 				<div class="row right-align">
 					<button id="btn-svr-evento" type="submit"
-						class="waves-effect waves-light btn pink darken-1">
-						<i class="material-icons right">border_color</i>Cobrar com
-						dinheiro
-					</button>
+						class="waves-effect waves-light btn pink darken-1" style="margin-top: -41px;">
+						Cobrar com dinheiro</button>
 				</div>
 			</form>
 			<div class="row right-align">
 				<a th:href="@{/cielo/cielo-pagamentos}" id="btn-cad-evento"
-					class="waves-effect waves-light btn pink darken-1">Cobrar com
-					cartão</a>
+					class="waves-effect waves-light btn pink darken-1"
+					style="margin-top: -5%; margin-right: 23px;">Cobrar com cartão</a>
 			</div>
-
 		</div>
 	</div>
 

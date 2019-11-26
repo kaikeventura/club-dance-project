@@ -12,7 +12,7 @@ public interface FornecedorService {
 	
 	List<FornecedorEntity> listarFornecedoresAtivos();
 
-	void editar(String nomeFantasia, String razaoSocial, String atividadePrincipal, String cnpj,
+	void editar(String nomeFantasia, String razaoSocial, String cnpj,
 			String inscricaoEstadual, String endereco, String bairro, String cidade, String uf, String cep,
 			String telefone, String celular, String email, String nomeContato, String status, Long id);
 

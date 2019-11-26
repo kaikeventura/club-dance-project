@@ -7,10 +7,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class SessaoController {
 	
 	private static final String LOGOUT = "/logout";
+	private static final String ACCESS_DENIED = "/access-denied";
 
 	@GetMapping(LOGOUT)
 	public String logout() {
 		
 		return "/";
+	}
+	
+	@GetMapping(ACCESS_DENIED)
+	public String acessoNegado() {
+		
+		return "error";
 	}
 }

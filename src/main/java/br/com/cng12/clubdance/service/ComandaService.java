@@ -1,5 +1,6 @@
 package br.com.cng12.clubdance.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import br.com.cng12.clubdance.entity.ClienteEntity;
@@ -18,9 +19,9 @@ public interface ComandaService {
 	
 	ComandaEntity buscarPorIdClienteIdEvento(ClienteEntity clienteEntity, EventoEntity eventoEntity);
 	
-//	List<ComandaListaVendasDTO> buscarClientesDoEventoComAComanda();
-	
 	ComandaEntity buscarComandaDoCliente(ClienteEntity clienteEntity);
 	
 	void atualizaStatusComanda(String status, Long id);
+	
+	ArrayList<ComandaEntity> listarComandasAbertas(EventoEntity eventoEntity);
 }

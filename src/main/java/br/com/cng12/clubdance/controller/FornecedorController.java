@@ -73,8 +73,7 @@ public class FornecedorController {
 	@PostMapping(EDITAR_FORNECEDOR)
 	public String editarFornecedor(@Valid FornecedorEntity fornecedorEntity, RedirectAttributes attr) {
 
-		fornecedorService.editar(fornecedorEntity.getNomeFantasia(), fornecedorEntity.getRazaoSocial(),
-				fornecedorEntity.getAtividadePrincipal(), fornecedorEntity.getCnpj(),
+		fornecedorService.editar(fornecedorEntity.getNomeFantasia(), fornecedorEntity.getRazaoSocial(), fornecedorEntity.getCnpj(),
 				fornecedorEntity.getInscricaoEstadual(), fornecedorEntity.getEndereco(), fornecedorEntity.getBairro(),
 				fornecedorEntity.getCidade(), fornecedorEntity.getUf(), fornecedorEntity.getCep(),
 				fornecedorEntity.getTelefone(), fornecedorEntity.getCelular(), fornecedorEntity.getEmail(),
@@ -95,11 +94,6 @@ public class FornecedorController {
 	@ModelAttribute("uf")
 	public UF[] getUFs() {
 		return UF.values();
-	}
-
-	@ModelAttribute("atividade")
-	public Atividades[] getAtividades() {
-		return Atividades.values();
 	}
 
 	@ModelAttribute("status")

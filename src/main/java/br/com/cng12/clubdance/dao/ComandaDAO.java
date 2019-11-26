@@ -1,5 +1,6 @@
 package br.com.cng12.clubdance.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -44,4 +45,7 @@ public interface ComandaDAO extends JpaRepository<ComandaEntity, Long> {
 //	@Query("select new br.com.cng12.clubdance.utils.dto.ComandaVendaProdutoDTO(ClienteEntity.nome, ClienteEntity.cpf, EventoEntity.nome, ComandaEntity.id) from ComandaEntity ce inner join ClienteEntity on ComandaEntity.clienteEntity = ClienteEntity.id inner join EventoEntity on ComandaEntoty.eventoEntity = EventoEntity.id")
 //	List<ComandaListaVendasDTO> buscarClientesDoEventoComAComanda();
 
+	@Query("select c from ComandaEntity c where c.eventoEntity =:eventoEntity and c.status = 'ABERTO'")
+	ArrayList<ComandaEntity> listarComandasAbertas(@Param("eventoEntity") EventoEntity eventoEntity);
+	
 }

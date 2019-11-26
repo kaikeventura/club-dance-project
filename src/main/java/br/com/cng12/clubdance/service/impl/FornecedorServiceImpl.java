@@ -34,11 +34,11 @@ public class FornecedorServiceImpl implements FornecedorService {
 	}
 
 	@Override
-	public void editar(String nomeFantasia, String razaoSocial, String atividadePrincipal, String cnpj,
+	public void editar(String nomeFantasia, String razaoSocial, String cnpj,
 			String inscricaoEstadual, String endereco, String bairro, String cidade, String uf, String cep,
 			String telefone, String celular, String email, String nomeContato, String status, Long id) {
 
-		dao.editar(nomeFantasia, razaoSocial, atividadePrincipal, cnpj, inscricaoEstadual, endereco, bairro, cidade, uf,
+		dao.editar(nomeFantasia, razaoSocial, cnpj, inscricaoEstadual, endereco, bairro, cidade, uf,
 				cep, telefone, celular, email, nomeContato, status, id);
 	}
 
