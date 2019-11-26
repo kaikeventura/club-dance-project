@@ -3,6 +3,7 @@ package br.com.cng12.clubdance.controller;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +15,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.cng12.clubdance.entity.FornecedorEntity;
 import br.com.cng12.clubdance.service.impl.FornecedorServiceImpl;
-import br.com.cng12.clubdance.utils.Atividades;
 import br.com.cng12.clubdance.utils.Status;
 import br.com.cng12.clubdance.utils.UF;
 
@@ -34,14 +34,20 @@ public class FornecedorController {
 	private FornecedorServiceImpl fornecedorService;
 
 	@GetMapping(CADASTRO_DE_PRODUTO)
-	public String cadastroDeProduto(FornecedorEntity fornecedorEntity) {
+	public String cadastroDeProduto(FornecedorEntity fornecedorEntity, ModelMap model) {
 
+		model.addAttribute("username", SecurityContextHolder.getContext()
+		        .getAuthentication().getName());
+		
 		return "estoque/fornecedor/cadastrar-fornecedor";
 	}
 
 	@PostMapping(SALVAR_FORNECEDOR)
-	public String salvarFornecedor(@Valid FornecedorEntity fornecedorEntity, RedirectAttributes attr) {
+	public String salvarFornecedor(@Valid FornecedorEntity fornecedorEntity, RedirectAttributes attr, ModelMap model) {
 
+		model.addAttribute("username", SecurityContextHolder.getContext()
+		        .getAuthentication().getName());
+		
 		fornecedorService.salvar(fornecedorEntity);
 		attr.addFlashAttribute("success", "Salvo com sucesso.");
 		
@@ -51,6 +57,9 @@ public class FornecedorController {
 	@GetMapping(LISTAR_FORNECEDORES)
 	public String listarFornecedores(ModelMap model) {
 
+		model.addAttribute("username", SecurityContextHolder.getContext()
+		        .getAuthentication().getName());
+		
 		model.addAttribute("fornecedores", fornecedorService.listar());
 
 		return "estoque/fornecedor/fornecedores";
@@ -59,6 +68,9 @@ public class FornecedorController {
 	@GetMapping(DETALHES_FORNECEDOR)
 	public String detalhesFornecedor(@PathVariable("id") Long id, ModelMap model) {
 
+		model.addAttribute("username", SecurityContextHolder.getContext()
+		        .getAuthentication().getName());
+		
 		model.addAttribute("fornecedorEntity", fornecedorService.buscarPorId(id));
 
 		return "estoque/fornecedor/detalhes/fornecedor-detalhes";
@@ -66,13 +78,20 @@ public class FornecedorController {
 
 	@GetMapping(PRE_EDITAR_FORNECEDOR)
 	public String preEditarFornecedor(@PathVariable("id") Long id, ModelMap model) {
+		
+		model.addAttribute("username", SecurityContextHolder.getContext()
+		        .getAuthentication().getName());
+		
 		model.addAttribute("fornecedorEntity", fornecedorService.buscarPorId(id));
 		return "estoque/fornecedor/cadastrar-fornecedor";
 	}
 
 	@PostMapping(EDITAR_FORNECEDOR)
-	public String editarFornecedor(@Valid FornecedorEntity fornecedorEntity, RedirectAttributes attr) {
+	public String editarFornecedor(@Valid FornecedorEntity fornecedorEntity, RedirectAttributes attr, ModelMap model) {
 
+		model.addAttribute("username", SecurityContextHolder.getContext()
+		        .getAuthentication().getName());
+		
 		fornecedorService.editar(fornecedorEntity.getNomeFantasia(), fornecedorEntity.getRazaoSocial(), fornecedorEntity.getCnpj(),
 				fornecedorEntity.getInscricaoEstadual(), fornecedorEntity.getEndereco(), fornecedorEntity.getBairro(),
 				fornecedorEntity.getCidade(), fornecedorEntity.getUf(), fornecedorEntity.getCep(),
@@ -84,8 +103,11 @@ public class FornecedorController {
 	}
 
 	@GetMapping(EXCLUIR_FORNECEDOR)
-	public String excluirFornecedor(@PathVariable("id") Long id) {
+	public String excluirFornecedor(@PathVariable("id") Long id, ModelMap model) {
 
+		model.addAttribute("username", SecurityContextHolder.getContext()
+		        .getAuthentication().getName());
+		
 		fornecedorService.excluir(id);
 
 		return "redirect:/estoque/fornecedor/fornecedores";

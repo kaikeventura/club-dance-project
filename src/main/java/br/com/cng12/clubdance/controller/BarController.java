@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -62,7 +63,10 @@ public class BarController {
 	private ComandaServiceImpl comandaServiceImpl;
 
 	@GetMapping(INICIO_BAR)
-	public String inicioBar() {
+	public String inicioBar(ModelMap model) {
+		
+		model.addAttribute("username", SecurityContextHolder.getContext()
+		        .getAuthentication().getName());
 
 		return "bar/inicio-bar";
 	}
@@ -71,6 +75,8 @@ public class BarController {
 	public String selecionarEventoLista(EventoEntity eventoEntity, ModelMap modelMap) {
 
 		modelMap.addAttribute("eventos", eventoService.listarEventosAtivos());
+		modelMap.addAttribute("username", SecurityContextHolder.getContext()
+		        .getAuthentication().getName());
 
 		return "bar/vender/selecionar-evento";
 	}
@@ -78,6 +84,9 @@ public class BarController {
 	@GetMapping(SELECIONAR_EVENTO)
 	public String selecionarEvento(@PathVariable("id") Long id, ModelMap model, EventoEntity eventoEntity) {
 
+		model.addAttribute("username", SecurityContextHolder.getContext()
+		        .getAuthentication().getName());
+		
 		EventoEntity eventoEntity2 = eventoService.buscarPorId(id);
 		
 		ArrayList<ComandaEntity> comandasAbertas = comandaServiceImpl.listarComandasAbertas(eventoEntity2);
@@ -101,6 +110,9 @@ public class BarController {
 	public String selecionarCliente(@PathVariable("id") Long id, ModelMap model, EventoEntity eventoEntity,
 			ClienteEntity clienteEntity, ProdutoEntity produtoEntity, ComandaAux comandaAux) {
 
+		model.addAttribute("username", SecurityContextHolder.getContext()
+		        .getAuthentication().getName());
+		
 		EventoEntity eventoEntity2 = eventoService.buscarPorId(temp.getIdEventoTemp());
 
 		model.addAttribute("eventoEntity", eventoService.buscarPorId(eventoEntity2.getId()));
@@ -113,8 +125,11 @@ public class BarController {
 	}
 
 	@PostMapping(SELECIONAR_PRODUTO)
-	public String selecionarProduto(@Valid ComandaAux comandaAux, RedirectAttributes attr) throws EstoqueException {
+	public String selecionarProduto(@Valid ComandaAux comandaAux, RedirectAttributes attr, ModelMap model) throws EstoqueException {
 
+		model.addAttribute("username", SecurityContextHolder.getContext()
+		        .getAuthentication().getName());
+		
 		Long idProduto = Long.parseLong(comandaAux.getNomeProduto());
 		ProdutoEntity produtoEntity = produtoService.buscarPorId(idProduto);
 
@@ -158,6 +173,8 @@ public class BarController {
 	@GetMapping(SELECIONAR_VENDA_CLIENTE)
 	public String slecionarVendaCliente(ComandaAux comandaVendaProdutoDTO, ModelMap model) {
 		
+		model.addAttribute("username", SecurityContextHolder.getContext()
+		        .getAuthentication().getName());
 //		model.addAttribute("comandaVendaProdutoDTO", comandaService.buscarClientesDoEventoComAComanda());
 		
 		return "bar/vender/editar/selecionar-cliente";

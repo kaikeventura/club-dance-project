@@ -52,6 +52,10 @@
 								<label for="icon_prefix">Senha</label>
 							</div>
 						</div>
+						<div align="center" th:if="${param.error}">
+							<p style="font-size: 20; color: #FF1C19;">Nome de usuário ou
+								senha incorretos, verificar!</p>
+						</div>
 						<br />
 						<div class='row'>
 							<button id="btn-svr-evento" type="submit"

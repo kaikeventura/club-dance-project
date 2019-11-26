@@ -28,18 +28,42 @@
 			<div class="nav-wrapper">
 				<div class="row">
 					<div class="col s12">
-						<a href="#" data-target="sidenav-1"
-							class="left sidenav-trigger hide-on-medium-and-up"><i
-							class="material-icons">menu</i></a> <strong><a href="#"
-							class="brand-logo white-text">Club Dance</a></strong>
+						<div class="row col s12 right-align">
+							<a th:href="@{/estoque/fornecedor/fornecedores}"
+								id="btn-cad-evento"
+								class="waves-effect waves-light btn pink darken-1"
+								style="margin-top: -12px;">Lista de fornecedores</a>
+						</div>
 					</div>
 				</div>
 			</div>
 		</nav>
 	</header>
 
+	<!-- MODAL LOGOUT -->
+	<div id="modal-logout" class="modal" style="width: 32%">
+		<div class="modal-content">
+			<h5>Deseja realmente fazer logout?</h5>
+		</div>
+		<div class="modal-footer">
+			<a th:href="@{/logout}"
+				class="modal-close waves-effect waves-green btn-flat">Sim</a> <a
+				href="#!" class="modal-close waves-effect waves-green btn-flat">Não</a>
+		</div>
+	</div>
+
 	<!-- LEFT SIDEBAR-->
 	<ul id="sidenav-1" class="sidenav sidenav-fixed">
+
+		<li class="menu-lateral"><a href="#modal-logout"
+			class="tooltipped modal-trigger" data-position="bottom"
+			data-tooltip="Clique para fazer logout"><i class="material-icons">face</i><span
+				class="back-text email" style="text-transform: uppercase;"
+				th:utext="${username}"></span></a></li>
+		<li>
+		<li>
+			<div class="divider"></div>
+		</li>
 		<li class="menu-lateral"><a th:href="@{/}"><i
 				class="material-icons">home</i>Home</a></li>
 		<li>
@@ -51,106 +75,124 @@
 			<div class="divider"></div>
 		</li>
 		<li><a><i class="material-icons">local_bar</i>Bar</a></li>
-		<li><a href="#"><i class="material-icons">chevron_right</i>Venda</a></li>
+		<li><a th:href="@{/bar/inicio}"><i class="material-icons">chevron_right</i>Venda</a></li>
 		<li>
 			<div class="divider"></div>
 		</li>
 		<li><a><i class="material-icons">store</i>Estoque</a></li>
-		<li><a href="#"><i class="material-icons">chevron_right</i>Consulta</a></li>
+		<li><a th:href="@{/estoque/inicio-estoque}"><i
+				class="material-icons">chevron_right</i>Consultar</a></li>
+		<li>
+			<div class="divider"></div>
+		</li>
+		<li><a><i class="material-icons">attach_money</i>Caixa</a></li>
+		<li><a th:href="@{/caixa/inicio-caixa}"><i
+				class="material-icons">chevron_right</i>Consultar</a></li>
 		<li>
 			<div class="divider"></div>
 		</li>
 		<li><a><i class="material-icons">content_paste</i>Administração</a></li>
-		<li><a href="#"><i class="material-icons">chevron_right</i>Relatórios</a></li>
+		<li><a th:href="@{/administracao/inicio}"><i
+				class="material-icons">chevron_right</i>Consultar</a></li>
 		<li>
 			<div class="divider"></div>
 		</li>
 	</ul>
 
 	<div class="body-principal">
-		<div class="row right-align">
-			<a th:href="@{/estoque/fornecedor/fornecedores}" id="btn-cad-evento"
-				class="waves-effect waves-light btn pink darken-1"><i
-				class="material-icons right">border_color</i>Lista de fornecedores</a>
-		</div>
-		<form th:object="${fornecedorEntity}">
-			<div class="row">
-				<div class="detalhes-fornecedor col s6">
-					<div class="row">
-						<div class="input-field col s6">
-							<input id="icon_prefix" type="text" class="validate"
-								th:field="*{nomeFantasia}" disabled="disabled"> <label
-								for="icon_prefix">Nome Fantasia</label>
-						</div>
-						<div class="input-field col s6">
-							<input id="icon_prefix" type="text" class="validate"
-								th:field="*{razaoSocial}" disabled="disabled"> <label
-								for="icon_prefix">razaoSocial</label>
-						</div>
-						<div class="input-field col s3">
-							<input id="dataEvento" type="text" class="validate"
-								th:field="*{cnpj}" disabled="disabled"> <label
-								for="icon_prefix">CNPJ</label>
-						</div>
-						<div class="input-field col s3">
-							<input id="icon_prefix" type="text" class="validate"
-								th:field="*{inscricaoEstadual}" disabled="disabled"> <label
-								for="icon_prefix">Inscricao Estadual</label>
-						</div>
-						<div class="input-field col s3">
-							<input id="icon_prefix" type="text" class="validate"
-								th:field="*{endereco}" disabled="disabled"> <label
-								for="icon_prefix">Endereco</label>
-						</div>
-						<div class="input-field col s3">
-							<input id="icon_prefix" type="text" class="validate"
-								th:field="*{bairro}" disabled="disabled"> <label
-								for="icon_prefix">Bairro</label>
-						</div>
-						<div class="input-field col s3">
-							<input id="icon_prefix" type="text" class="validate"
-								th:field="*{cidade}" disabled="disabled"> <label
-								for="icon_prefix">Cidade</label>
-						</div>
-						<div class="input-field col s3">
-							<input id="icon_prefix" type="text" class="validate"
-								th:field="*{uf}" disabled="disabled"> <label
-								for="icon_prefix">UF</label>
-						</div>
-						<div class="input-field col s3">
-							<input id="icon_prefix" type="text" class="validate"
-								th:field="*{cep}" disabled="disabled"> <label
-								for="icon_prefix">CEP</label>
-						</div>
-						<div class="input-field col s3">
-							<input id="icon_prefix" type="text" class="validate"
-								th:field="*{telefone}" disabled="disabled"> <label
-								for="icon_prefix">Telefone</label>
-						</div>
-						<div class="input-field col s3">
-							<input id="icon_prefix" type="text" class="validate"
-								th:field="*{celular}" disabled="disabled"> <label
-								for="icon_prefix">Celular</label>
-						</div>
-						<div class="input-field col s3">
-							<input id="icon_prefix" type="text" class="validate"
-								th:field="*{email}" disabled="disabled"> <label
-								for="icon_prefix">E-mail</label>
-						</div>
-						<div class="input-field col s3">
-							<input id="icon_prefix" type="text" class="validate"
-								th:field="*{nomeContato}" disabled="disabled"> <label
-								for="icon_prefix">Contato</label>
-						</div>
-						<div class="input-field col s3">
-							<input id="icon_prefix" type="text" class="validate"
-								th:field="*{status}" disabled="disabled"> <label
-								for="icon_prefix">Status</label>
-						</div>
+
+		<div class="row">
+			<div class="col s12 m12">
+				<div class="card" style="display: grid;">
+					<div class="card-action center black">
+						<strong><a class="white-text">Detalhes do fornecedor</a></strong>
 					</div>
+					<div class="divider"></div>
+
+
+					<form th:object="${fornecedorEntity}">
+						<div class="detalhes-fornecedor col s6">
+							<div class="row">
+								<div class="input-field col s6">
+									<input id="icon_prefix" type="text" class="validate"
+										th:field="*{nomeFantasia}" disabled="disabled"> <label
+										for="icon_prefix">Nome Fantasia</label>
+								</div>
+								<div class="input-field col s6">
+									<input id="icon_prefix" type="text" class="validate"
+										th:field="*{razaoSocial}" disabled="disabled"> <label
+										for="icon_prefix">razaoSocial</label>
+								</div>
+								<div class="input-field col s3">
+									<input id="dataEvento" type="text" class="validate"
+										th:field="*{cnpj}" disabled="disabled"> <label
+										for="icon_prefix">CNPJ</label>
+								</div>
+								<div class="input-field col s3">
+									<input id="icon_prefix" type="text" class="validate"
+										th:field="*{inscricaoEstadual}" disabled="disabled"> <label
+										for="icon_prefix">Inscricao Estadual</label>
+								</div>
+								<div class="input-field col s3">
+									<input id="icon_prefix" type="text" class="validate"
+										th:field="*{endereco}" disabled="disabled"> <label
+										for="icon_prefix">Endereco</label>
+								</div>
+								<div class="input-field col s3">
+									<input id="icon_prefix" type="text" class="validate"
+										th:field="*{bairro}" disabled="disabled"> <label
+										for="icon_prefix">Bairro</label>
+								</div>
+								<div class="input-field col s3">
+									<input id="icon_prefix" type="text" class="validate"
+										th:field="*{cidade}" disabled="disabled"> <label
+										for="icon_prefix">Cidade</label>
+								</div>
+								<div class="input-field col s3">
+									<input id="icon_prefix" type="text" class="validate"
+										th:field="*{uf}" disabled="disabled"> <label
+										for="icon_prefix">UF</label>
+								</div>
+								<div class="input-field col s3">
+									<input id="icon_prefix" type="text" class="validate"
+										th:field="*{cep}" disabled="disabled"> <label
+										for="icon_prefix">CEP</label>
+								</div>
+								<div class="input-field col s3">
+									<input id="icon_prefix" type="text" class="validate"
+										th:field="*{telefone}" disabled="disabled"> <label
+										for="icon_prefix">Telefone</label>
+								</div>
+								<div class="input-field col s3">
+									<input id="icon_prefix" type="text" class="validate"
+										th:field="*{celular}" disabled="disabled"> <label
+										for="icon_prefix">Celular</label>
+								</div>
+								<div class="input-field col s3">
+									<input id="icon_prefix" type="text" class="validate"
+										th:field="*{email}" disabled="disabled"> <label
+										for="icon_prefix">E-mail</label>
+								</div>
+								<div class="input-field col s3">
+									<input id="icon_prefix" type="text" class="validate"
+										th:field="*{nomeContato}" disabled="disabled"> <label
+										for="icon_prefix">Contato</label>
+								</div>
+								<div class="input-field col s3">
+									<input id="icon_prefix" type="text" class="validate"
+										th:field="*{status}" disabled="disabled"> <label
+										for="icon_prefix">Status</label>
+								</div>
+							</div>
+						</div>
+					</form>
+
+
 				</div>
 			</div>
-		</form>
+		</div>
+
+
 		<div class="row">
 			<div class="input-field col s6">
 				<div class="row right-align" th:each="f : ${fornecedorEntity}">
@@ -192,6 +234,12 @@
 			$('#sidenav-2').sidenav({
 				edge : 'right'
 			});
+		});
+		$(document).ready(function() {
+			$('.tooltipped').tooltip();
+		});
+		$(document).ready(function() {
+			$('.modal').modal();
 		});
 	</script>
 </body>

@@ -7,6 +7,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -75,14 +76,19 @@ public class CaixaController {
 	TotalDTO totalDTO = new TotalDTO();
 
 	@GetMapping(PAGINA_INICIAL_CAIXA)
-	public String paginaInicialDoCaixa() {
+	public String paginaInicialDoCaixa(ModelMap model) {
 
+		model.addAttribute("username", SecurityContextHolder.getContext()
+		        .getAuthentication().getName());
+		
 		return "caixa/inicio-caixa";
 	}
 
 	@GetMapping(SELECIONAR_EVENTO_LISTA)
 	public String selecionarEventoLista(EventoEntity eventoEntity, ModelMap modelMap) {
 
+		modelMap.addAttribute("username", SecurityContextHolder.getContext()
+		        .getAuthentication().getName());
 		modelMap.addAttribute("eventos", eventoService.listarEventosAtivos());
 
 		return "caixa/cobranca/selecionar-evento";
@@ -91,7 +97,10 @@ public class CaixaController {
 	@GetMapping(SELECIONAR_EVENTO)
 	public String selecionarEvento(@PathVariable("id") Long id, ModelMap model, EventoEntity eventoEntity) {
 
-EventoEntity eventoEntity2 = eventoService.buscarPorId(id);
+		model.addAttribute("username", SecurityContextHolder.getContext()
+		        .getAuthentication().getName());
+		
+		EventoEntity eventoEntity2 = eventoService.buscarPorId(id);
 		
 		ArrayList<ComandaEntity> comandasAbertas = comandaServiceImpl.listarComandasAbertas(eventoEntity2);
 		
@@ -115,6 +124,9 @@ EventoEntity eventoEntity2 = eventoService.buscarPorId(id);
 			ClienteEntity clienteEntity, ComandaEntity comandaEntity, ComandaProdutoEntity comandaProdutoEntity,
 			TotalDTO dto, PagamentoCaixaEntity pagamentoCaixaEntity) {
 
+		model.addAttribute("username", SecurityContextHolder.getContext()
+		        .getAuthentication().getName());
+		
 		EventoEntity evento = eventoService.buscarPorId(temp.getIdEventoTempCaixa());
 		ComandaEntity comanda = comandaService.buscarComandaDoCliente(clienteEntity);
 		List<ComandaProdutoEntity> comandaProdutos = comandaProdutoService.buscarLancamentosDaComanda(comanda);
@@ -150,6 +162,8 @@ EventoEntity eventoEntity2 = eventoService.buscarPorId(id);
 			ComandaEntity comandaEntity, ComandaProdutoEntity comandaProdutoEntity, TotalDTO dto,
 			PagamentoCaixaEntity pagamentoCaixaEntity) {
 
+		model.addAttribute("username", SecurityContextHolder.getContext()
+		        .getAuthentication().getName());
 		model.addAttribute("valorTotalAPagar", totalDTO);
 
 		return "cielo/cielo";
@@ -157,7 +171,7 @@ EventoEntity eventoEntity2 = eventoService.buscarPorId(id);
 
 	@PostMapping(COMANDA_CLIENTE)
 	public String comandaCliente(@Valid PagamentoCaixaEntity pagamentoCaixaEntity, RedirectAttributes attr) {
-
+		
 		EventoEntity evento = eventoService.buscarPorId(temp.getIdEventoTempCaixa());
 		ClienteEntity cliente = clienteService.buscarPorId(temp.getIdClienteTempCaixa());
 		ComandaEntity comanda = comandaService.buscarComandaDoCliente(cliente);
@@ -240,7 +254,10 @@ EventoEntity eventoEntity2 = eventoService.buscarPorId(id);
 	}
 	
 	@GetMapping(PAGAMENTO_DINHEIRO)
-	public String pagamentoComDinheiro(RedirectAttributes attr) {
+	public String pagamentoComDinheiro(RedirectAttributes attr, ModelMap model) {
+		
+		model.addAttribute("username", SecurityContextHolder.getContext()
+		        .getAuthentication().getName());
 		
 		PagamentoCaixaEntity pagamentoCaixaEntity = new PagamentoCaixaEntity();
 		

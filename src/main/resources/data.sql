@@ -1,3 +1,4 @@
+REPLACE INTO `role` VALUES (1,'ROLE_ADMIN'),(2,'ROLE_RECEP'),(3,'ROLE_BAR'),(4,'ROLE_CAIXA'),(5,'ROLE_ESTOQ');
 REPLACE INTO `fornecedor` VALUES (1,'FORNECEDOR TESTE','1','(1','1','1','kaike916@gmail.com','1','1','1','1','1','ATIVO','(1','AL');
 REPLACE INTO `produto` VALUES (1,'nissin',50,'Macarrão instantaneo',6,1,'ATIVO','METRO'),(2,'Jack Daniels',70,'Whysky Jack Daniels',4.25,13,'ATIVO','LITRO'),(3,'Red Bull',50,'Red Bull 200ml',75,12,'ATIVO','LITRO'),(4,'Fofura',60,'Salgadinho Fofura',12.8,868,'ATIVO','PACOTE'),(5,'Italac',45,'Leite Italac 1LT',7.25,8,'ATIVO','LITRO'),(6,'Sadia',67,'Lasanha a Bolonesa',108.55,2,'ATIVO','KILO');
 REPLACE INTO `evento` VALUES (1,7,14,'2019-10-10','07:56','09:00','Rua das coisas, 12','Noite da latinha',564.56,898.98,434.34,'ATIVO');

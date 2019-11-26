@@ -38,8 +38,30 @@
 		</nav>
 	</header>
 
+	<!-- MODAL LOGOUT -->
+	<div id="modal-logout" class="modal" style="width: 32%">
+		<div class="modal-content">
+			<h5>Deseja realmente fazer logout?</h5>
+		</div>
+		<div class="modal-footer">
+			<a th:href="@{/logout}"
+				class="modal-close waves-effect waves-green btn-flat">Sim</a> <a
+				href="#!" class="modal-close waves-effect waves-green btn-flat">Não</a>
+		</div>
+	</div>
+
 	<!-- LEFT SIDEBAR-->
 	<ul id="sidenav-1" class="sidenav sidenav-fixed">
+
+		<li class="menu-lateral"><a href="#modal-logout"
+			class="tooltipped modal-trigger" data-position="bottom"
+			data-tooltip="Clique para fazer logout"><i class="material-icons">face</i><span
+				class="back-text email" style="text-transform: uppercase;"
+				th:utext="${username}"></span></a></li>
+		<li>
+		<li>
+			<div class="divider"></div>
+		</li>
 		<li class="menu-lateral"><a th:href="@{/}"><i
 				class="material-icons">home</i>Home</a></li>
 		<li>
@@ -51,7 +73,7 @@
 			<div class="divider"></div>
 		</li>
 		<li><a><i class="material-icons">local_bar</i>Bar</a></li>
-		<li><a href="#"><i class="material-icons">chevron_right</i>Venda</a></li>
+		<li><a th:href="@{/bar/inicio}"><i class="material-icons">chevron_right</i>Venda</a></li>
 		<li>
 			<div class="divider"></div>
 		</li>
@@ -61,75 +83,92 @@
 		<li>
 			<div class="divider"></div>
 		</li>
+		<li><a><i class="material-icons">attach_money</i>Caixa</a></li>
+		<li><a th:href="@{/caixa/inicio-caixa}"><i
+				class="material-icons">chevron_right</i>Consultar</a></li>
+		<li>
+			<div class="divider"></div>
+		</li>
 		<li><a><i class="material-icons">content_paste</i>Administração</a></li>
-		<li><a href="#"><i class="material-icons">chevron_right</i>Relatórios</a></li>
+		<li><a th:href="@{/administracao/inicio}"><i
+				class="material-icons">chevron_right</i>Consultar</a></li>
 		<li>
 			<div class="divider"></div>
 		</li>
 	</ul>
 
 	<div class="body-principal">
-		<br>
+
 		<div class="row">
-			<div class="detalhes-fornecedor">
-				<div th:object="${fornecedorEntity}">
-					<div class="row">
-						<br>
-						<div class="input-field col s4">
-							<input id="icon_prefix" type="text" class="validate"
-								th:field="*{nomeFantasia}" disabled="disabled"> <label
-								for="icon_prefix">Nome Fantasia</label>
+			<div class="col s12 m12">
+				<div class="card" style="display: grid;">
+					<div class="card-action center black">
+						<strong><a class="white-text">Lançamento de nota
+								fiscal</a></strong>
+					</div>
+					<div class="divider"></div>
+
+					<div class="detalhes-fornecedor">
+						<div th:object="${fornecedorEntity}">
+							<div class="row">
+								<br>
+								<div class="input-field col s4">
+									<input id="icon_prefix" type="text" class="validate"
+										th:field="*{nomeFantasia}" disabled="disabled"> <label
+										for="icon_prefix">Nome Fantasia</label>
+								</div>
+								<div class="input-field col s4">
+									<input id="icon_prefix" type="text" class="validate"
+										th:field="*{razaoSocial}" disabled="disabled"> <label
+										for="icon_prefix">Razão Social</label>
+								</div>
+								<div class="input-field col s4">
+									<input id="dataEvento" type="text" class="validate"
+										th:field="*{cnpj}" disabled="disabled"> <label
+										for="icon_prefix">CNPJ</label>
+								</div>
+								<div class="input-field col s4">
+									<input id="icon_prefix" type="text" class="validate"
+										th:field="*{inscricaoEstadual}" disabled="disabled"> <label
+										for="icon_prefix">Inscricao Estadual</label>
+								</div>
+								<div class="input-field col s4">
+									<input id="icon_prefix" type="text" class="validate"
+										th:field="*{cidade}" disabled="disabled"> <label
+										for="icon_prefix">Cidade</label>
+								</div>
+								<div class="input-field col s4">
+									<input id="icon_prefix" type="text" class="validate"
+										th:field="*{uf}" disabled="disabled"> <label
+										for="icon_prefix">UF</label>
+								</div>
+							</div>
 						</div>
-						<div class="input-field col s4">
-							<input id="icon_prefix" type="text" class="validate"
-								th:field="*{razaoSocial}" disabled="disabled"> <label
-								for="icon_prefix">Razão Social</label>
-						</div>
-						<div class="input-field col s4">
-							<input id="dataEvento" type="text" class="validate"
-								th:field="*{cnpj}" disabled="disabled"> <label
-								for="icon_prefix">CNPJ</label>
-						</div>
-						<div class="input-field col s4">
-							<input id="icon_prefix" type="text" class="validate"
-								th:field="*{inscricaoEstadual}" disabled="disabled"> <label
-								for="icon_prefix">Inscricao Estadual</label>
-						</div>
-						<div class="input-field col s4">
-							<input id="icon_prefix" type="text" class="validate"
-								th:field="*{cidade}" disabled="disabled"> <label
-								for="icon_prefix">Cidade</label>
-						</div>
-						<div class="input-field col s4">
-							<input id="icon_prefix" type="text" class="validate"
-								th:field="*{uf}" disabled="disabled"> <label
-								for="icon_prefix">UF</label>
-						</div>
+						<div class="divider"></div>
+						<br> <br>
+						<form th:action="@{/estoque/nota-fiscal/lancar/nota-fiscal}"
+							th:object="${notaFiscalEntity}" method="POST">
+							<div class="row">
+								<div class="input-field col s6">
+									<input type="text" class="validate" th:field="*{numero}"
+										min="1" max="999999999" required="required"
+										onkeypress="$(this).mask('000000000');"> <label>Número
+										da Nota Fiscal</label>
+								</div>
+								<div class="input-field col s6">
+									<input type="date" class="validate" th:field="*{dataEmissao}"
+										required="required"> <label>Data de Emissão</label>
+								</div>
+								<div class="input-field col s12">
+									<button id="btn-vender-ingresso" type="submit"
+										class="waves-effect waves-light btn pink darken-1">
+										<i class="material-icons right">border_color</i>Prosseguir
+									</button>
+								</div>
+							</div>
+						</form>
 					</div>
 				</div>
-				<div class="divider"></div>
-				<br> <br>
-				<form th:action="@{/estoque/nota-fiscal/lancar/nota-fiscal}"
-					th:object="${notaFiscalEntity}" method="POST">
-					<div class="row">
-						<div class="input-field col s6">
-							<input type="text" class="validate" th:field="*{numero}" min="1"
-								max="999999999" required="required"
-								onkeypress="$(this).mask('000000000');"> <label>Número
-								da Nota Fiscal</label>
-						</div>
-						<div class="input-field col s6">
-							<input type="date" class="validate" th:field="*{dataEmissao}"
-								required="required"> <label>Data de Emissão</label>
-						</div>
-						<div class="input-field col s12">
-							<button id="btn-vender-ingresso" type="submit"
-								class="waves-effect waves-light btn pink darken-1">
-								<i class="material-icons right">border_color</i>Prosseguir
-							</button>
-						</div>
-					</div>
-				</form>
 			</div>
 		</div>
 	</div>
@@ -156,6 +195,12 @@
 		});
 		$(document).ready(function() {
 			$('select').formSelect();
+		});
+		$(document).ready(function() {
+			$('.tooltipped').tooltip();
+		});
+		$(document).ready(function() {
+			$('.modal').modal();
 		});
 	</script>
 </body>

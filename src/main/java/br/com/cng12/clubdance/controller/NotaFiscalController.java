@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -58,6 +59,9 @@ public class NotaFiscalController {
 	@GetMapping(SELECIONAR_FORNECEDOR)
 	public String selecionarFornecedor(FornecedorEntity fornecedorEntity, ModelMap modelMap) {
 
+		modelMap.addAttribute("username", SecurityContextHolder.getContext()
+		        .getAuthentication().getName());
+		
 		modelMap.addAttribute("fornecedores", fornecedorService.listarFornecedoresAtivos());
 
 		return "estoque/nota-fiscal/selecionar-fornecedor";
@@ -65,6 +69,10 @@ public class NotaFiscalController {
 
 	@GetMapping(BUSCAR_FORNECEDOR_POR_NOME)
 	public String buscarFornecedorPorNome(@RequestParam("nome") String nome, ModelMap model) {
+		
+		model.addAttribute("username", SecurityContextHolder.getContext()
+		        .getAuthentication().getName());
+		
 		model.addAttribute("fornecedores", fornecedorService.buscarPorNome(nome));
 
 		return "estoque/nota-fiscal/selecionar-fornecedor";
@@ -73,6 +81,9 @@ public class NotaFiscalController {
 	@GetMapping(PRE_NOTA_FISCAL)
 	public String preNotaFiscal(@PathVariable("id") Long id, ModelMap model, NotaFiscalEntity notaFiscalEntity) {
 
+		model.addAttribute("username", SecurityContextHolder.getContext()
+		        .getAuthentication().getName());
+		
 		model.addAttribute("fornecedorEntity", fornecedorService.buscarPorId(id));
 		temp.setIdFornecedorTemp(id);
 
@@ -80,8 +91,11 @@ public class NotaFiscalController {
 	}
 
 	@PostMapping(NOVA_NOTA_FISCAL)
-	public String novaNotaFiscal(@Valid NotaFiscalEntity notaFiscalEntity) {
+	public String novaNotaFiscal(@Valid NotaFiscalEntity notaFiscalEntity, ModelMap model) {
 
+		model.addAttribute("username", SecurityContextHolder.getContext()
+		        .getAuthentication().getName());
+		
 		notaFiscalEntity.setDataLancamento(LocalDate.now());
 		notaFiscalService.salvar(notaFiscalEntity);
 		temp.setIdNotaFiscalTemp(notaFiscalEntity.getId());
@@ -93,6 +107,9 @@ public class NotaFiscalController {
 	public String preLancarProduto(FornecedorEntity fornecedorEntity, NotaFiscalEntity notaFiscalEntity,
 			ProdutoEntity produtoEntity, NotaFiscalAux notaFiscalAux, ModelMap modelMap) {
 
+		modelMap.addAttribute("username", SecurityContextHolder.getContext()
+		        .getAuthentication().getName());
+		
 		modelMap.addAttribute("fornecedorEntity", fornecedorService.buscarPorId(temp.getIdFornecedorTemp()));
 		modelMap.addAttribute("notaFiscalEntity", notaFiscalService.buscarPorId(temp.getIdNotaFiscalTemp()));
 		modelMap.addAttribute("produtos", produtoService.listarProdutosAtivos());
@@ -101,8 +118,11 @@ public class NotaFiscalController {
 	}
 
 	@PostMapping(LANCAR_PRODUTO)
-	public String lancarProduto(@Valid NotaFiscalAux notaFiscalAux, RedirectAttributes attr) {
+	public String lancarProduto(@Valid NotaFiscalAux notaFiscalAux, RedirectAttributes attr, ModelMap model) {
 
+		model.addAttribute("username", SecurityContextHolder.getContext()
+		        .getAuthentication().getName());
+		
 		Long idProduto = Long.parseLong(notaFiscalAux.getNomeProduto());
 		NotaFiscalEntity notaFiscal = notaFiscalService.buscarPorId(temp.getIdNotaFiscalTemp());
 		FornecedorEntity fornecedor = fornecedorService.buscarPorId(temp.getIdFornecedorTemp());
@@ -122,6 +142,9 @@ public class NotaFiscalController {
 	@GetMapping(NOTAS_FISCAIS_LANCADAS)
 	public String notasFiscaisLancadas(NotaFiscalFornecedorProdutoEntity NFPEntity, ModelMap modelMap) {
 
+		modelMap.addAttribute("username", SecurityContextHolder.getContext()
+		        .getAuthentication().getName());
+		
 		modelMap.addAttribute("notasFiscais", notaFiscalService.listar());
 
 		return "estoque/nota-fiscal/lista/notas-fiscais";
@@ -130,6 +153,8 @@ public class NotaFiscalController {
 	@GetMapping(PRE_EDITAR_NOTA_FISCAL_SELECIONADA)
 	public String preEditarNotaFiscalSelecionarProduto(@PathVariable("id") Long id, ModelMap modelMap) {
 
+		modelMap.addAttribute("username", SecurityContextHolder.getContext()
+		        .getAuthentication().getName());
 //		NotaFiscalEntity notaFiscalEntity = notaFiscalService.buscarPorId(id);
 //		NotaFiscalFornecedorProdutoEntity NFP = NFPService.buscarNFPComIdNotaFiscal(notaFiscalEntity);
 

@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -55,6 +56,9 @@ public class ClienteController {
 
 	@GetMapping(PRE_EDITAR_EVENTO)
 	public String preEditarEvento(@PathVariable("id") Long id, ModelMap model) {
+		
+		model.addAttribute("username", SecurityContextHolder.getContext()
+		        .getAuthentication().getName());
 		model.addAttribute("clienteEntity", clienteService.buscarPorId(id));
 		this.idCliente = id;
 
@@ -62,8 +66,11 @@ public class ClienteController {
 	}
 
 	@PostMapping(EDITAR_EVENTO)
-	public String editarEvento(@Valid ClienteEntity clienteEntity, RedirectAttributes attr) throws IngressoException {
-
+	public String editarEvento(@Valid ClienteEntity clienteEntity, RedirectAttributes attr, ModelMap model) throws IngressoException {
+		
+		model.addAttribute("username", SecurityContextHolder.getContext()
+		        .getAuthentication().getName());
+		
 		ClienteEntity clienteEntityAtual = clienteService.buscarPorId(clienteEntity.getId());
 		EventoEntity eventoEntity = eventoService.buscarPorId(eventoController.getIdEvento());
 

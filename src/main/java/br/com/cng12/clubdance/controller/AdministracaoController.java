@@ -16,6 +16,7 @@ import javax.sql.DataSource;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -71,6 +72,8 @@ public class AdministracaoController {
 		model.addAttribute("produtos", produtoService.listar());
 		model.addAttribute("usuariosAtivos", usuarioService.listarUsuariosAtivos());
 		model.addAttribute("usuariosInativos", usuarioService.listarUsuariosInativos());
+		model.addAttribute("username", SecurityContextHolder.getContext()
+		        .getAuthentication().getName());
 		
 		return "administracao/administracao";
 	}

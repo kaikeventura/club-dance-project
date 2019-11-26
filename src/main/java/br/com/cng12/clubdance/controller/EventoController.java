@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -53,13 +54,20 @@ public class EventoController {
 	private Long idEvento = 0L;
 
 	@GetMapping(CADASTRAR_EVENTO)
-	public String cadastroDeEvento(EventoEntity eventoEntity) {
+	public String cadastroDeEvento(EventoEntity eventoEntity, ModelMap model) {
+		
+		model.addAttribute("username", SecurityContextHolder.getContext()
+		        .getAuthentication().getName());
+		
 		return "evento/cadastrar-evento";
 	}
 
 	@PostMapping(SALVAR_EVENTO)
-	public String salvarEvento(@Valid EventoEntity eventoEntity, BindingResult bindingResult, RedirectAttributes attr) {
+	public String salvarEvento(@Valid EventoEntity eventoEntity, BindingResult bindingResult, RedirectAttributes attr, ModelMap model) {
 
+		model.addAttribute("username", SecurityContextHolder.getContext()
+		        .getAuthentication().getName());
+		
 		if (bindingResult.hasErrors()) {
 			return "evento/cadastrar-evento";
 		}
@@ -78,6 +86,8 @@ public class EventoController {
 	@GetMapping(LISTAR_EVENTOS)
 	public String listarEventos(ModelMap model) {
 
+		model.addAttribute("username", SecurityContextHolder.getContext()
+		        .getAuthentication().getName());
 		model.addAttribute("eventos", eventoService.listarEventosAtivos());
 
 		return "evento/eventos";
@@ -86,14 +96,19 @@ public class EventoController {
 	@GetMapping(PRE_EDITAR_EVENTO)
 	public String preEditarEvento(@PathVariable("id") Long id, ModelMap model) {
 
+		model.addAttribute("username", SecurityContextHolder.getContext()
+		        .getAuthentication().getName());
 		model.addAttribute("eventoEntity", eventoService.buscarPorId(id));
 
 		return "evento/cadastrar-evento";
 	}
 
 	@PostMapping(EDITAR_EVENTO)
-	public String editarEvento(@Valid EventoEntity eventoEntity, RedirectAttributes attr) {
+	public String editarEvento(@Valid EventoEntity eventoEntity, RedirectAttributes attr, ModelMap model) {
 
+		model.addAttribute("username", SecurityContextHolder.getContext()
+		        .getAuthentication().getName());
+		
 		eventoService.editar(eventoEntity);
 		attr.addFlashAttribute("success", "Salvo com sucesso.");
 
@@ -101,8 +116,11 @@ public class EventoController {
 	}
 
 	@GetMapping(EXCLUIR_EVENTO)
-	public String excluirEvento(@PathVariable("id") Long id) {
+	public String excluirEvento(@PathVariable("id") Long id, ModelMap model) {
 
+		model.addAttribute("username", SecurityContextHolder.getContext()
+		        .getAuthentication().getName());
+		
 		eventoService.excluir(id);
 
 		return "redirect:/evento/eventos";
@@ -111,6 +129,9 @@ public class EventoController {
 	@GetMapping(PRE_VENDA_INGRESSO)
 	public String preVendaIngresso(@PathVariable("id") Long id, ModelMap model, ClienteEntity clienteEntity) {
 
+		model.addAttribute("username", SecurityContextHolder.getContext()
+		        .getAuthentication().getName());
+		
 		this.idEvento = id;
 		model.addAttribute("eventoEntity", eventoService.buscarPorId(id));
 		model.addAttribute("clientes", clienteService.listaClientesDoEvento(this.idEvento));
@@ -118,8 +139,11 @@ public class EventoController {
 	}
 
 	@PostMapping(VENDA_INGRESSO)
-	public String venderIngressoCliente(@Valid ClienteEntity clienteEntity, RedirectAttributes attr)
+	public String venderIngressoCliente(@Valid ClienteEntity clienteEntity, RedirectAttributes attr, ModelMap model)
 			throws IngressoException {
+		
+		model.addAttribute("username", SecurityContextHolder.getContext()
+		        .getAuthentication().getName());
 		
 		EventoEntity eventoEntity = eventoService.buscarPorId(idEvento);
 		List<ClienteEntity> clientesDoEvento = clienteService.buscarClientesDoEvento(eventoEntity);

@@ -38,8 +38,30 @@
 		</nav>
 	</header>
 
+	<!-- MODAL LOGOUT -->
+	<div id="modal-logout" class="modal" style="width: 32%">
+		<div class="modal-content">
+			<h5>Deseja realmente fazer logout?</h5>
+		</div>
+		<div class="modal-footer">
+			<a th:href="@{/logout}"
+				class="modal-close waves-effect waves-green btn-flat">Sim</a> <a
+				href="#!" class="modal-close waves-effect waves-green btn-flat">Não</a>
+		</div>
+	</div>
+
 	<!-- LEFT SIDEBAR-->
 	<ul id="sidenav-1" class="sidenav sidenav-fixed">
+
+		<li class="menu-lateral"><a href="#modal-logout"
+			class="tooltipped modal-trigger" data-position="bottom"
+			data-tooltip="Clique para fazer logout"><i class="material-icons">face</i><span
+				class="back-text email" style="text-transform: uppercase;"
+				th:utext="${username}"></span></a></li>
+		<li>
+		<li>
+			<div class="divider"></div>
+		</li>
 		<li class="menu-lateral"><a th:href="@{/}"><i
 				class="material-icons">home</i>Home</a></li>
 		<li>
@@ -51,7 +73,7 @@
 			<div class="divider"></div>
 		</li>
 		<li><a><i class="material-icons">local_bar</i>Bar</a></li>
-		<li><a href="#"><i class="material-icons">chevron_right</i>Venda</a></li>
+		<li><a th:href="@{/bar/inicio}"><i class="material-icons">chevron_right</i>Venda</a></li>
 		<li>
 			<div class="divider"></div>
 		</li>
@@ -61,26 +83,46 @@
 		<li>
 			<div class="divider"></div>
 		</li>
+		<li><a><i class="material-icons">attach_money</i>Caixa</a></li>
+		<li><a th:href="@{/caixa/inicio-caixa}"><i
+				class="material-icons">chevron_right</i>Consultar</a></li>
+		<li>
+			<div class="divider"></div>
+		</li>
 		<li><a><i class="material-icons">content_paste</i>Administração</a></li>
-		<li><a href="#"><i class="material-icons">chevron_right</i>Relatórios</a></li>
+		<li><a th:href="@{/administracao/inicio}"><i
+				class="material-icons">chevron_right</i>Consultar</a></li>
 		<li>
 			<div class="divider"></div>
 		</li>
 	</ul>
 
 	<div class="body-principal">
-		<div class="menu-ferramentas-estoque">
-			<div class="row">
-				<a th:href="@{/estoque/produto/produtos}" class="waves-effect waves-light btn-large pink darken-1"><i
-					class="material-icons right">format_align_justify</i>PRODUTO</a>
-			</div>
-			<div class="row">
-				<a th:href="@{/estoque/fornecedor/fornecedores}" class="waves-effect waves-light btn-large pink darken-1"><i
-					class="material-icons right">format_align_justify</i>FORNECEDOR</a>
-			</div>
-			<div class="row">
-				<a th:href="@{/estoque/nota-fiscal/selecionar-fornecedor}" class="waves-effect waves-light btn-large pink darken-1"><i
-					class="material-icons right">format_align_justify</i>LANÇAR NOTA FISCAL</a>
+
+		<div class="row">
+			<div class="col s6 m6" style="margin-top: 40px; margin-left: 240px;">
+				<div class="card" style="display: grid;">
+					<div class="card-action center black">
+						<strong><a class="white-text">Estoque</a></strong>
+					</div>
+					<div class="divider"></div>
+
+					<a th:href="@{/estoque/produto/produtos}"
+						class="waves-effect waves-light btn-large pink darken-1" style="margin: 2%"><i
+						class="material-icons right">format_align_justify</i>PRODUTO</a> 
+						
+						<a
+						th:href="@{/estoque/fornecedor/fornecedores}"
+						class="waves-effect waves-light btn-large pink darken-1" style="margin: 2%"><i
+						class="material-icons right">format_align_justify</i>FORNECEDOR</a> 
+						
+						<a
+						th:href="@{/estoque/nota-fiscal/selecionar-fornecedor}"
+						class="waves-effect waves-light btn-large pink darken-1" style="margin: 2%"><i
+						class="material-icons right">format_align_justify</i>LANÇAR NOTA
+						FISCAL</a>
+
+				</div>
 			</div>
 		</div>
 	</div>
@@ -104,6 +146,12 @@
 		});
 		$(document).ready(function() {
 			$('select').formSelect();
+		});
+		$(document).ready(function() {
+			$('.tooltipped').tooltip();
+		});
+		$(document).ready(function() {
+			$('.modal').modal();
 		});
 	</script>
 </body>

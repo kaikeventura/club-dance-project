@@ -41,6 +41,7 @@ public class UsuarioController {
 				List<RoleEntity> roles0 = Arrays.asList(roleEntity0);
 				usuarioEntity.setRoles(roles0);
 				usuarioEntity.setSenha(usuarioService.encodeSenha(usuarioEntity.getSenha()));
+				usuarioEntity.setStatus("ATIVO");
 				
 				usuarioService.salvar(usuarioEntity);
 				
@@ -52,6 +53,7 @@ public class UsuarioController {
 				List<RoleEntity> roles1 = Arrays.asList(roleEntity1);
 				usuarioEntity.setRoles(roles1);
 				usuarioEntity.setSenha(usuarioService.encodeSenha(usuarioEntity.getSenha()));
+				usuarioEntity.setStatus("ATIVO");
 				
 				usuarioService.salvar(usuarioEntity);
 				
@@ -63,6 +65,7 @@ public class UsuarioController {
 				List<RoleEntity> roles2 = Arrays.asList(roleEntity2);
 				usuarioEntity.setRoles(roles2);
 				usuarioEntity.setSenha(usuarioService.encodeSenha(usuarioEntity.getSenha()));
+				usuarioEntity.setStatus("ATIVO");
 				
 				usuarioService.salvar(usuarioEntity);
 				
@@ -74,6 +77,7 @@ public class UsuarioController {
 				List<RoleEntity> roles3 = Arrays.asList(roleEntity3);
 				usuarioEntity.setRoles(roles3);
 				usuarioEntity.setSenha(usuarioService.encodeSenha(usuarioEntity.getSenha()));
+				usuarioEntity.setStatus("ATIVO");
 				
 				usuarioService.salvar(usuarioEntity);
 				
@@ -85,6 +89,7 @@ public class UsuarioController {
 				List<RoleEntity> roles4 = Arrays.asList(roleEntity4);
 				usuarioEntity.setRoles(roles4);
 				usuarioEntity.setSenha(usuarioService.encodeSenha(usuarioEntity.getSenha()));
+				usuarioEntity.setStatus("ATIVO");
 				
 				usuarioService.salvar(usuarioEntity);
 				

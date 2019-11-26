@@ -29,13 +29,26 @@
 		</nav>
 	</header>
 
+	<!-- MODAL LOGOUT -->
+	<div id="modal-logout" class="modal" style="width: 32%">
+		<div class="modal-content">
+			<h5>Deseja realmente fazer logout?</h5>
+		</div>
+		<div class="modal-footer">
+			<a th:href="@{/logout}"
+				class="modal-close waves-effect waves-green btn-flat">Sim</a> <a
+				href="#!" class="modal-close waves-effect waves-green btn-flat">Não</a>
+		</div>
+	</div>
+
 	<!-- LEFT SIDEBAR-->
 	<ul id="sidenav-1" class="sidenav sidenav-fixed">
 
 		<li class="menu-lateral"><a href="#modal-logout"
 			class="tooltipped modal-trigger" data-position="bottom"
 			data-tooltip="Clique para fazer logout"><i class="material-icons">face</i><span
-				class="back-text email" style="text-transform: uppercase;">kaike_ventura</span></a></li>
+				class="back-text email" style="text-transform: uppercase;"
+				th:utext="${username}"></span></a></li>
 		<li>
 		<li>
 			<div class="divider"></div>
@@ -124,8 +137,6 @@
 										<li><a class="modal-trigger"
 											href="#modal-eventos-finalizados">Relatório - Eventos
 												finalizados</a></li>
-										<li class="divider" tabindex="-1"></li>
-										<li><a href="#!">Relatório - Próximos eventos</a></li>
 									</ul>
 								</div>
 								<!-- Relatorios do caixa -->
@@ -428,6 +439,9 @@
 		});
 		$(document).ready(function() {
 			$('select').formSelect();
+		});
+		$(document).ready(function() {
+			$('.tooltipped').tooltip();
 		});
 	</script>
 </body>

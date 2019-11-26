@@ -41,6 +41,19 @@
 			<div class="nav-wrapper"></div>
 		</nav>
 	</header>
+	
+	
+	<!-- MODAL LOGOUT -->
+	<div id="modal-logout" class="modal" style="width: 32%">
+		<div class="modal-content">
+			<h5>Deseja realmente fazer logout?</h5>
+		</div>
+		<div class="modal-footer">
+			<a th:href="@{/logout}"
+				class="modal-close waves-effect waves-green btn-flat">Sim</a> <a
+				href="#!" class="modal-close waves-effect waves-green btn-flat">Não</a>
+		</div>
+	</div>
 
 	<!-- LEFT SIDEBAR-->
 	<ul id="sidenav-1" class="sidenav sidenav-fixed">

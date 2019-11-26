@@ -53,7 +53,7 @@ body {
 /* ----------------Detalhes venda evento---------------- */
 .info-evento-venda {
 	background: white;
-	width: 49% !important;
+	width: 99% !important;
 	margin-top: 1%;
 	margin-left: 1% !important;	
 }
@@ -69,7 +69,7 @@ body {
 
 .lista-clientes {
 	background: white;
-	width: 48% !important;
+	width: 99% !important;
 	margin-top: 1%;
 	margin-left: 1% !important;	
 }

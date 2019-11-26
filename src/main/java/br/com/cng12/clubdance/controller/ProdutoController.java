@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,14 +45,20 @@ public class ProdutoController {
 	private NotaFiscalFornecedorProdutoEntityServiceImpl NFPService;
 
 	@GetMapping(CADASTRO_DE_PRODUTO)
-	public String cadastroDeProduto(ProdutoEntity produtoEntity) {
+	public String cadastroDeProduto(ProdutoEntity produtoEntity, ModelMap model) {
 
+		model.addAttribute("username", SecurityContextHolder.getContext()
+		        .getAuthentication().getName());
+		
 		return "estoque/produto/cadastrar-produto";
 	}
 
 	@PostMapping(SALVAR_PRODUTO)
-	public String salvarProduto(@Valid ProdutoEntity produtoEntity, RedirectAttributes attr) {
+	public String salvarProduto(@Valid ProdutoEntity produtoEntity, RedirectAttributes attr, ModelMap model) {
 
+		model.addAttribute("username", SecurityContextHolder.getContext()
+		        .getAuthentication().getName());
+		
 		produtoEntity.setQtdeEstoque(0);
 		produtoEntity.setPreco(0.0D);
 		produtoService.salvar(produtoEntity);
@@ -63,6 +70,9 @@ public class ProdutoController {
 	@GetMapping(LISTAR_PRODUTOS)
 	public String listarProdutos(ModelMap model) {
 
+		model.addAttribute("username", SecurityContextHolder.getContext()
+		        .getAuthentication().getName());
+		
 		model.addAttribute("produtos", produtoService.listar());
 
 		return "estoque/produto/produtos";
@@ -70,13 +80,20 @@ public class ProdutoController {
 
 	@GetMapping(PRE_EDITAR_PRODUTO)
 	public String preEditarProduto(@PathVariable("id") Long id, ModelMap model) {
+		
+		model.addAttribute("username", SecurityContextHolder.getContext()
+		        .getAuthentication().getName());
+		
 		model.addAttribute("produtoEntity", produtoService.buscarPorId(id));
 		return "estoque/produto/cadastrar-produto";
 	}
 
 	@PostMapping(EDITAR_PRODUTO)
-	public String editarProduto(@Valid ProdutoEntity produtoEntity, RedirectAttributes attr) {
+	public String editarProduto(@Valid ProdutoEntity produtoEntity, RedirectAttributes attr, ModelMap model) {
 
+		model.addAttribute("username", SecurityContextHolder.getContext()
+		        .getAuthentication().getName());
+		
 		produtoService.editar(produtoEntity.getNome(), produtoEntity.getMarca(), produtoEntity.getUnidadeMedida(),
 				produtoEntity.getMargemLucro(), produtoEntity.getStatus(), produtoEntity.getId());
 		attr.addFlashAttribute("success", "Editado com sucesso.");
@@ -84,8 +101,11 @@ public class ProdutoController {
 	}
 
 	@GetMapping(EXCLUIR_PRODUTO)
-	public String excluirProduto(@PathVariable("id") Long id, RedirectAttributes attr) {
+	public String excluirProduto(@PathVariable("id") Long id, RedirectAttributes attr, ModelMap model) {
 
+		model.addAttribute("username", SecurityContextHolder.getContext()
+		        .getAuthentication().getName());
+		
 		ProdutoEntity produtoEntity = produtoService.buscarPorId(id);
 		List<ComandaProdutoEntity> comandaProdutoEntitys = comandaProdutoService
 				.buscarComandasQuePossuemProdutosVinculados(produtoEntity);
@@ -122,6 +142,10 @@ public class ProdutoController {
 
 	@GetMapping(BUSCAR_PRODUTO_POR_NOME)
 	public String buscarProdutoPorNome(@RequestParam("nome") String nome, ModelMap model) {
+		
+		model.addAttribute("username", SecurityContextHolder.getContext()
+		        .getAuthentication().getName());
+		
 		model.addAttribute("produtos", produtoService.buscarPorNome(nome));
 		return "estoque/produto/produtos";
 	}
