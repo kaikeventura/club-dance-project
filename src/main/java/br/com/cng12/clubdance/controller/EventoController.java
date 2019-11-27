@@ -17,10 +17,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.cng12.clubdance.entity.ClienteEntity;
+import br.com.cng12.clubdance.entity.ComandaEntity;
 import br.com.cng12.clubdance.entity.EventoEntity;
+import br.com.cng12.clubdance.entity.PagamentoCaixaEntity;
 import br.com.cng12.clubdance.exceptions.IngressoException;
 import br.com.cng12.clubdance.service.impl.ClienteServiceImpl;
+import br.com.cng12.clubdance.service.impl.ComandaServiceImpl;
 import br.com.cng12.clubdance.service.impl.EventoServiceImpl;
+import br.com.cng12.clubdance.service.impl.PagamentoCaixaServiceImpl;
 import br.com.cng12.clubdance.utils.Status;
 import br.com.cng12.clubdance.utils.components.ControleDeCapacidadeEventoComponent;
 import lombok.Getter;
@@ -49,6 +53,12 @@ public class EventoController {
 
 	@Autowired
 	private ControleDeCapacidadeEventoComponent controleDeCapacidadeEvento;
+	
+	@Autowired
+	private ComandaServiceImpl comandaService;
+	
+	@Autowired
+	private PagamentoCaixaServiceImpl pagamentoCaixaService;
 
 	@Getter
 	private Long idEvento = 0L;
@@ -116,14 +126,40 @@ public class EventoController {
 	}
 
 	@GetMapping(EXCLUIR_EVENTO)
-	public String excluirEvento(@PathVariable("id") Long id, ModelMap model) {
+	public String excluirEvento(@PathVariable("id") Long id, ModelMap model, RedirectAttributes attr) {
 
 		model.addAttribute("username", SecurityContextHolder.getContext()
 		        .getAuthentication().getName());
 		
-		eventoService.excluir(id);
+		EventoEntity eventoEntity = eventoService.buscarPorId(id);
+		
+		List<ClienteEntity> clientesComEventosVinculados = clienteService.buscarClientesDoEvento(eventoEntity);
+		
+		List<ComandaEntity> comandasComEventosVinculados = comandaService.buscarComandasQuePossuemEventosVinculados(eventoEntity);
+		
+		List<PagamentoCaixaEntity> comandasComPagamentosVinculados = pagamentoCaixaService.buscarPagamentosQuePossuemEventosVinculados(eventoEntity);
+		
+		if (!clientesComEventosVinculados.isEmpty()) {
+			attr.addFlashAttribute("error", "O evento " + eventoEntity.getNome()
+					+ " não pode ser excluído, pois está vinculado com outras partes do sistema.");
+			return "redirect:/evento/eventos";
+		}
+		else if (!comandasComEventosVinculados.isEmpty()) {
+			attr.addFlashAttribute("error", "O evento " + eventoEntity.getNome()
+					+ " não pode ser excluído, pois está vinculado com outras partes do sistema.");
+			return "redirect:/evento/eventos";
+		}
+		else if (!comandasComPagamentosVinculados.isEmpty()) {
+			attr.addFlashAttribute("error", "O evento " + eventoEntity.getNome()
+					+ " não pode ser excluído, pois está vinculado com outras partes do sistema.");
+			return "redirect:/evento/eventos";
+		}
+		else {
+			eventoService.excluir(id);
+			attr.addFlashAttribute("success", "O evento " + eventoEntity.getNome() + " foi excluído com sucesso.");
+			return "redirect:/evento/eventos";
+		}
 
-		return "redirect:/evento/eventos";
 	}
 
 	@GetMapping(PRE_VENDA_INGRESSO)
@@ -209,6 +245,8 @@ public class EventoController {
 
 	@GetMapping(BUSCAR_EVENTO_POR_NOME)
 	public String buscarEventoPorNome(@RequestParam("nome") String nome, ModelMap model) {
+		model.addAttribute("username", SecurityContextHolder.getContext()
+		        .getAuthentication().getName());
 		model.addAttribute("eventos", eventoService.buscarPorNome(nome));
 		return "evento/eventos";
 	}

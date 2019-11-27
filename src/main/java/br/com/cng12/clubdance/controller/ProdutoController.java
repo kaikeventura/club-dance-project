@@ -107,8 +107,10 @@ public class ProdutoController {
 		        .getAuthentication().getName());
 		
 		ProdutoEntity produtoEntity = produtoService.buscarPorId(id);
+		
 		List<ComandaProdutoEntity> comandaProdutoEntitys = comandaProdutoService
 				.buscarComandasQuePossuemProdutosVinculados(produtoEntity);
+		
 		List<NotaFiscalFornecedorProdutoEntity> notaFiscalFornecedorProdutoEntitys = NFPService
 				.buscarNotasFiscaisQuePossuemProdutosVinculados(produtoEntity);
 

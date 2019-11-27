@@ -38,14 +38,11 @@ public interface ComandaDAO extends JpaRepository<ComandaEntity, Long> {
 	@Query("UPDATE ComandaEntity c SET c.status =:status WHERE c.id =:id")
 	void atualizaStatusComanda(@Param("status") String status,
 			@Param("id") Long id);
-	
-//	@Query("select ClienteEntity.nome, ClienteEntity.cpf, EventoEntity.nome, ComandaEntity.id from ComandaEntity inner join ClienteEntity on ComandaEntity.clienteEntity = ClienteEntity.id inner join EventoEntity on ComandaEntoty.eventoEntity = EventoEntity.id where EventoEntity.id =: id")
-//	List<ComandaListaVendasDTO> buscarClientesDoEventoComAComanda(@Param("id") Long idEvento);
-	
-//	@Query("select new br.com.cng12.clubdance.utils.dto.ComandaVendaProdutoDTO(ClienteEntity.nome, ClienteEntity.cpf, EventoEntity.nome, ComandaEntity.id) from ComandaEntity ce inner join ClienteEntity on ComandaEntity.clienteEntity = ClienteEntity.id inner join EventoEntity on ComandaEntoty.eventoEntity = EventoEntity.id")
-//	List<ComandaListaVendasDTO> buscarClientesDoEventoComAComanda();
 
 	@Query("select c from ComandaEntity c where c.eventoEntity =:eventoEntity and c.status = 'ABERTO'")
 	ArrayList<ComandaEntity> listarComandasAbertas(@Param("eventoEntity") EventoEntity eventoEntity);
+	
+	@Query("select c from ComandaEntity c WHERE c.eventoEntity =:eventoEntity")
+	List<ComandaEntity> buscarComandasQuePossuemEventosVinculados(@Param("eventoEntity") EventoEntity eventoEntity);
 	
 }

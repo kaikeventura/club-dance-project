@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.cng12.clubdance.dao.NotaFiscalFornecedorProdutoEntityDAO;
+import br.com.cng12.clubdance.entity.FornecedorEntity;
 import br.com.cng12.clubdance.entity.NotaFiscalEntity;
 import br.com.cng12.clubdance.entity.NotaFiscalFornecedorProdutoEntity;
 import br.com.cng12.clubdance.entity.ProdutoEntity;
@@ -40,6 +41,13 @@ public class NotaFiscalFornecedorProdutoEntityServiceImpl implements NotaFiscalF
 			ProdutoEntity produtoEntity) {
 		
 		return dao.buscarNotasFiscaisQuePossuemProdutosVinculados(produtoEntity);
+	}
+
+	@Override
+	public List<NotaFiscalFornecedorProdutoEntity> buscarNotasFiscaisQuePossuemFornecedoresVinculados(
+			FornecedorEntity fornecedorEntity) {
+		
+		return dao.buscarNotasFiscaisQuePossuemFornecedoresVinculados(fornecedorEntity);
 	}
 	
 	

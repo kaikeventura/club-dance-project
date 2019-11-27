@@ -24,4 +24,7 @@ public interface ComandaService {
 	void atualizaStatusComanda(String status, Long id);
 	
 	ArrayList<ComandaEntity> listarComandasAbertas(EventoEntity eventoEntity);
+	
+	List<ComandaEntity> buscarComandasQuePossuemEventosVinculados(EventoEntity eventoEntity);
+	
 }

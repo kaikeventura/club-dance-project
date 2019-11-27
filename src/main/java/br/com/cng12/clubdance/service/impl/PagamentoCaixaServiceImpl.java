@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.cng12.clubdance.dao.PagamentoCaixaDAO;
+import br.com.cng12.clubdance.entity.EventoEntity;
 import br.com.cng12.clubdance.entity.PagamentoCaixaEntity;
 import br.com.cng12.clubdance.service.PagamentoCaixaService;
 
@@ -31,6 +32,12 @@ public class PagamentoCaixaServiceImpl implements PagamentoCaixaService {
 	public PagamentoCaixaEntity buscarPorId(Long id) {
 
 		return dao.getOne(id);
+	}
+
+	@Override
+	public List<PagamentoCaixaEntity> buscarPagamentosQuePossuemEventosVinculados(EventoEntity eventoEntity) {
+
+		return dao.buscarPagamentosQuePossuemEventosVinculados(eventoEntity);
 	}
 
 }

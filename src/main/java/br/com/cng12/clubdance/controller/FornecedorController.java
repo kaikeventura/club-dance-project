@@ -1,5 +1,7 @@
 package br.com.cng12.clubdance.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.cng12.clubdance.entity.FornecedorEntity;
+import br.com.cng12.clubdance.entity.NotaFiscalFornecedorProdutoEntity;
 import br.com.cng12.clubdance.service.impl.FornecedorServiceImpl;
+import br.com.cng12.clubdance.service.impl.NotaFiscalFornecedorProdutoEntityServiceImpl;
 import br.com.cng12.clubdance.utils.Status;
 import br.com.cng12.clubdance.utils.UF;
 
@@ -32,6 +36,9 @@ public class FornecedorController {
 
 	@Autowired
 	private FornecedorServiceImpl fornecedorService;
+	
+	@Autowired
+	private NotaFiscalFornecedorProdutoEntityServiceImpl NFPService;
 
 	@GetMapping(CADASTRO_DE_PRODUTO)
 	public String cadastroDeProduto(FornecedorEntity fornecedorEntity, ModelMap model) {
@@ -103,14 +110,27 @@ public class FornecedorController {
 	}
 
 	@GetMapping(EXCLUIR_FORNECEDOR)
-	public String excluirFornecedor(@PathVariable("id") Long id, ModelMap model) {
+	public String excluirFornecedor(@PathVariable("id") Long id, ModelMap model, RedirectAttributes attr) {
 
 		model.addAttribute("username", SecurityContextHolder.getContext()
 		        .getAuthentication().getName());
 		
-		fornecedorService.excluir(id);
+		FornecedorEntity fornecedorEntity = fornecedorService.buscarPorId(id);
+		
+		List<NotaFiscalFornecedorProdutoEntity> notaFiscalComFornecedores = NFPService
+				.buscarNotasFiscaisQuePossuemFornecedoresVinculados(fornecedorEntity);
+		
+		if (!notaFiscalComFornecedores.isEmpty()) {
+			attr.addFlashAttribute("error", "O fornecedor " + fornecedorEntity.getRazaoSocial()
+					+ " não pode ser excluído, pois está vinculado com outras partes do sistema.");
+			return "redirect:/estoque/fornecedor/fornecedores";
+		}
+		else {
+			fornecedorService.excluir(id);
+			attr.addFlashAttribute("success", "O fornecedor " + fornecedorEntity.getRazaoSocial() + " foi excluído com sucesso.");
 
-		return "redirect:/estoque/fornecedor/fornecedores";
+			return "redirect:/estoque/fornecedor/fornecedores";
+		}
 	}
 
 	@ModelAttribute("uf")
@@ -125,6 +145,10 @@ public class FornecedorController {
 
 	@GetMapping(BUSCAR_FORNECEDOR_POR_NOME)
 	public String buscarFornecedorPorNome(@RequestParam("nome") String nome, ModelMap model) {
+		
+		model.addAttribute("username", SecurityContextHolder.getContext()
+		        .getAuthentication().getName());
+		
 		model.addAttribute("fornecedores", fornecedorService.buscarPorNome(nome));
 		
 		return "estoque/fornecedor/fornecedores";

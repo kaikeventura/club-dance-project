@@ -114,7 +114,12 @@
 						<strong><a class="white-text">Lista de Fornecedores</a></strong>
 					</div>
 					<div class="divider"></div>
-
+					<div th:if="${success} != null">
+						<span class="success-span z-depth-1 col s12" th:text="${success}"></span>
+					</div>
+					<div th:if="${error} != null">
+						<span class="error-span z-depth-1 col s12" th:text="${error}"></span>
+					</div>
 					<!-- Tabela -->
 					<table class="highlight">
 						<thead>

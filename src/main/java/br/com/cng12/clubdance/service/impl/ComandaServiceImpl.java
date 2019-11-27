@@ -66,4 +66,10 @@ public class ComandaServiceImpl implements ComandaService {
 		return dao.listarComandasAbertas(eventoEntity);
 	}
 
+	@Override
+	public List<ComandaEntity> buscarComandasQuePossuemEventosVinculados(EventoEntity eventoEntity) {
+		
+		return dao.buscarComandasQuePossuemEventosVinculados(eventoEntity);
+	}
+
 }

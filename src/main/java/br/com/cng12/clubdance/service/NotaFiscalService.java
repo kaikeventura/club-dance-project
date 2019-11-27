@@ -13,4 +13,6 @@ public interface NotaFiscalService {
 	List<NotaFiscalEntity> buscarPorNumero(Long numero);
 	
 	List<NotaFiscalEntity> listar();
+	
+	NotaFiscalEntity buscarPorNumeroNF(Long numero);
 }

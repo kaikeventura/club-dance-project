@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import br.com.cng12.clubdance.entity.FornecedorEntity;
 import br.com.cng12.clubdance.entity.NotaFiscalEntity;
 import br.com.cng12.clubdance.entity.NotaFiscalFornecedorProdutoEntity;
 import br.com.cng12.clubdance.entity.ProdutoEntity;
@@ -21,5 +22,9 @@ public interface NotaFiscalFornecedorProdutoEntityDAO extends JpaRepository<Nota
 	@Query("select c from NotaFiscalFornecedorProdutoEntity c WHERE c.produtoEntity =:produtoEntity")
 	List<NotaFiscalFornecedorProdutoEntity> buscarNotasFiscaisQuePossuemProdutosVinculados(
 			@Param("produtoEntity") ProdutoEntity produtoEntity);
+	
+	@Query("select c from NotaFiscalFornecedorProdutoEntity c WHERE c.fornecedorEntity =:fornecedorEntity")
+	List<NotaFiscalFornecedorProdutoEntity> buscarNotasFiscaisQuePossuemFornecedoresVinculados(
+			@Param("fornecedorEntity") FornecedorEntity fornecedorEntity);
 
 }

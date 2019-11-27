@@ -38,7 +38,8 @@
 								</div>
 								<div class="input-field col s2 right-align">
 									<a th:href="@{/evento/cadastrar-evento}" id="btn-cad-evento"
-										class="waves-effect waves-light btn pink darken-1">Cadastrar Evento</a>
+										class="waves-effect waves-light btn pink darken-1">Cadastrar
+										Evento</a>
 								</div>
 							</form>
 						</div>
@@ -115,7 +116,12 @@
 						<strong><a class="white-text">Lista de Eventos</a></strong>
 					</div>
 					<div class="divider"></div>
-
+					<div th:if="${success} != null">
+						<span class="success-span z-depth-1 col s12" th:text="${success}"></span>
+					</div>
+					<div th:if="${error} != null">
+						<span class="error-span z-depth-1 col s12" th:text="${error}"></span>
+					</div>
 					<!-- Tabela -->
 
 					<table class="highlight">

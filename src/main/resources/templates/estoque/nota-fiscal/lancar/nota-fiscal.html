@@ -108,6 +108,9 @@
 					</div>
 					<div class="divider"></div>
 
+					<div th:if="${error} != null">
+						<span class="error-span z-depth-1 col s12" th:text="${error}"></span>
+					</div>
 					<div class="detalhes-fornecedor">
 						<div th:object="${fornecedorEntity}">
 							<div class="row">

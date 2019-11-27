@@ -39,4 +39,10 @@ public class NotaFiscalServiceImpl implements NotaFiscalService {
 		return dao.findAll();
 	}
 
+	@Override
+	public NotaFiscalEntity buscarPorNumeroNF(Long numero) {
+
+		return dao.buscarPorNumeroNF(numero);
+	}
+
 }

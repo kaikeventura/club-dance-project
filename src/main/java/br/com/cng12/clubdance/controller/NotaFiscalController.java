@@ -1,6 +1,7 @@
 package br.com.cng12.clubdance.controller;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -91,16 +92,26 @@ public class NotaFiscalController {
 	}
 
 	@PostMapping(NOVA_NOTA_FISCAL)
-	public String novaNotaFiscal(@Valid NotaFiscalEntity notaFiscalEntity, ModelMap model) {
+	public String novaNotaFiscal(@Valid NotaFiscalEntity notaFiscalEntity, ModelMap model, RedirectAttributes attr) {
 
 		model.addAttribute("username", SecurityContextHolder.getContext()
 		        .getAuthentication().getName());
 		
-		notaFiscalEntity.setDataLancamento(LocalDate.now());
-		notaFiscalService.salvar(notaFiscalEntity);
-		temp.setIdNotaFiscalTemp(notaFiscalEntity.getId());
+		List<NotaFiscalEntity> notas = notaFiscalService
+				.buscarPorNumero(notaFiscalEntity.getNumero());
+		
+		if(notas.isEmpty()) {
+			
+			notaFiscalEntity.setDataLancamento(LocalDate.now());
+			notaFiscalService.salvar(notaFiscalEntity);
+			temp.setIdNotaFiscalTemp(notaFiscalEntity.getId());
 
-		return "redirect:/estoque/nota-fiscal/lancar/lancar-produto";
+			return "redirect:/estoque/nota-fiscal/lancar/lancar-produto";
+		}
+		else {
+			attr.addFlashAttribute("error", "Já existe uma nota fiscal cadastrada com esse número: "+notaFiscalEntity.getNumero());
+			return "redirect:/estoque/nota-fiscal/lancar/nota-fiscal/"+temp.getIdFornecedorTemp();
+		}
 	}
 
 	@GetMapping(PRE_LANCAR_NOTA_FISCAL)
